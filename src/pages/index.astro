@@ -1,0 +1,159 @@
+---
+import Card from '../components/Card.astro';
+import { Image } from 'astro:assets';
+import SpellboundRollersImg from "../images/SpellboundRollers.png"
+import SentientBuffetImg from "../images/SentientBuffetThumbnail.png"
+
+const gamedevThumbnails: ImageMetadata[] = [SpellboundRollersImg, SentientBuffetImg];
+const webdevThumbnails: ImageMetadata[] = [SpellboundRollersImg, SentientBuffetImg];
+
+const repeatArray = new Array<number>(10).fill(0);
+---
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Home</title>
+	</head>
+	<body>
+		<main>
+			<!-- <h1>Welcome to <span class="text-gradient">Astro</span></h1> -->
+			<div class="thumbnail-list gamedev-thumbnail ">
+				{
+					repeatArray.map(() => (
+						gamedevThumbnails.map((thumbnail) => (
+							<Image src={thumbnail} alt={"Thumbnail"} class="thumbnail"/>
+						))
+					))
+				}
+			</div>
+			<div class="thumbnail-list webdev-thumbnail">
+					{
+						repeatArray.map(() => (
+							webdevThumbnails.map((thumbnail) => (
+								<Image src={thumbnail} alt={"Thumbnail"} class="thumbnail"/>
+							))
+						))
+					}
+			</div>
+			<div class="container">
+				<h1>Welcome to my Website!</h1>
+				<h2>Are you here for</h2>
+				<p>
+					<a href="https://gamedev.gnoxnahte.dev">Game Development</a>
+					OR
+					<a href="https://webdev.gnoxnahte.dev">Web Development</a>
+				</p>
+			</div>
+		</main>
+	</body>
+</html>
+
+<style>
+	:root {
+		--accent: 136, 58, 234;
+		--accent-light: 224, 204, 250;
+		--accent-dark: 49, 10, 101;
+		--accent-gradient: linear-gradient(
+			45deg,
+			rgb(var(--accent)),
+			rgb(var(--accent-light)) 30%,
+			white 60%
+		);
+	}
+	html {
+		font-family: system-ui, sans-serif;
+		background: #13151a;
+		background-size: 224px;
+		overflow: hidden;
+	}
+	body {
+		height: 100vh;
+		text-align: center;
+	}
+	main {
+		height: 100%;
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	h1, h2 {
+		text-align: center;
+		user-select: none;
+	}
+	p {
+		text-align: center;
+	}
+	a {
+		pointer-events: all;
+	}
+	a:link, a:visited {
+		color: unset;
+	}
+	a:hover {
+		transform: scale(2);
+	}
+	
+	.container {
+		position: relative;
+		top: 50%;
+		translate: 0 -55%;
+		display: inline-block;
+		backdrop-filter: blur(10px);
+		mask-image: radial-gradient(ellipse, black 50%, transparent 75%);
+		/* background-color: red; */
+		padding: 10vw;
+		pointer-events: none;
+	}
+
+	.thumbnail-list {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		top: 0;
+		width: 1vh;
+		width: 45vw;
+		opacity: 15%;
+		animation: 30s linear 0s infinite normal slow-scroll;
+		transition: opacity 0.5s;
+	}
+	.thumbnail-list:hover {
+		opacity: 0.6;
+	}
+
+	.gamedev-thumbnail{
+		left: 2.5vw;
+	}
+	.webdev-thumbnail{
+		right: 2.5vw;
+	}
+	.thumbnail {
+		width: 100%;
+		height: auto;
+		margin: 10px 0;
+		border-radius: 15px;
+		-webkit-user-drag: none;
+		user-select: none;
+	}
+
+	@keyframes slow-scroll {
+		from {
+			translate: 0 -50%;
+		}
+		to {
+			translate: 0 0;
+		}
+	}
+
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+</style>
