@@ -1,0 +1,104 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+
+import GitHubIcon from "../images/icons/github-mark-white.svg";
+import EmailIcon from "../images/icons/google-icon-email.svg";
+import TwitterIcon from "../images/icons/x-twitter-icon.svg";
+import LinkedInIcon from "../images/icons/LinkedInIcon.png";
+
+---
+
+<Layout title="About Me" description="Description about me">
+    <div class="container">
+        <h1>About Me</h1>
+        <h2>Quick points about me:</h2>
+        <ul>
+            <li>I'm from Singapore! <img src="https://flagsapi.com/SG/flat/64.png" class="flag" alt="SG Flag"></li>
+            <li>Studied <strong>Game Development and Technology</strong> from <abbr title="Nanyang Polytechnic">NYP</abbr>. <a href="https://www.nyp.edu.sg/schools/sdm/full-time-courses/game-development-and-technology.html">Course Link</a> (They changed some syllabus compared to when I enrolled)</li>
+            <li>Self studying Web Development in my free time</li>
+            <li>Interested to learn new technologies</li>
+        </ul>
+        <details>
+            <summary>Certificates</summary>
+            <ul>
+                <li>Director's List - Academic Year 2019/20 Semester 1</li>
+                <li>Director's List - Academic Year 2021/22 Semester 2</li>
+                <li><a href="https://unity.com/products/unity-certifications/associate-programmer" target="_blank">UCAP-720: Unity Certified Associate: Programmer</a></li>
+            </ul>
+            <a href="https://www.nyp.edu.sg/current-students/academic-matters/nyp-assessment-regulations.html" target="_blank">Director's List</a> - Top 15% in my cohort for the semester
+        </details>
+        <h1>Contact</h1>
+        <p class="social-icon-container">
+            <a href="mailto:gnoxnahte.dev@gmail.com" target="_blank"><Image src={EmailIcon} alt="icon" class="social-icon email"></a>
+            <a href="https://github.com/GnoxNahte" target="_blank"><Image src={GitHubIcon} alt="icon" class="social-icon"></a>
+            <a href="https://twitter.com/GnoxNahteDev" target="_blank"><Image src={TwitterIcon} alt="icon" class="social-icon"></a>
+            <a href="https://www.linkedin.com/in/ethanongsg/" target="_blank"><Image src={LinkedInIcon} alt="icon" class="social-icon"></a>
+        </p>
+        
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Playing with my arcade shooter<a href="https://twitter.com/hashtag/gamedev?src=hash&amp;ref_src=twsrc%5Etfw">#gamedev</a> <a href="https://twitter.com/hashtag/unity?src=hash&amp;ref_src=twsrc%5Etfw">#unity</a> <a href="https://t.co/FIYzoQVASc">pic.twitter.com/FIYzoQVASc</a></p>&mdash; GnoxNahteDev (@GnoxNahteDev) <a href="https://twitter.com/GnoxNahteDev/status/1680554119042416641?ref_src=twsrc%5Etfw">July 16, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <a href="/" class="back">Back to Home</a>
+    </div>
+
+    <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/6Dz4njC9AyM?si=MlC4ZHUGKvajQbDI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</Layout>
+
+<style>
+    h1 {
+        text-align: center;
+    }
+    ul {
+        margin-top: 5px;
+    }
+    h2 {
+        margin-bottom: 0;
+    }
+    a {
+        transition: all 0.25s;
+    }
+    a:hover {
+        transform: translateY(-5px);
+    }
+    details {
+        margin-left: 2em;
+        /* border: 2px solid white; */
+    }
+
+    summary {
+        margin-left: -2em;
+    }
+
+    .container {
+        padding: 25px;
+        margin: auto;
+        max-width: fit-content;
+    }
+
+    .flag {
+        height: 1.5em;
+        display: inline; 
+        transform: translateY(0.3em);
+    }
+
+    .social-icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0
+    }
+
+    .social-icon {
+        height: 1em;
+        width: auto;
+        margin: 10px;
+    }
+
+    .social-icon.email {
+        height: 1.4em;
+    }
+
+    .back {
+        margin: auto;
+        display: table;
+    }
+</style>

@@ -1,159 +1,164 @@
 ---
-import Card from '../components/Card.astro';
 import { Image } from 'astro:assets';
-import SpellboundRollersImg from "../images/SpellboundRollers.png"
-import SentientBuffetImg from "../images/SentientBuffetThumbnail.png"
+import Layout from "../layouts/Layout.astro";
+// Game Dev Thumbnails
+import SpellboundRollersImg from "../images/gamedev-thumbnails/SpellboundRollers.png";
+import SentientBuffetImg from "../images/gamedev-thumbnails/SentientBuffetThumbnail.png";
+// Web Dev Thumbnails
+import EventRegistrationImg from "../images/webdev-thumbnails/EventRegistrationThumbnail.png";
+import OldPortfolioImg from "../images/webdev-thumbnails/OldPortfolioThumbnail.png";
 
 const gamedevThumbnails: ImageMetadata[] = [SpellboundRollersImg, SentientBuffetImg];
-const webdevThumbnails: ImageMetadata[] = [SpellboundRollersImg, SentientBuffetImg];
+const webdevThumbnails: ImageMetadata[] = [SpellboundRollersImg, SentientBuffetImg,OldPortfolioImg, EventRegistrationImg];
 
-const repeatArray = new Array<number>(10).fill(0);
+const repeatArray = new Array<number>(4).fill(0);
 ---
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Home</title>
-	</head>
-	<body>
-		<main>
-			<!-- <h1>Welcome to <span class="text-gradient">Astro</span></h1> -->
-			<div class="thumbnail-list gamedev-thumbnail ">
-				{
-					repeatArray.map(() => (
-						gamedevThumbnails.map((thumbnail) => (
-							<Image src={thumbnail} alt={"Thumbnail"} class="thumbnail"/>
-						))
+<Layout title='Home' description='Home page to redirect you to the page you are looking for.'>
+	<!-- <h1>Welcome to <span class="text-gradient">Astro</span></h1> -->
+	<div class="thumbnail-list" id="gamedev-thumbnail">
+		{
+			repeatArray.map(() => (
+				gamedevThumbnails.map((thumbnail) => (
+					<Image src={thumbnail} alt={"Thumbnail"} class="thumbnail"/>
+				))
+			))
+		}
+	</div>
+	<div class="thumbnail-list" id="webdev-thumbnail">
+			{
+				repeatArray.map(() => (
+					webdevThumbnails.map((thumbnail) => (
+						<Image src={thumbnail} alt={"Thumbnail"} class="thumbnail"/>
 					))
-				}
-			</div>
-			<div class="thumbnail-list webdev-thumbnail">
-					{
-						repeatArray.map(() => (
-							webdevThumbnails.map((thumbnail) => (
-								<Image src={thumbnail} alt={"Thumbnail"} class="thumbnail"/>
-							))
-						))
-					}
-			</div>
-			<div class="container">
-				<h1>Welcome to my Website!</h1>
-				<h2>Are you here for</h2>
-				<p>
-					<a href="https://gamedev.gnoxnahte.dev">Game Development</a>
-					OR
-					<a href="https://webdev.gnoxnahte.dev">Web Development</a>
-				</p>
-			</div>
-		</main>
-	</body>
-</html>
+				))
+			}
+	</div>
+	<div class="container">
+		<h1>Hi I'm Ethan<br>Welcome to my Website!</h1>
+		<h2>Are you here for</h2>
+		<p>
+			<a href="https://gamedev.gnoxnahte.dev" id="gamedev-link">Game Development</a>
+			OR
+			<a href="https://webdev.gnoxnahte.dev" id="webdev-link">Web Development</a>
+		</p>
+		<a href="/about">About Me</a>
+	</div>
+</Layout>
 
 <style>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+html {
+	overflow: hidden;
+}
+body {
+    text-align: center;
+}
+main {
+    height: 100%;
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+h1, h2 {
+	text-align: center;
+	user-select: none;
+}
+p {
+	text-align: center;
+}
+a {
+	pointer-events: all;
+	transition: all .25s;
+	backdrop-filter: blur(200px);
+}
+a:link, a:visited {
+	color: unset;
+}
+a:hover {
+	font-size: x-large;
+	font-weight: bolder;
+}
+
+.container {
+	position: relative;
+	top: 50%;
+	translate: 0 -55%;
+	display: inline-block;
+	backdrop-filter: blur(5px);
+	mask-image: radial-gradient(ellipse, black 50%, transparent 75%);
+	/* background-color: red; */
+	padding: 15vw;
+	pointer-events: none;
+}
+
+.thumbnail-list {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	top: 0;
+	width: 1vh;
+	width: 45vw;
+	opacity: .125;
+	animation: 30s linear 0s infinite normal slow-scroll;
+	transition: opacity 0.5s;
+}
+.thumbnail-list:hover, .thumbnail-list.hover{
+	opacity: 0.6;
+}
+
+#gamedev-thumbnail{
+	left: 2.5vw;
+}
+#webdev-thumbnail{
+	right: 2.5vw;
+}
+.thumbnail {
+	width: 100%;
+	height: auto;
+	margin: 10px 0;
+	border-radius: 15px;
+	-webkit-user-drag: none;
+	user-select: none;
+}
+
+@keyframes slow-scroll {
+	from {
+		translate: 0 -50%;
 	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-		overflow: hidden;
+	to {
+		translate: 0 0;
 	}
-	body {
-		height: 100vh;
-		text-align: center;
-	}
-	main {
-		height: 100%;
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-	h1, h2 {
-		text-align: center;
-		user-select: none;
-	}
-	p {
-		text-align: center;
-	}
-	a {
-		pointer-events: all;
-	}
-	a:link, a:visited {
-		color: unset;
-	}
-	a:hover {
-		transform: scale(2);
+}
+
+.text-gradient {
+	background-image: var(--accent-gradient);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-size: 400%;
+	background-position: 0%;
+}
+</style>
+
+<script>
+	// Helps to pass the onhover / onmouseover over to the thumbnails.
+	function OnHover(div: HTMLDivElement) {
+		console.log("hover")
+		div.classList.add("hover");
 	}
 	
-	.container {
-		position: relative;
-		top: 50%;
-		translate: 0 -55%;
-		display: inline-block;
-		backdrop-filter: blur(10px);
-		mask-image: radial-gradient(ellipse, black 50%, transparent 75%);
-		/* background-color: red; */
-		padding: 10vw;
-		pointer-events: none;
+	function OnLeave(div: HTMLDivElement) {
+		console.log("leave")
+		div.classList.remove("hover");
 	}
 
-	.thumbnail-list {
-		position: absolute;
-		display: flex;
-		flex-direction: column;
-		top: 0;
-		width: 1vh;
-		width: 45vw;
-		opacity: 15%;
-		animation: 30s linear 0s infinite normal slow-scroll;
-		transition: opacity 0.5s;
-	}
-	.thumbnail-list:hover {
-		opacity: 0.6;
-	}
+	const gamedevThumbnail = document.getElementById("gamedev-thumbnail") as HTMLDivElement;
+	console.log("Game: " + gamedevThumbnail.className)
+	const gamedevLink = document.getElementById("gamedev-link") as HTMLAnchorElement;
+	gamedevLink.addEventListener("mouseover", (e)=>OnHover(gamedevThumbnail));
+	gamedevLink.addEventListener("mouseleave", (e)=>OnLeave(gamedevThumbnail));
 
-	.gamedev-thumbnail{
-		left: 2.5vw;
-	}
-	.webdev-thumbnail{
-		right: 2.5vw;
-	}
-	.thumbnail {
-		width: 100%;
-		height: auto;
-		margin: 10px 0;
-		border-radius: 15px;
-		-webkit-user-drag: none;
-		user-select: none;
-	}
-
-	@keyframes slow-scroll {
-		from {
-			translate: 0 -50%;
-		}
-		to {
-			translate: 0 0;
-		}
-	}
-
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-</style>
+	const webdevThumbnail = document.getElementById("webdev-thumbnail") as HTMLDivElement;
+	const webdevLink = document.getElementById("webdev-link") as HTMLAnchorElement;
+	webdevLink.addEventListener("mouseover", (e)=>OnHover(webdevThumbnail));
+	webdevLink.addEventListener("mouseleave", (e)=>OnLeave(webdevThumbnail));
+</script>
