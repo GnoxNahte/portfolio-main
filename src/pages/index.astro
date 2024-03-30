@@ -7,14 +7,15 @@ import SentientBuffetImg from "../images/gamedev-thumbnails/SentientBuffetThumbn
 // Web Dev Thumbnails
 import EventRegistrationImg from "../images/webdev-thumbnails/EventRegistrationThumbnail.png";
 import OldPortfolioImg from "../images/webdev-thumbnails/OldPortfolioThumbnail.png";
+import ObsidianAutoEmbed from "../images/webdev-thumbnails/Auto-Embed-Getting-Started.gif"
 
+// TODO: Change all to gifs
 const gamedevThumbnails: ImageMetadata[] = [SpellboundRollersImg, SentientBuffetImg];
-const webdevThumbnails: ImageMetadata[] = [SpellboundRollersImg, SentientBuffetImg,OldPortfolioImg, EventRegistrationImg];
+const webdevThumbnails: ImageMetadata[] = [ObsidianAutoEmbed, OldPortfolioImg, EventRegistrationImg];
 
 const repeatArray = new Array<number>(4).fill(0);
 ---
 <Layout title='Home' description='Home page to redirect you to the page you are looking for.'>
-	<!-- <h1>Welcome to <span class="text-gradient">Astro</span></h1> -->
 	<div class="thumbnail-list" id="gamedev-thumbnail">
 		{
 			repeatArray.map(() => (
@@ -42,8 +43,6 @@ const repeatArray = new Array<number>(4).fill(0);
 			<a href="https://webdev.gnoxnahte.dev" id="webdev-link">Web Development</a>
 		</p>
 		<a href="/about">About Me</a>
-
-		<img src="../images/gamedev-thumbnails/SpellboundRollers.png" alt="Test"/>
 	</div>
 </Layout>
 
@@ -86,7 +85,7 @@ a:hover {
 	top: 50%;
 	translate: 0 -55%;
 	display: inline-block;
-	backdrop-filter: blur(5px);
+	backdrop-filter: blur(5px) contrast(1.1);
 	mask-image: radial-gradient(ellipse, black 50%, transparent 75%);
 	/* background-color: red; */
 	padding: 15vw;
@@ -101,7 +100,7 @@ a:hover {
 	width: 1vh;
 	width: 45vw;
 	opacity: .125;
-	animation: 30s linear 0s infinite normal slow-scroll;
+	animation: 30s linear 0s infinite normal;
 	transition: opacity 0.5s;
 }
 .thumbnail-list:hover, .thumbnail-list.hover{
@@ -110,13 +109,17 @@ a:hover {
 
 #gamedev-thumbnail{
 	left: 2.5vw;
+	animation-name: slow-scroll;
 }
 #webdev-thumbnail{
 	right: 2.5vw;
+	animation-name: slow-scroll-reverse;
 }
 .thumbnail {
 	width: 100%;
 	height: auto;
+	max-height: 100vh;
+	object-fit: contain;
 	margin: 10px 0;
 	border-radius: 15px;
 	-webkit-user-drag: none;
@@ -129,6 +132,15 @@ a:hover {
 	}
 	to {
 		translate: 0 0;
+	}
+}
+
+@keyframes slow-scroll-reverse {
+	from {
+		translate: 0 0;
+	}
+	to {
+		translate: 0 -50%;
 	}
 }
 
@@ -163,4 +175,10 @@ a:hover {
 	const webdevLink = document.getElementById("webdev-link") as HTMLAnchorElement;
 	webdevLink.addEventListener("mouseover", (e)=>OnHover(webdevThumbnail));
 	webdevLink.addEventListener("mouseleave", (e)=>OnLeave(webdevThumbnail));
+
+	// ===== Change animation duration based on height =====
+	const animSpeed = 150; // In pixels per seconds
+	gamedevThumbnail.style.animationDuration = (gamedevThumbnail.clientHeight / animSpeed).toString() + "s";
+	webdevThumbnail.style.animationDuration = (webdevThumbnail.clientHeight / animSpeed).toString() + "s";
+
 </script>

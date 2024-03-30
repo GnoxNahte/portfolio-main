@@ -6,6 +6,7 @@ import GitHubIcon from "../images/icons/github-mark-white.svg";
 import EmailIcon from "../images/icons/google-icon-email.svg";
 import TwitterIcon from "../images/icons/x-twitter-icon.svg";
 import LinkedInIcon from "../images/icons/LinkedInIcon.png";
+import HomeIcon from "../images/icons/HomeIcon.svg";
 
 ---
 
@@ -18,23 +19,32 @@ import LinkedInIcon from "../images/icons/LinkedInIcon.png";
             <li>Studied <strong>Game Development and Technology</strong> from <abbr title="Nanyang Polytechnic">NYP</abbr>. <a href="https://www.nyp.edu.sg/schools/sdm/full-time-courses/game-development-and-technology.html">Course Link</a> (They changed some syllabus compared to when I enrolled)</li>
             <li>Self studying Web Development in my free time</li>
             <li>Interested to learn new technologies and implement them in products used by others</li>
+            <li>My username, <strong>GnoxNahte</strong>, is my name <strong>Ethan Ong</strong> reversed, with 'x' instead of ' '(space).</li>
+            <!-- <br>The main reason was having a unique and identifiable username that can be traced back to me, despite my common name</li> -->
         </ul>
         <details>
             <summary>Certificates</summary>
             <ul>
-                <li>Director's List - Academic Year 2019/20 Semester 1</li>
-                <li>Director's List - Academic Year 2021/22 Semester 2</li>
+                <li>Director's List* - Academic Year 2019/20 Semester 1</li>
+                <li>Director's List* - Academic Year 2021/22 Semester 2</li>
                 <li><a href="https://unity.com/products/unity-certifications/associate-programmer" target="_blank">UCAP-720: Unity Certified Associate: Programmer</a></li>
             </ul>
-            <a href="https://www.nyp.edu.sg/current-students/academic-matters/nyp-assessment-regulations.html" target="_blank">Director's List</a> - Top 15% in my cohort for the semester
+            * <a href="https://www.nyp.edu.sg/current-students/academic-matters/nyp-assessment-regulations.html" target="_blank">Director's List</a> - Top 15% in my cohort for the semester
         </details>
+
+        <p>
+            <a href="/">Back to Home<Image src={HomeIcon} alt={"Home"} class={"home-img"}/></a>
+        </p>
+        
         <h1>Contact</h1>
         <p class="social-icon-container">
             <a href="mailto:gnoxnahte.dev@gmail.com" target="_blank"><Image src={EmailIcon} alt="icon" class="social-icon email"></a>
             <a href="https://github.com/GnoxNahte" target="_blank"><Image src={GitHubIcon} alt="icon" class="social-icon"></a>
             <a href="https://twitter.com/GnoxNahteDev" target="_blank"><Image src={TwitterIcon} alt="icon" class="social-icon"></a>
-            <a href="https://www.linkedin.com/in/ethanongsg/" target="_blank"><Image src={LinkedInIcon} alt="icon" class="social-icon"></a>
+            <a href="https://www.linkedin.com/in/ethanongsg/" target="_blank"><Image src={LinkedInIcon} alt="icon" class="social-icon linked-in"></a>
         </p>
+
+        
 </Layout>
 
 <style>
@@ -65,7 +75,7 @@ import LinkedInIcon from "../images/icons/LinkedInIcon.png";
     .container {
         padding: 25px;
         margin: auto;
-        max-width: fit-content;
+        width: fit-content;
     }
 
     .flag {
@@ -91,8 +101,12 @@ import LinkedInIcon from "../images/icons/LinkedInIcon.png";
         height: 1.4em;
     }
 
-    .back {
-        margin: auto;
-        display: table;
+    .social-icon.linked-in {
+        filter: brightness(0) invert(1);
+    }
+    
+    .home-img {
+        filter: brightness(0) invert(0.95);
+        transform: translateY(0.5em);
     }
 </style>
