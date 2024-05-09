@@ -12,13 +12,12 @@
 }
 html {
     font-family: system-ui, sans-serif;
-    background: #13151a;
     background: linear-gradient(#13151a 10%, #2b2e46);
 }
 body, html {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
 }
 main {
     height: 100%;
