@@ -1,3 +1,4 @@
+/* HTML Elements */
 :root {
     --accent: 0, 0, 0;
     /* --accent-light: 224, 204, 250; */
@@ -26,9 +27,17 @@ main {
     line-height: 1.6;
 }
 
+header + main {
+    margin-top:  5em;
+}
 a {
     color:#739fe6;
 }
 a:visited {
     color: #af74e3;
+/* Limits the width for easier reading */
+.content-container {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }

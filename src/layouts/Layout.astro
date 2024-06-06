@@ -1,13 +1,16 @@
 ---
+import Header from "../components/Header.astro";
 import "../styles/global.css";
 
 export interface Props {
     title: string;
     description: string;
     darkMode?: boolean;
+	showHeader?: boolean;
+	showFootnote?: boolean;
 }
 
-const { title, description, darkMode = true } = Astro.props as Props;
+const { title, description, darkMode = true, showHeader = true } = Astro.props as Props;
 ---
 
 <!DOCTYPE html>
@@ -21,6 +24,7 @@ const { title, description, darkMode = true } = Astro.props as Props;
 		<title>{title}</title>
 	</head>
 	<body>
+		{showHeader && <Header />}
 		<main>
             <slot />
 		</main>
