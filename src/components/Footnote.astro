@@ -1,0 +1,47 @@
+---
+import { Image } from "astro:assets";
+
+import GitHubIcon from "../images/icons/github-mark-white.svg";
+import EmailIcon from "../images/icons/google-icon-email.svg";
+import TwitterIcon from "../images/icons/x-twitter-icon.svg";
+import LinkedInIcon from "../images/icons/LinkedInIcon.png";
+
+
+---
+
+<hr>
+<footer>
+    <!-- 
+        NOTE: Don't update the year as it's supposed to be the year the content is published. 
+        Source:
+        - https://stackoverflow.com/questions/2390230/do-copyright-dates-need-to-be-updated
+        - https://www.reddit.com/r/web_design/comments/11yly24/do_you_need_a_copyright_with_the_year_in_the/
+    -->
+    <small>© 2024 GnoxNahte | All rights reserved</small>
+    <span class="mini-social-icons">
+        <a href="mailto:gnoxnahte.dev@gmail.com" target="_blank"><Image src={EmailIcon} alt="icon" class="email"></a>
+        <a href="https://github.com/GnoxNahte" target="_blank"><Image src={GitHubIcon} alt="icon"></a>
+        <a href="https://twitter.com/GnoxNahteDev" target="_blank"><Image src={TwitterIcon} alt="icon"></a>
+        <a href="https://www.linkedin.com/in/ethanongsg/" target="_blank"><Image src={LinkedInIcon} alt="icon" class="linked-in"></a>
+    </span>
+</footer>
+
+<style>
+    footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 30px;
+    }
+
+    small {
+        align-self: center;
+    }
+
+    @media (max-width: 600px) {
+        footer {
+            flex-direction: column-reverse;
+            gap: 10px;
+            padding-bottom: 35px;
+        }
+    }
+</style>

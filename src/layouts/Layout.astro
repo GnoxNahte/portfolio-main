@@ -1,4 +1,5 @@
 ---
+import Footnote from "../components/Footnote.astro";
 import Header from "../components/Header.astro";
 import "../styles/global.css";
 
@@ -7,10 +8,10 @@ export interface Props {
     description: string;
     darkMode?: boolean;
 	showHeader?: boolean;
-	showFootnote?: boolean;
+	showFooter?: boolean;
 }
 
-const { title, description, darkMode = true, showHeader = true } = Astro.props as Props;
+const { title, description, darkMode = true, showHeader = true, showFooter = true } = Astro.props as Props;
 ---
 
 <!DOCTYPE html>
@@ -28,5 +29,6 @@ const { title, description, darkMode = true, showHeader = true } = Astro.props a
 		<main>
             <slot />
 		</main>
+		{showFooter && <Footnote />}
 	</body>
 </html>

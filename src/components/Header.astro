@@ -14,7 +14,7 @@
 <style>
     header {
         position: fixed;
-        top: calc(2em - 30px);
+        top: 10px;
         width: 100%;
 
         z-index: 10;
@@ -27,7 +27,7 @@
         display: flex;
 
         margin: 0 auto;
-        padding: 0.8em;
+        padding: 0.7em;
 
         border: 2px solid white;
         border-radius: 5em;
@@ -55,7 +55,7 @@
 
     header.hide-header {
         transition: top 0.3s ease-out;
-        top: calc(-2.35em - 30px);
+        top: calc(-2.05em - 30px);
     }
     
     header.hide-header:hover {
@@ -71,40 +71,10 @@
         transform: translateY(-3px);
         transition: transform 0.25s;
     }
-/* 
-    @keyframes header-anim {
-        from {
-            top: 1em;
-        }
-
-        to {
-            top: -3em;
-        }
-    }
-
-    nav:hover, nav:focus {
-        top: 0em !important;
-        animation: animate-out 0.5s linear 0s forwards;
-    }
-
-    @keyframes animate-out {
-        from {
-            top: -2.3em;
-
-        }
-
-        to {
-            top: 0em;
-        }
-    }
-
-    nav a {
-        text-decoration: none;
-        color: white;
-    } */
 </style>
 
 <script>
+    // Show the header on scroll
     let prevScrollPos = window.scrollY;
     const header = document.getElementById("header");
     function OnScroll(ev: Event) {
@@ -126,5 +96,7 @@
         prevScrollPos = currScrollPos;
     }
 
-    window.addEventListener("scroll", OnScroll)
+    window.addEventListener("scroll", OnScroll);
+
+    
 </script>

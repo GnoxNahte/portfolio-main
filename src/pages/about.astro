@@ -2,10 +2,6 @@
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 
-import GitHubIcon from "../images/icons/github-mark-white.svg";
-import EmailIcon from "../images/icons/google-icon-email.svg";
-import TwitterIcon from "../images/icons/x-twitter-icon.svg";
-import LinkedInIcon from "../images/icons/LinkedInIcon.png";
 import HomeIcon from "../images/icons/HomeIcon.svg";
 
 ---
@@ -35,16 +31,6 @@ import HomeIcon from "../images/icons/HomeIcon.svg";
         <p>
             <a href="/">Back to Home<Image src={HomeIcon} alt={"Home"} class={"home-img"}/></a>
         </p>
-        
-        <h1>Contact</h1>
-        <p class="social-icon-container">
-            <a href="mailto:gnoxnahte.dev@gmail.com" target="_blank"><Image src={EmailIcon} alt="icon" class="social-icon email"></a>
-            <a href="https://github.com/GnoxNahte" target="_blank"><Image src={GitHubIcon} alt="icon" class="social-icon"></a>
-            <a href="https://twitter.com/GnoxNahteDev" target="_blank"><Image src={TwitterIcon} alt="icon" class="social-icon"></a>
-            <a href="https://www.linkedin.com/in/ethanongsg/" target="_blank"><Image src={LinkedInIcon} alt="icon" class="social-icon linked-in"></a>
-        </p>
-
-        
 </Layout>
 
 <style>
@@ -77,6 +63,7 @@ import HomeIcon from "../images/icons/HomeIcon.svg";
 
     .container {
         padding: 25px;
+        padding-top: 0;
         margin: auto;
         width: fit-content;
     }
@@ -85,27 +72,6 @@ import HomeIcon from "../images/icons/HomeIcon.svg";
         height: 1.5em;
         display: inline; 
         transform: translateY(0.3em);
-    }
-
-    .social-icon-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0
-    }
-
-    .social-icon {
-        height: 1em;
-        width: auto;
-        margin: 10px;
-    }
-
-    .social-icon.email {
-        height: 1.4em;
-    }
-
-    .social-icon.linked-in {
-        filter: brightness(0) invert(1);
     }
     
     .home-img {
