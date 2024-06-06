@@ -1,6 +1,7 @@
 ---
 import Footnote from "../components/Footnote.astro";
 import Header from "../components/Header.astro";
+import ReturnToTopArrow from "../components/ReturnToTopArrow.astro";
 import "../styles/global.css";
 
 export interface Props {
@@ -28,6 +29,7 @@ const { title, description, darkMode = true, showHeader = true, showFooter = tru
 		{showHeader && <Header />}
 		<main>
             <slot />
+			<ReturnToTopArrow />
 		</main>
 		{showFooter && <Footnote />}
 	</body>

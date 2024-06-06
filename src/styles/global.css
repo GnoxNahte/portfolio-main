@@ -21,6 +21,7 @@ body, html {
     min-height: 100vh;
     color: white;
     font-size: 20px;
+    scroll-behavior: smooth;
 }
 main {
     height: 100%;

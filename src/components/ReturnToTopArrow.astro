@@ -1,0 +1,50 @@
+<a href="#" id="return-to-top-arrow" aria-label="Return to top of the page">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+        <path d="m296-345-56-56 240-240 240 240-56 56-184-184-184 184Z"/>
+    </svg>
+</a>
+
+<script>
+    const root = document.documentElement;
+    const arrow = document.getElementById("return-to-top-arrow");
+    
+    const onScroll = () => {
+        if (!arrow)
+            return;
+
+        if (root.scrollTop > 20 && // Checks if the user started scrolling
+            root.scrollHeight - root.scrollTop - root.clientHeight > 100 // Checks if the user scrolled to the bottom
+        ) {
+            arrow.classList.add("show");
+        }
+        else {
+            arrow.classList.remove("show");
+        }
+    }
+    window.addEventListener("scroll", onScroll);
+</script>
+
+<style lang="scss">
+    #return-to-top-arrow {
+        position: fixed;
+        right: 60px;
+        bottom: 60px;
+        opacity: 0;
+        transition: opacity 0.5s, transform 0.45s;
+        border: 1px solid black;
+        background-color: white;
+        border-radius: 50%;
+        line-height: 0;
+
+        padding: 5px;
+        
+        // svg {
+        //     filter: brightness(0) invert(1);
+        // }
+    }
+
+    #return-to-top-arrow.show {
+        opacity: 1;
+        transform: translateY(0.75em);
+    }
+</style>
