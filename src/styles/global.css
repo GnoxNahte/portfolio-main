@@ -43,6 +43,25 @@ a:visited {
     color: #af74e3;
 }
 
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    /* box-shadow: inset 0 0 5px grey; */
+    background-color: rgb(86, 86, 86);
+    /* border-radius: 10px; */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888888;
+    border-radius: 10px;
+}
+
+
 /* Custom classes */
 
 /* Limits the width for easier reading */
