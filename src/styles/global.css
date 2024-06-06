@@ -46,10 +46,15 @@ a:visited {
 /* Custom classes */
 
 /* Limits the width for easier reading */
-.content-container {
+.container {
     max-width: 800px;
+    width: fit-content;
+
     margin-left: auto;
     margin-right: auto;
+
+    padding: 25px;
+    padding-top: 0;
 }
 
 /* Social icons */
