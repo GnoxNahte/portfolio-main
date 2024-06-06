@@ -43,10 +43,10 @@ const repeatArray = new Array<number>(4).fill(0);
 			<a href="https://webdev.gnoxnahte.dev" id="webdev-link">Web Development</a>
 		</p>
 		<p>
-			<a href="/projects" id="all-projects-link">View all projects</a>
+			<a href="/projects/" id="all-projects-link">View all projects</a>
 		</p>
 	</div>
-	<a href="/about" id="about-link">About Me</a>
+	<a href="/about/" id="about-link">About Me</a>
 </Layout>
 
 <style>
@@ -77,6 +77,13 @@ p {
 a {
 	pointer-events: all;
 	transition: font .25s;
+	padding: 10px 0;
+}
+a:first-child {
+	padding-left: 10px;
+}
+a:last-child {
+	padding-right: 10px;
 }
 a:link, a:visited {
 	color: unset;

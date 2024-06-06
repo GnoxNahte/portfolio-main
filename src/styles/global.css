@@ -35,6 +35,8 @@ a {
 }
 a:visited {
     color: #af74e3;
+}
+
 /* Limits the width for easier reading */
 .content-container {
     max-width: 800px;
