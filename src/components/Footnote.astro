@@ -5,12 +5,10 @@ import GitHubIcon from "../images/icons/github-mark-white.svg";
 import EmailIcon from "../images/icons/google-icon-email.svg";
 import TwitterIcon from "../images/icons/x-twitter-icon.svg";
 import LinkedInIcon from "../images/icons/LinkedInIcon.png";
-
-
 ---
 
-<hr>
 <footer>
+    <hr>
     <!-- 
         NOTE: Don't update the year as it's supposed to be the year the content is published. 
         Source:
@@ -28,20 +26,66 @@ import LinkedInIcon from "../images/icons/LinkedInIcon.png";
 
 <style>
     footer {
+        position: relative;
+        margin-top: auto;
         display: flex;
         justify-content: space-between;
-        padding: 15px 30px;
+        padding: 1.25rem 1.5rem;
+    }
+    
+    hr {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
     }
 
     small {
         align-self: center;
     }
 
-    @media (max-width: 600px) {
+    /* Social icons */
+    .mini-social-icons {
+        --social-icons-padding: 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        height: calc(1.5rem + var(--social-icons-padding) * 2);
+    }
+
+    .mini-social-icons a {
+        height: 100%;
+    }
+
+    .mini-social-icons img {
+        height: calc(100% - var(--social-icons-padding) * 2);
+        width: auto;
+        padding: var(--social-icons-padding);
+        
+        /* Takes slighly longer to fall down */
+        transition: transform 0.5s;
+    }
+
+    .mini-social-icons img:hover {
+        /* Rises up quickly */
+        transform: translateY(-10%);
+        transition: transform 0.25s;
+    }
+
+    .mini-social-icons a:has(img.email) {
+        transform: scale(1.35);
+    }
+
+    .mini-social-icons img.linked-in {
+        filter: brightness(0) invert(1);
+    }
+
+    @media (max-width: 33rem) {
         footer {
             flex-direction: column-reverse;
-            gap: 10px;
-            padding-bottom: 35px;
+            gap: 0.5rem;
         }
     }
 </style>

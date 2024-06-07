@@ -14,13 +14,13 @@
 <style>
     header {
         position: fixed;
-        top: 10px;
+        top: 0;
         width: 100%;
 
         z-index: 10;
 
         transition: top 0.4s ease-out;
-        padding: 30px 0;
+        padding: 2em 0;
     }
 
     nav {
@@ -55,11 +55,11 @@
 
     header.hide-header {
         transition: top 0.3s ease-out;
-        top: calc(-2.05em - 30px);
+        top: -4.2em;
     }
     
     header.hide-header:hover {
-        top: -30px;
+        top: -2em;
     }
 
     li {
