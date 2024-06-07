@@ -11,9 +11,23 @@
         white 60%
     );
 }
+/* Color Variables */
+:root {
+    --color-background: #262643;
+    --color-background-secondary: #1e1e2e;
+    --color-background-gradient: linear-gradient(var(--color-background), var(--color-background-secondary));
+    --color-primary: white;
+    --color-secondary: grey;
+    --color-text: #ffffff;
+}
+:root.dark {
+    /* --color-primary:  */
+}
+
 html {
     font-family: system-ui, sans-serif;
     background: linear-gradient(#13151a 10%, #2b2e46);
+    background: var(--color-background-gradient);
     min-height: 100vh;
 }
 body {
