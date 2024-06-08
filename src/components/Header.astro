@@ -85,7 +85,8 @@
 
         const currScrollPos = window.scrollY;
         // If scroll down, hide header
-        if (prevScrollPos < currScrollPos) {
+        // currScrollPos > 1 for mobile.
+        if (prevScrollPos < currScrollPos && currScrollPos > 1) {
             header.classList.add("hide-header");
         }
         // Else, show header
