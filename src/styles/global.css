@@ -1,21 +1,12 @@
 /* HTML Elements */
 :root {
-    --accent: 0, 0, 0;
-    /* --accent-light: 224, 204, 250; */
-    --accent-light: 0, 0, 0;
-    --accent-dark: 0, 0, 0;
-    --accent-gradient: linear-gradient(
-        45deg,
-        rgb(var(--accent)),
-        rgb(var(--accent-light)) 30%,
-        white 60%
-    );
+
 }
 /* Color Variables */
 :root {
-    --color-background: #262643;
-    --color-background-secondary: #1e1e2e;
-    --color-background-gradient: linear-gradient(var(--color-background), var(--color-background-secondary));
+    --color-background: #1f2247;
+    --color-background-secondary: #131325;
+    --color-background-gradient: linear-gradient(var(--color-background) 15%, var(--color-background-secondary));
     --color-primary: white;
     --color-secondary: grey;
     --color-text: #ffffff;
@@ -26,8 +17,10 @@
 
 html {
     font-family: system-ui, sans-serif;
-    background: linear-gradient(#13151a 10%, #2b2e46);
+    font-size: 110%;
     background: var(--color-background-gradient);
+    color: var(--color-background-gradient);
+    scroll-behavior: smooth;
     min-height: 100vh;
 }
 body {
@@ -36,8 +29,6 @@ body {
     margin: 0;
     padding: 0;
     color: white;
-    font-size: 110%;
-    scroll-behavior: smooth;
 }
 main {
     flex-grow: 2;
