@@ -4,26 +4,6 @@
     </svg>
 </a>
 
-<script>
-    const root = document.documentElement;
-    const arrow = document.getElementById("return-to-top-arrow");
-    
-    const onScroll = () => {
-        if (!arrow)
-            return;
-
-        if (root.scrollTop > 20 && // Checks if the user started scrolling
-            root.scrollHeight - root.scrollTop - root.clientHeight > 100 // Checks if the user scrolled to the bottom
-        ) {
-            arrow.classList.add("show");
-        }
-        else {
-            arrow.classList.remove("show");
-        }
-    }
-    window.addEventListener("scroll", onScroll);
-</script>
-
 <style lang="scss">
     #return-to-top-arrow {
         position: fixed;
@@ -49,3 +29,30 @@
         transform: translateY(40%);
     }
 </style>
+
+<script>
+    function Init() {
+        const root = document.documentElement;
+        const arrow = document.getElementById("return-to-top-arrow");
+
+        const OnScroll = () => {
+            if (!arrow)
+                return;
+
+            if (root.scrollTop > 20 && // Checks if the user started scrolling
+                root.scrollHeight - root.scrollTop - root.clientHeight > 100 // Checks if the user scrolled to the bottom
+            ) {
+                arrow.classList.add("show");
+            }
+            else {
+                arrow.classList.remove("show");
+            }
+        }
+
+        window.addEventListener("scroll", OnScroll);
+        // See header script comment for why this is needed
+        document.addEventListener("astro:before-preparation", () => window.removeEventListener("scroll", OnScroll), {once: true});
+    }
+    
+    document.addEventListener("astro:page-load", Init);
+</script>

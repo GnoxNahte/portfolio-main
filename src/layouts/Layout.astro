@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from "astro:transitions";
 import Footnote from "../components/Footnote.astro";
 import Header from "../components/Header.astro";
 import ReturnToTopArrow from "../components/ReturnToTopArrow.astro";
@@ -23,10 +24,12 @@ const { title, description, darkMode = true, showHeader = true, showFooter = tru
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<!-- For safari toolbar and address bar colors -->
 		<meta name="theme-color" content="#1f2247">
 		<meta name="msapplication-navbutton-color" content="#1f2247">
 		<meta name="apple-mobile-web-app-capable" content="yes"/>
 		<meta name="apple-mobile-web-app-status-bar-style" content="#1f2247">
+		<ViewTransitions />
 		<title>{title}</title>
 	</head>
 	<body>

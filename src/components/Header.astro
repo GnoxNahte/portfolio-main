@@ -74,30 +74,41 @@
 </style>
 
 <script>
-    // Show the header on scroll
-    let prevScrollPos = window.scrollY;
-    const header = document.getElementById("header");
-    function OnScroll(ev: Event) {
-        if (!header) {
-            console.log("Can't find header");
-            return;
+    function Init() {
+        // Show the header on scroll
+        let prevScrollPos = window.scrollY;
+        const header = document.getElementById("header");
+        function OnScroll(ev: Event) {
+            if (!header) {
+                console.log("Can't find header");
+                return;
+            }
+
+            const currScrollPos = window.scrollY;
+            // If scroll down, hide header
+            // currScrollPos > 1 for mobile.
+            if (prevScrollPos < currScrollPos && currScrollPos > 1) {
+                header.classList.add("hide-header");
+            }
+            // Else, show header
+            else {
+                header.classList.remove("hide-header");
+            }
+
+            prevScrollPos = currScrollPos;
         }
 
-        const currScrollPos = window.scrollY;
-        // If scroll down, hide header
-        // currScrollPos > 1 for mobile.
-        if (prevScrollPos < currScrollPos && currScrollPos > 1) {
-            header.classList.add("hide-header");
-        }
-        // Else, show header
-        else {
-            header.classList.remove("hide-header");
-        }
-
-        prevScrollPos = currScrollPos;
+        window.addEventListener("scroll", OnScroll);
+        // Had event listeners remaining after page transitions, this cleans up those events
+        // To check,
+        //      1. Open dev tools
+        //      2. select html/root element 
+        //      3. Event listener 
+        //      4. Check Scroll & astro:before-prep & astro:page-load
+        //      5. Try to navigate to different pages and go back to the original page
+        //      6. Check if there is duplicate event listeners. Remember to refresh the event listeners.
+        document.addEventListener("astro:before-preparation", () => window.removeEventListener("scroll", OnScroll), {once: true});
     }
-
-    window.addEventListener("scroll", OnScroll);
-
     
+    document.addEventListener("astro:page-load", Init);
 </script>

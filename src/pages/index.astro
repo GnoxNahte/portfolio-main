@@ -121,7 +121,7 @@ const repeatArray = new Array<number>(4).fill(0);
 		transition: opacity 0.5s;
 	}
 	.thumbnail-list:hover, .thumbnail-list.hover{
-		opacity: 0.6;
+		opacity: 0.4;
 	}
 
 	#gamedev-thumbnail{
@@ -171,36 +171,43 @@ const repeatArray = new Array<number>(4).fill(0);
 </style>
 
 <script>
-	// Highlights the thumbnails when the user hovers over the link
-	function OnHover(div: HTMLDivElement) {
-		div.classList.add("hover");
+	function Init() {
+		// Quick check to see if it is the correct page. For when astro:page-load gets called after leaving this page
+		if (window.location.pathname !== "/")
+			return;
+
+		// Highlights the thumbnails when the user hovers over the link
+		function OnHover(div: HTMLDivElement) {
+			div.classList.add("hover");
+		}
+		
+		function OnLeave(div: HTMLDivElement) {
+			div.classList.remove("hover");
+		}
+
+		const gamedevThumbnail = document.getElementById("gamedev-thumbnail") as HTMLDivElement;
+		const gamedevLink = document.getElementById("gamedev-link") as HTMLAnchorElement;
+		gamedevLink.addEventListener("mouseover", (e)=>OnHover(gamedevThumbnail));
+		gamedevLink.addEventListener("mouseleave", (e)=>OnLeave(gamedevThumbnail));
+
+		const webdevThumbnail = document.getElementById("webdev-thumbnail") as HTMLDivElement;
+		const webdevLink = document.getElementById("webdev-link") as HTMLAnchorElement;
+		webdevLink.addEventListener("mouseover", (e)=>OnHover(webdevThumbnail));
+		webdevLink.addEventListener("mouseleave", (e)=>OnLeave(webdevThumbnail));
+
+		const seeAllLink = document.getElementById("all-projects-link") as HTMLAnchorElement;
+		seeAllLink.addEventListener("mouseover", (e)=>OnHover(webdevThumbnail));
+		seeAllLink.addEventListener("mouseover", (e)=>OnHover(gamedevThumbnail));
+		seeAllLink.addEventListener("mouseleave", (e)=>OnLeave(webdevThumbnail));
+		seeAllLink.addEventListener("mouseleave", (e)=>OnLeave(gamedevThumbnail));
+
+		// ===== Change animation duration based on height =====
+		// TODO: Add on resize listener
+		// TODO: Change animation speed instead of duration
+		const animSpeed = 150; // In pixels per seconds
+		gamedevThumbnail.style.animationDuration = (gamedevThumbnail.clientHeight / animSpeed).toString() + "s";
+		webdevThumbnail.style.animationDuration = (webdevThumbnail.clientHeight / animSpeed).toString() + "s";
 	}
-	
-	function OnLeave(div: HTMLDivElement) {
-		div.classList.remove("hover");
-	}
 
-	const gamedevThumbnail = document.getElementById("gamedev-thumbnail") as HTMLDivElement;
-	const gamedevLink = document.getElementById("gamedev-link") as HTMLAnchorElement;
-	gamedevLink.addEventListener("mouseover", (e)=>OnHover(gamedevThumbnail));
-	gamedevLink.addEventListener("mouseleave", (e)=>OnLeave(gamedevThumbnail));
-
-	const webdevThumbnail = document.getElementById("webdev-thumbnail") as HTMLDivElement;
-	const webdevLink = document.getElementById("webdev-link") as HTMLAnchorElement;
-	webdevLink.addEventListener("mouseover", (e)=>OnHover(webdevThumbnail));
-	webdevLink.addEventListener("mouseleave", (e)=>OnLeave(webdevThumbnail));
-
-	const seeAllLink = document.getElementById("all-projects-link") as HTMLAnchorElement;
-	seeAllLink.addEventListener("mouseover", (e)=>OnHover(webdevThumbnail));
-	seeAllLink.addEventListener("mouseover", (e)=>OnHover(gamedevThumbnail));
-	seeAllLink.addEventListener("mouseleave", (e)=>OnLeave(webdevThumbnail));
-	seeAllLink.addEventListener("mouseleave", (e)=>OnLeave(gamedevThumbnail));
-
-	// ===== Change animation duration based on height =====
-	// TODO: Add on resize listener
-	// TODO: Change animation speed instead of duration
-	const animSpeed = 150; // In pixels per seconds
-	gamedevThumbnail.style.animationDuration = (gamedevThumbnail.clientHeight / animSpeed).toString() + "s";
-	webdevThumbnail.style.animationDuration = (webdevThumbnail.clientHeight / animSpeed).toString() + "s";
-
+	document.addEventListener("astro:page-load", Init);
 </script>
