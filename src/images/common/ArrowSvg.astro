@@ -1,0 +1,22 @@
+---
+export interface Props {    
+    size?: string;
+    addedClass?: string;
+}
+
+const { size = "1em", addedClass: className, ...rest } = Astro.props as Props;
+---
+
+<svg height={size} viewBox="0 -960 960 960" width={size} class={className}  {...rest}>
+    <path d="m296-345-56-56 240-240 240 240-56 56-184-184-184 184Z"/>
+</svg>
+
+<style>
+    .down-arrow {
+        transform: scaleY(-1);
+    }
+
+    .white-arrow {
+        filter: brightness(0) invert(1);
+    }
+</style>

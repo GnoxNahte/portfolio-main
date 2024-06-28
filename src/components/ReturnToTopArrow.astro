@@ -1,7 +1,9 @@
+---
+import ArrowSvg from "../images/common/ArrowSvg.astro";
+---
+
 <a href="#" id="return-to-top-arrow" aria-label="Return to top of the page">
-    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-        <path d="m296-345-56-56 240-240 240 240-56 56-184-184-184 184Z"/>
-    </svg>
+    <ArrowSvg size={"1.5rem"}>
 </a>
 
 <style lang="scss">
@@ -16,12 +18,12 @@
         border-radius: 50%;
         line-height: 0;
         padding: 5px;
-            
-        svg {
-            // filter: brightness(0) invert(1);
-            width: 1.5rem;
-            height: 1.5rem;
-        }
+        
+        // svg {
+        //     // filter: brightness(0) invert(1);
+        //     width: 1.5rem;
+        //     height: 1.5rem;
+        // }
     }
 
     #return-to-top-arrow.show {

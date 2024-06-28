@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import ArrowSvg from "../images/common/ArrowSvg.astro";
 
 ---
 <header id="header">
@@ -8,23 +10,30 @@
             <li><a href="/projects/">Projects</a></li>
             <li><a href="/about/">About</a></li>
         </ul>
+        <ArrowSvg size="2em" addedClass="header-arrow"/>
     </nav>
 </header>
 
-<style>
+<style lang="scss">
     header {
         position: fixed;
         top: 0;
         width: 100%;
 
         z-index: 10;
-
-        transition: top 0.4s ease-out;
+        
         padding: 2em 0;
+
+        transition-property: top;
+    }
+
+    header, header * {
+        transition-duration: .33s;
     }
 
     nav {
         display: flex;
+        flex-direction: column;
 
         margin: 0 auto;
         padding: 0.7em;
@@ -35,6 +44,8 @@
         width: fit-content;
         /* TODO: Use color variables */
         background-color: #1f2233;
+
+        transition-property: padding-bottom;
     }
 
     ul {
@@ -43,6 +54,7 @@
         flex-direction: row;
         margin: 0;
         padding: 0;
+        transition-duration: .2s;
     }
 
     li a {
@@ -53,11 +65,34 @@
         font-weight: bold;
     }
 
-    header.hide-header {
-        transition: top 0.3s ease-out;
-        top: -4.2em;
+    .header-arrow {
+        transform: scaleY(-1);
+        // filter: brightness(0) invert(1);
+        fill: white;
+        height: 0;
+        opacity: 0;
+        align-self: center;
+        transition-property: height, opacity;
     }
-    
+
+    // TODO: Improve animation
+    header.hide-header:not(:hover) {
+        top: -4.3em;
+        
+        nav {
+            padding-bottom: 0;
+        }
+
+        .header-arrow {
+            height: 2em;
+            opacity: 1;
+        }
+
+        ul {
+            opacity: 0;
+        }
+    }
+
     header.hide-header:hover {
         top: -2em;
     }
