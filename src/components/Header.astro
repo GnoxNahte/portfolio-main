@@ -6,6 +6,8 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
 
 ---
 <header id="header">
+    <!-- Just to help to center the main header when its full size and have 0 size when its very small -->
+    <div class="filler"></div> 
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
@@ -14,10 +16,15 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         </ul>
         <ArrowSvg size="2em" addedClass="header-arrow"/>
     </nav>
-    <div class="theme-toggle">
-        <Image src={DarkThemeIcon} alt="Dark mode icon"/>
-        <Image src={LightThemeIcon} alt="Light mode icon"/>
+    <div class="filler"></div> 
+    <div class="theme-toggle-container">
+        <label for="theme-toggle">
+            <Image src={DarkThemeIcon} alt="Dark mode icon" class:list={"dark-theme-icon"}/>
+            <Image src={LightThemeIcon} alt="Light mode icon" class:list={"light-theme-icon"}/>
+        </label>
+        <input type="checkbox" id="theme-toggle"/> 
     </div>
+    <div class="filler"></div> 
 </header>
 
 <style lang="scss">
@@ -38,11 +45,20 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         transition-duration: .33s;
     }
 
+    .filler {
+        flex-grow: 1;
+    }
+
+    .theme-toggle-container + .filler {
+        flex-basis: 2em;
+        flex-grow: 0;
+    }
+
     nav {
+        flex-grow: 0;
         display: flex;
         flex-direction: column;
 
-        margin: 0 auto;
         padding: 0.7em;
 
         border: 2px solid white;
@@ -115,7 +131,53 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
     }
 
     // ===== Theme toggle =====
-    .theme-toggle img {
+    .theme-toggle-container {
+        width: var(--theme-icon-size);
+        height: 100%;
+        background-color: red;
+
+        --theme-icon-size: 2em;
+    }
+
+    .theme-toggle-container label {
+        display: inline-block;
+        position: relative;
+        user-select: none;
+        // width: var(--theme-icon-size);
+        // height: 100%;
+        
+
+        cursor: pointer;
+
+        img {
+            right: 0;
+
+            width: var(--theme-icon-size);
+            height: var(--theme-icon-size);
+        }
+
+        .dark-theme-icon {
+            opacity: 0;
+        }
+
+        .light-theme-icon {
+            opacity: 1;
+        }
+
+        &:has(+ #theme-toggle:checked) img {
+            &.dark-theme-icon {
+                opacity: 1;
+            }
+
+            &.light-theme-icon {
+                opacity: 0;
+            }
+        }
+
+    }
+
+    .theme-toggle-container input {
+        display: none;
     }
 </style>
 
