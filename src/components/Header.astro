@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import ArrowSvg from "../images/common/ArrowSvg.astro";
+import DarkThemeIcon from "../images/icons/dark-mode-icon.svg";
+import LightThemeIcon from "../images/icons/light-mode-icon.svg";
 
 ---
 <header id="header">
@@ -12,10 +14,15 @@ import ArrowSvg from "../images/common/ArrowSvg.astro";
         </ul>
         <ArrowSvg size="2em" addedClass="header-arrow"/>
     </nav>
+    <div class="theme-toggle">
+        <Image src={DarkThemeIcon} alt="Dark mode icon"/>
+        <Image src={LightThemeIcon} alt="Light mode icon"/>
+    </div>
 </header>
 
 <style lang="scss">
     header {
+        display: flex;
         position: fixed;
         top: 0;
         width: 100%;
@@ -105,6 +112,10 @@ import ArrowSvg from "../images/common/ArrowSvg.astro";
         /* Rises up quickly */
         transform: translateY(-3px);
         transition: transform 0.25s;
+    }
+
+    // ===== Theme toggle =====
+    .theme-toggle img {
     }
 </style>
 

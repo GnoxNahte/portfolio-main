@@ -1,6 +1,7 @@
 /* HTML Elements */
 :root {
-
+    --color-dark-theme-primary: white;
+    --color-light-theme-primary: black;
 }
 /* Color Variables */
 :root {
