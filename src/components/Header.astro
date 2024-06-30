@@ -6,8 +6,13 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
 
 ---
 <header id="header">
-    <!-- Just to help to center the main header when its full size and have 0 size when its very small -->
+    <!-- Fillers are just to help to center the main header when its full size and have 0 size when its very small -->
+    
     <div class="filler"></div> 
+    <!-- Help to offset the theme toggle, making the main header be centered -->
+    <div class="filler filler-mirror-theme-toggle"></div> 
+    <div class="filler"></div> 
+    
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
@@ -33,12 +38,13 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         position: fixed;
         top: 0;
         width: 100%;
-
         z-index: 10;
         
         padding: 2em 0;
 
         transition-property: top;
+
+        --theme-icon-size: 2em;
     }
 
     header, header * {
@@ -49,7 +55,17 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         flex-grow: 1;
     }
 
-    .theme-toggle-container + .filler {
+    .filler:first-child + .filler-mirror-theme-toggle {
+        flex-grow: 0;
+        flex-basis: var(--theme-icon-size);
+    }
+
+    nav + .filler {
+        min-width: 1em;
+        flex-shrink: 3;
+    }
+
+    .filler:first-child, .filler:last-child {
         flex-basis: 2em;
         flex-grow: 0;
     }
@@ -144,13 +160,15 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         position: relative;
         user-select: none;
         // width: var(--theme-icon-size);
-        // height: 100%;
+        height: 100%;
         
 
         cursor: pointer;
 
         img {
-            right: 0;
+            top: 0.8em;
+            margin: auto;
+            position: absolute;
 
             width: var(--theme-icon-size);
             height: var(--theme-icon-size);
