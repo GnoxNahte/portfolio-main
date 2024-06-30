@@ -56,5 +56,6 @@ import ArrowSvg from "../images/common/ArrowSvg.astro";
         document.addEventListener("astro:before-preparation", () => window.removeEventListener("scroll", OnScroll), {once: true});
     }
     
-    document.addEventListener("astro:page-load", Init);
+    Init();
+    // document.addEventListener("astro:page-load", Init);
 </script>

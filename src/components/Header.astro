@@ -77,12 +77,11 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
 
         padding: 0.7em;
 
-        border: 2px solid white;
+        border: 2px solid var(--color-primary);
         border-radius: 5em;
 
         width: fit-content;
-        /* TODO: Use color variables */
-        background-color: #1f2233;
+        background-color: var(--color-background-secondary);
 
         transition-property: padding-bottom;
     }
@@ -97,8 +96,8 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
     }
 
     li a {
+        color: var(--color-text);
         text-decoration: none;
-        color: white;
         margin: 0.5em;
         font-size: 1.2rem;
         font-weight: bold;
@@ -149,10 +148,6 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
     // ===== Theme toggle =====
     .theme-toggle-container {
         width: var(--theme-icon-size);
-        height: 100%;
-        background-color: red;
-
-        --theme-icon-size: 2em;
     }
 
     .theme-toggle-container label {
@@ -200,7 +195,28 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
 </style>
 
 <script>
+import GetUserTheme from "../scripts/utilities";
+
     function Init() {
+        // ===== Theme Settings =====
+        const userTheme = GetUserTheme();
+
+        const darkCssClass = "dark", lightCssClass = "light";
+        const htmlEl = document.querySelector("html") as HTMLHtmlElement;
+
+        const themeToggle = document.getElementById("theme-toggle") as HTMLInputElement;
+        themeToggle.checked = userTheme == "dark";
+        themeToggle?.addEventListener("change", (ev) => {
+            htmlEl.classList.toggle(darkCssClass, themeToggle.checked);
+            htmlEl.classList.toggle(lightCssClass, !themeToggle.checked);
+
+            console.log("HTML Class: " + htmlEl.classList);
+
+            localStorage.setItem("theme", themeToggle.checked ? darkCssClass : lightCssClass);
+        })
+
+        // ===== Hide and show header depending on user scroll
+
         // Show the header on scroll
         let prevScrollPos = window.scrollY;
         const header = document.getElementById("header");
@@ -236,5 +252,6 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         document.addEventListener("astro:before-preparation", () => window.removeEventListener("scroll", OnScroll), {once: true});
     }
     
-    document.addEventListener("astro:page-load", Init);
+    Init();
+    // document.addEventListener("astro:page-load", Init);
 </script>

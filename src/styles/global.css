@@ -1,26 +1,30 @@
 /* HTML Elements */
-:root {
-    --color-dark-theme-primary: white;
-    --color-light-theme-primary: black;
-}
+
 /* Color Variables */
-:root {
+:root, :root.light {
+    /* --color-background: #9399e7; */
+    /* --color-background: #8c93f2; */
+    --color-background: #838bfb;
+    --color-background-secondary: #7491fb;
+    --color-background-gradient: linear-gradient(var(--color-background), var(--color-background-secondary));
+    --color-primary: black;
+    --color-secondary: grey;
+    --color-text: black;
+    
+}
+:root.dark {
     --color-background: #1f2247;
     --color-background-secondary: #131325;
     --color-background-gradient: linear-gradient(var(--color-background) 15%, var(--color-background-secondary));
     --color-primary: white;
     --color-secondary: grey;
-    --color-text: #ffffff;
+    --color-text: white;
 }
-:root.dark {
-    /* --color-primary:  */
-}
-
 html {
     font-family: system-ui, sans-serif;
     font-size: 110%;
     background: var(--color-background-gradient);
-    color: var(--color-background-gradient);
+    color: var(--color-primary);
     scroll-behavior: smooth;
     min-height: 100vh;
 }
@@ -29,7 +33,6 @@ body {
     flex-direction: column;
     margin: 0;
     padding: 0;
-    color: white;
 }
 main {
     flex-grow: 2;
@@ -43,10 +46,18 @@ body:has(header + main) {
     padding-top: var(--heading-size);
     min-height: calc(100vh - var(--heading-size));
 }
+
 a {
-    color:#739fe6;
+    color:#001be6;
 }
 a:visited {
+    color: #802cc5;
+}
+
+.dark a {
+    color:#739fe6;
+}
+.dark a:visited {
     color: #af74e3;
 }
 
@@ -72,7 +83,7 @@ a:visited {
 
 /* Limits the width for easier reading */
 .container {
-    max-width: 40em;
+    max-width: 50em;
     width: fit-content;
 
     margin-left: auto;
@@ -81,3 +92,27 @@ a:visited {
     padding: 1em;
     padding-top: 0;
 }
+
+/* ::view-transition-new(root), 
+::view-transition-old(root) {
+    animation-duration: 5s;
+}
+
+::view-transition-new(root) {
+    animation: reveal 1s;
+    clip-path: inset(0 0 0 0);
+    z-index: 2;
+  }
+  ::view-transition-old(root) {
+    z-index: -1;
+    animation: none;
+  }
+  @keyframes reveal { from { clip-path: inset(var(--from)); } }
+
+.dark { --from: 0 0 100% 0; }
+.light { --from: 100% 0 0 0; } */
+
+
+/* @view-transition {
+    navigation: auto;
+} */
