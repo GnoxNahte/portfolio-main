@@ -48,9 +48,44 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         --theme-icon-size: 2em;
     }
 
-    // header, header * {
-    //     transition-duration: .33s;
-    // }
+    header, header * {
+        --transition-duration: .33s;
+        transition: top var(--transition-duration);
+
+        nav {
+            transition: padding var(--transition-duration);
+        }
+        
+        .header-arrow {
+            transition: height var(--transition-duration), opacity var(--transition-duration);
+        }
+
+        ul {
+            transition: opacity var(--transition-duration);
+        }
+    }
+    
+    // TODO: Improve animation
+    header.hide-header:not(:hover) {
+        top: -4.3em;
+        
+        nav {
+            padding-bottom: 0;
+        }
+
+        .header-arrow {
+            height: 2em;
+            opacity: 1;
+        }
+
+        ul {
+            opacity: 0;
+        }
+    }
+
+    header.hide-header:hover {
+        top: -2em;
+    }
 
     .filler {
         flex-grow: 1;
@@ -112,28 +147,6 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         opacity: 0;
         align-self: center;
         transition-property: height, opacity;
-    }
-
-    // TODO: Improve animation
-    header.hide-header:not(:hover) {
-        top: -4.3em;
-        
-        nav {
-            padding-bottom: 0;
-        }
-
-        .header-arrow {
-            height: 2em;
-            opacity: 1;
-        }
-
-        ul {
-            opacity: 0;
-        }
-    }
-
-    header.hide-header:hover {
-        top: -2em;
     }
 
     li {
