@@ -253,17 +253,7 @@ import GetUserTheme from "../scripts/utilities";
         }
 
         window.addEventListener("scroll", OnScroll);
-        // Had event listeners remaining after page transitions, this cleans up those events
-        // To check,
-        //      1. Open dev tools
-        //      2. select html/root element 
-        //      3. Event listener 
-        //      4. Check Scroll & astro:before-prep & astro:page-load
-        //      5. Try to navigate to different pages and go back to the original page
-        //      6. Check if there is duplicate event listeners. Remember to refresh the event listeners.
-        document.addEventListener("astro:before-preparation", () => window.removeEventListener("scroll", OnScroll), {once: true});
     }
-    
+
     Init();
-    // document.addEventListener("astro:page-load", Init);
 </script>
