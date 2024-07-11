@@ -98,21 +98,15 @@ a:visited {
     animation-duration: .5s;
 }
 
-/* ::view-transition-new(root) {
-    animation: reveal 1s;
-    clip-path: inset(0 0 0 0);
+::view-transition-new(root) {
     z-index: 2;
-  }
-  ::view-transition-old(root) {
+    /* Have no idea why the transition works when there's an animation name. even when there's no animation tied to the name. */
+    animation-name: tmp;
+}
+::view-transition-old(root) {
     z-index: -1;
     animation: none;
-  }
-  @keyframes reveal { from { clip-path: inset(var(--from)); } }
-
-.dark { --from: 0 0 100% 0; }
-.light { --from: 100% 0 0 0; } */
-
-
+}
 @view-transition {
     navigation: auto;
 }
