@@ -5,7 +5,7 @@ import DarkThemeIcon from "../images/icons/dark-mode-icon.svg";
 import LightThemeIcon from "../images/icons/light-mode-icon.svg";
 
 ---
-<header id="header">
+<header id="header" view-transition-name="header">
     <!-- Fillers are just to help to center the main header when its full size and have 0 size when its very small -->
     
     <div class="filler"></div> 
@@ -43,13 +43,14 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         padding: 2em 0;
 
         transition-property: top;
+        view-transition-name: header;
 
         --theme-icon-size: 2em;
     }
 
-    header, header * {
-        transition-duration: .33s;
-    }
+    // header, header * {
+    //     transition-duration: .33s;
+    // }
 
     .filler {
         flex-grow: 1;
@@ -92,7 +93,7 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         flex-direction: row;
         margin: 0;
         padding: 0;
-        transition-duration: .2s;
+        // transition-duration: .2s;
     }
 
     li a {
@@ -157,7 +158,6 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         // width: var(--theme-icon-size);
         height: 100%;
         
-
         cursor: pointer;
 
         img {
@@ -186,7 +186,6 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
                 opacity: 0;
             }
         }
-
     }
 
     .theme-toggle-container input {

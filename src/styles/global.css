@@ -93,12 +93,12 @@ a:visited {
     padding-top: 0;
 }
 
-/* ::view-transition-new(root), 
+::view-transition-new(root), 
 ::view-transition-old(root) {
-    animation-duration: 5s;
+    animation-duration: .5s;
 }
 
-::view-transition-new(root) {
+/* ::view-transition-new(root) {
     animation: reveal 1s;
     clip-path: inset(0 0 0 0);
     z-index: 2;
@@ -113,6 +113,6 @@ a:visited {
 .light { --from: 100% 0 0 0; } */
 
 
-/* @view-transition {
+@view-transition {
     navigation: auto;
-} */
+}
