@@ -1,9 +1,18 @@
 ---
 import { Image } from "astro:assets";
 import ArrowSvg from "../images/common/ArrowSvg.astro";
+import DarkThemeIcon from "../images/icons/dark-mode-icon.svg";
+import LightThemeIcon from "../images/icons/light-mode-icon.svg";
 
 ---
-<header id="header">
+<header id="header" view-transition-name="header">
+    <!-- Fillers are just to help to center the main header when its full size and have 0 size when its very small -->
+    
+    <div class="filler"></div> 
+    <!-- Help to offset the theme toggle, making the main header be centered -->
+    <div class="filler filler-mirror-theme-toggle"></div> 
+    <div class="filler"></div> 
+    
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
@@ -12,69 +21,50 @@ import ArrowSvg from "../images/common/ArrowSvg.astro";
         </ul>
         <ArrowSvg size="2em" addedClass="header-arrow"/>
     </nav>
+    <div class="filler"></div> 
+    <div class="theme-toggle-container">
+        <label for="theme-toggle">
+            <Image src={DarkThemeIcon} alt="Dark mode icon" class:list={"dark-theme-icon"}/>
+            <Image src={LightThemeIcon} alt="Light mode icon" class:list={"light-theme-icon"}/>
+        </label>
+        <input type="checkbox" id="theme-toggle"/> 
+    </div>
+    <div class="filler"></div> 
 </header>
 
 <style lang="scss">
     header {
+        display: flex;
         position: fixed;
         top: 0;
         width: 100%;
-
         z-index: 10;
         
         padding: 2em 0;
 
         transition-property: top;
+        view-transition-name: header;
+
+        --theme-icon-size: 2em;
     }
 
     header, header * {
-        transition-duration: .33s;
+        --transition-duration: .33s;
+        transition: top var(--transition-duration);
+
+        nav {
+            transition: padding var(--transition-duration);
+        }
+        
+        .header-arrow {
+            transition: height var(--transition-duration), opacity var(--transition-duration);
+        }
+
+        ul {
+            transition: opacity var(--transition-duration);
+        }
     }
-
-    nav {
-        display: flex;
-        flex-direction: column;
-
-        margin: 0 auto;
-        padding: 0.7em;
-
-        border: 2px solid white;
-        border-radius: 5em;
-
-        width: fit-content;
-        /* TODO: Use color variables */
-        background-color: #1f2233;
-
-        transition-property: padding-bottom;
-    }
-
-    ul {
-        display: flex;
-        list-style: none;
-        flex-direction: row;
-        margin: 0;
-        padding: 0;
-        transition-duration: .2s;
-    }
-
-    li a {
-        text-decoration: none;
-        color: white;
-        margin: 0.5em;
-        font-size: 1.2rem;
-        font-weight: bold;
-    }
-
-    .header-arrow {
-        transform: scaleY(-1);
-        // filter: brightness(0) invert(1);
-        fill: white;
-        height: 0;
-        opacity: 0;
-        align-self: center;
-        transition-property: height, opacity;
-    }
-
+    
     // TODO: Improve animation
     header.hide-header:not(:hover) {
         top: -4.3em;
@@ -97,6 +87,68 @@ import ArrowSvg from "../images/common/ArrowSvg.astro";
         top: -2em;
     }
 
+    .filler {
+        flex-grow: 1;
+    }
+
+    .filler:first-child + .filler-mirror-theme-toggle {
+        flex-grow: 0;
+        flex-basis: var(--theme-icon-size);
+    }
+
+    nav + .filler {
+        min-width: 1em;
+        flex-shrink: 3;
+    }
+
+    .filler:first-child, .filler:last-child {
+        flex-basis: 2em;
+        flex-grow: 0;
+    }
+
+    nav {
+        flex-grow: 0;
+        display: flex;
+        flex-direction: column;
+
+        padding: 0.7em;
+
+        border: 2px solid var(--color-primary);
+        border-radius: 5em;
+
+        width: fit-content;
+        background-color: var(--color-background-secondary);
+
+        transition-property: padding-bottom;
+    }
+
+    ul {
+        display: flex;
+        list-style: none;
+        flex-direction: row;
+        margin: 0;
+        padding: 0;
+        // transition-duration: .2s;
+    }
+
+    li a {
+        color: var(--color-text);
+        text-decoration: none;
+        margin: 0.5em;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .header-arrow {
+        transform: scaleY(-1);
+        // filter: brightness(0) invert(1);
+        fill: white;
+        height: 0;
+        opacity: 0;
+        align-self: center;
+        transition-property: height, opacity;
+    }
+
     li {
         /* Takes slighly longer to fall down */
         transition: transform 0.5s;
@@ -106,10 +158,131 @@ import ArrowSvg from "../images/common/ArrowSvg.astro";
         transform: translateY(-3px);
         transition: transform 0.25s;
     }
+
+    // ===== Theme toggle =====
+    .theme-toggle-container {
+        width: var(--theme-icon-size);
+    }
+
+    .theme-toggle-container label {
+        display: inline-block;
+        position: relative;
+        user-select: none;
+        // width: var(--theme-icon-size);
+        height: 100%;
+        
+        cursor: pointer;
+
+        img {
+            top: 0.8em;
+            margin: auto;
+            position: absolute;
+
+            width: var(--theme-icon-size);
+            height: var(--theme-icon-size);
+        }
+
+        .dark-theme-icon {
+            opacity: 0;
+        }
+
+        .light-theme-icon {
+            opacity: 1;
+        }
+
+        &:has(+ #theme-toggle:checked) img {
+            &.dark-theme-icon {
+                opacity: 1;
+            }
+
+            &.light-theme-icon {
+                opacity: 0;
+            }
+        }
+    }
+
+    .theme-toggle-container input {
+        display: none;
+    }
+
 </style>
 
 <script>
+import GetUserTheme from "../scripts/utilities";
+
     function Init() {
+        // ===== Theme Settings =====
+        const userTheme = GetUserTheme();
+
+        const darkCssClass = "dark", lightCssClass = "light";
+        const htmlEl = document.querySelector("html") as HTMLHtmlElement;
+
+        const themeToggle = document.getElementById("theme-toggle") as HTMLInputElement;
+        themeToggle.checked = userTheme == "dark";
+            
+        function ToggleTheme() {
+            htmlEl.classList.toggle(darkCssClass, themeToggle.checked);
+            htmlEl.classList.toggle(lightCssClass, !themeToggle.checked);
+
+            console.log("HTML Class: " + htmlEl.classList);
+
+            localStorage.setItem("theme", themeToggle.checked ? darkCssClass : lightCssClass);
+        }
+
+        themeToggle?.addEventListener("change", (ev) => {
+            if (!document.startViewTransition) {
+                ToggleTheme();
+                return;
+            }
+            console.log("Transit name: " + htmlEl.style.viewTransitionName);
+
+            const themeToggleRect = themeToggle.parentElement?.getBoundingClientRect();
+            if (!themeToggleRect)
+                return;
+
+            // Get the click position, or fallback to the middle of the screen
+            const x = (themeToggleRect.left + themeToggleRect.right) / 2;
+            const y = (themeToggleRect.top + themeToggleRect.bottom) / 2;
+            // Get the distance to the furthest corner
+            const endRadius = Math.hypot(
+                Math.max(x, innerWidth - x),
+                Math.max(y, innerHeight - y),
+            );
+            // console.log("Anim: " + x + "|" + y + "|" + endRadius);
+            const transition = document.startViewTransition(() => ToggleTheme());
+            const duration = 500;
+            transition.ready.then(() => {
+
+                // Animate the root’s new view
+                document.documentElement.animate(
+                {
+                    clipPath: [
+                    `circle(0 at ${x}px ${y}px)`,
+                    `circle(${endRadius}px at ${x}px ${y}px)`,
+                    ],
+                },
+                {
+                    duration: duration,
+                    easing: "ease-in",
+                    // Specify which pseudo-element to animate
+                    pseudoElement: "::view-transition-new(root)",
+                });
+                // Animate the root’s new view
+                document.documentElement.animate(
+                {
+                    opacity: [1,1]
+                },
+                {
+                    duration: duration,
+                    easing: "ease-in",
+                    // Specify which pseudo-element to animate
+                    pseudoElement: "::view-transition-old(root)",
+                });
+            }); 
+        })
+
+        // ===== Hide and show header depending on user scroll
+
         // Show the header on scroll
         let prevScrollPos = window.scrollY;
         const header = document.getElementById("header");
@@ -134,16 +307,7 @@ import ArrowSvg from "../images/common/ArrowSvg.astro";
         }
 
         window.addEventListener("scroll", OnScroll);
-        // Had event listeners remaining after page transitions, this cleans up those events
-        // To check,
-        //      1. Open dev tools
-        //      2. select html/root element 
-        //      3. Event listener 
-        //      4. Check Scroll & astro:before-prep & astro:page-load
-        //      5. Try to navigate to different pages and go back to the original page
-        //      6. Check if there is duplicate event listeners. Remember to refresh the event listeners.
-        document.addEventListener("astro:before-preparation", () => window.removeEventListener("scroll", OnScroll), {once: true});
     }
-    
-    document.addEventListener("astro:page-load", Init);
+
+    Init();
 </script>

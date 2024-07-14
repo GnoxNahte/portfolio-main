@@ -29,7 +29,7 @@ const { title, description, darkMode = true, showHeader = true, showFooter = tru
 		<meta name="msapplication-navbutton-color" content="#1f2247">
 		<meta name="apple-mobile-web-app-capable" content="yes"/>
 		<meta name="apple-mobile-web-app-status-bar-style" content="#1f2247">
-		<ViewTransitions />
+		<!-- <ViewTransitions /> -->
 		<title>{title}</title>
 	</head>
 	<body>
@@ -41,3 +41,11 @@ const { title, description, darkMode = true, showHeader = true, showFooter = tru
 		{showFooter && <Footnote />}
 	</body>
 </html>
+
+<script>
+	import GetUserTheme from "../scripts/utilities";
+
+	const userTheme = GetUserTheme();
+	const htmlEl = document.querySelector("html") as HTMLHtmlElement;
+	htmlEl.classList.add(userTheme);
+</script>

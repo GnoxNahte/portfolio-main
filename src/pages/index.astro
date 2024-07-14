@@ -59,7 +59,6 @@ const repeatArray = new Array<number>(4).fill(0);
 		text-align: center;
 	}
 	main {
-		color: white;
 		font-size: 20px;
 		line-height: 1.6;
 	}
@@ -209,5 +208,5 @@ const repeatArray = new Array<number>(4).fill(0);
 		webdevThumbnail.style.animationDuration = (webdevThumbnail.clientHeight / animSpeed).toString() + "s";
 	}
 
-	document.addEventListener("astro:page-load", Init);
+	Init();
 </script>

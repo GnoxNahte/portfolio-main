@@ -17,10 +17,10 @@ import LinkedInIcon from "../images/icons/social/LinkedInIcon.png";
     -->
     <small>© 2024 GnoxNahte | All rights reserved</small>
     <span class="mini-social-icons">
-        <a href="mailto:gnoxnahte.dev@gmail.com" target="_blank"><Image src={EmailIcon} alt="icon" class="email"></a>
-        <a href="https://github.com/GnoxNahte" target="_blank"><Image src={GitHubIcon} alt="icon"></a>
-        <a href="https://twitter.com/GnoxNahteDev" target="_blank"><Image src={TwitterIcon} alt="icon"></a>
-        <a href="https://www.linkedin.com/in/ethanongsg/" target="_blank"><Image src={LinkedInIcon} alt="icon" class="linked-in"></a>
+        <a href="mailto:gnoxnahte.dev@gmail.com" target="_blank"><Image src={EmailIcon} alt="Email: gnoxnahte.dev@gmail.com" title="Email" class="email"></a>
+        <a href="https://github.com/GnoxNahte" target="_blank"><Image src={GitHubIcon} alt="GitHub: GnoxNahte" title="GitHub"></a>
+        <a href="https://twitter.com/GnoxNahteDev" target="_blank"><Image src={TwitterIcon} alt="Twitter: GnoxNahteDev" title="X/Twitter"></a>
+        <a href="https://www.linkedin.com/in/ethanongsg/" target="_blank"><Image src={LinkedInIcon} alt="LinkedIn: ethanongsg" title="LinkedIn" class="linked-in"></a>
     </span>
 </footer>
 
@@ -34,6 +34,7 @@ import LinkedInIcon from "../images/icons/social/LinkedInIcon.png";
     }
     
     hr {
+        border-color: var(--color-primary);
         position: absolute;
         top: 0;
         left: 0;
@@ -68,6 +69,11 @@ import LinkedInIcon from "../images/icons/social/LinkedInIcon.png";
         transition: transform 0.5s;
     }
 
+    .mini-social-icons img{
+        filter: brightness(0);
+    }
+
+
     .mini-social-icons img:hover {
         /* Rises up quickly */
         transform: translateY(-10%);
@@ -78,7 +84,7 @@ import LinkedInIcon from "../images/icons/social/LinkedInIcon.png";
         transform: scale(1.35);
     }
 
-    .mini-social-icons img.linked-in {
+    .dark .mini-social-icons img.linked-in {
         filter: brightness(0) invert(1);
     }
 
@@ -87,5 +93,12 @@ import LinkedInIcon from "../images/icons/social/LinkedInIcon.png";
             flex-direction: column-reverse;
             gap: 0.5rem;
         }
+    }
+</style>
+
+<!-- Since styles are scoped, need to do this for it to interact with .dark -->
+<style is:global>
+    .dark .mini-social-icons img {
+        filter: unset !important;
     }
 </style>
