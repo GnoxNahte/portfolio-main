@@ -15,12 +15,12 @@ const webdevThumbnails: ImageMetadata[] = [ObsidianAutoEmbed, OldPortfolioImg, E
 
 const repeatArray = new Array<number>(4).fill(0);
 ---
-<Layout title='Home' description='Home page to redirect you to the page you are looking for.' showHeader={false} showFooter={false}>
+<Layout title='Home' description="Home page" showHeader={false} showFooter={false}>
 	<div class="thumbnail-list" id="gamedev-thumbnail">
 		{
 			repeatArray.map(() => (
 				gamedevThumbnails.map((thumbnail) => (
-					<Image src={thumbnail} alt={"Thumbnail"} class="thumbnail"/>
+					<Image src={thumbnail} alt={"Thumbnail"} class="thumbnail" widths={[360,720,1080,1920]}/>
 				))
 			))
 		}
@@ -29,7 +29,7 @@ const repeatArray = new Array<number>(4).fill(0);
 			{
 				repeatArray.map(() => (
 					webdevThumbnails.map((thumbnail) => (
-						<Image src={thumbnail} alt={"Thumbnail"} class="thumbnail"/>
+						<Image src={thumbnail} alt={"Thumbnail"} class="thumbnail" widths={[360,720,1080,1920]}/>
 					))
 				))
 			}
@@ -115,12 +115,12 @@ const repeatArray = new Array<number>(4).fill(0);
 		top: 0;
 		width: 1vh;
 		width: 45vw;
-		opacity: .125;
+		opacity: .2;
 		animation: 30s linear 0s infinite normal;
 		transition: opacity 0.5s;
 	}
 	.thumbnail-list:hover, .thumbnail-list.hover{
-		opacity: 0.4;
+		opacity: 0.5;
 	}
 
 	#gamedev-thumbnail{
