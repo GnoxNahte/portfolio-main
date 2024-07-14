@@ -186,19 +186,19 @@ const repeatArray = new Array<number>(4).fill(0);
 
 		const gamedevThumbnail = document.getElementById("gamedev-thumbnail") as HTMLDivElement;
 		const gamedevLink = document.getElementById("gamedev-link") as HTMLAnchorElement;
-		gamedevLink.addEventListener("mouseover", (e)=>OnHover(gamedevThumbnail));
-		gamedevLink.addEventListener("mouseleave", (e)=>OnLeave(gamedevThumbnail));
+		gamedevLink.addEventListener("mouseover", ()=>OnHover(gamedevThumbnail));
+		gamedevLink.addEventListener("mouseleave", ()=>OnLeave(gamedevThumbnail));
 
 		const webdevThumbnail = document.getElementById("webdev-thumbnail") as HTMLDivElement;
 		const webdevLink = document.getElementById("webdev-link") as HTMLAnchorElement;
-		webdevLink.addEventListener("mouseover", (e)=>OnHover(webdevThumbnail));
-		webdevLink.addEventListener("mouseleave", (e)=>OnLeave(webdevThumbnail));
+		webdevLink.addEventListener("mouseover", ()=>OnHover(webdevThumbnail));
+		webdevLink.addEventListener("mouseleave", ()=>OnLeave(webdevThumbnail));
 
 		const seeAllLink = document.getElementById("all-projects-link") as HTMLAnchorElement;
-		seeAllLink.addEventListener("mouseover", (e)=>OnHover(webdevThumbnail));
-		seeAllLink.addEventListener("mouseover", (e)=>OnHover(gamedevThumbnail));
-		seeAllLink.addEventListener("mouseleave", (e)=>OnLeave(webdevThumbnail));
-		seeAllLink.addEventListener("mouseleave", (e)=>OnLeave(gamedevThumbnail));
+		seeAllLink.addEventListener("mouseover", ()=>OnHover(webdevThumbnail));
+		seeAllLink.addEventListener("mouseover", ()=>OnHover(gamedevThumbnail));
+		seeAllLink.addEventListener("mouseleave", ()=>OnLeave(webdevThumbnail));
+		seeAllLink.addEventListener("mouseleave", ()=>OnLeave(gamedevThumbnail));
 
 		// ===== Change animation duration based on height =====
 		// TODO: Add on resize listener

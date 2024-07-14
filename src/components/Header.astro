@@ -229,7 +229,7 @@ import GetUserTheme from "../scripts/utilities";
             localStorage.setItem("theme", themeToggle.checked ? darkCssClass : lightCssClass);
         }
 
-        themeToggle?.addEventListener("change", (ev) => {
+        themeToggle?.addEventListener("change", () => {
             if (!document.startViewTransition) {
                 ToggleTheme();
                 return;
@@ -286,7 +286,7 @@ import GetUserTheme from "../scripts/utilities";
         // Show the header on scroll
         let prevScrollPos = window.scrollY;
         const header = document.getElementById("header");
-        function OnScroll(ev: Event) {
+        function OnScroll() {
             if (!header) {
                 console.log("Can't find header");
                 return;
