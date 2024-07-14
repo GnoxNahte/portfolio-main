@@ -1,7 +1,7 @@
 /* HTML Elements */
 
 /* Color Variables */
-:root, :root.light {
+:root.light {
     /* --color-background: #9399e7; */
     /* --color-background: #8c93f2; */
     --color-background: #838bfb;
@@ -12,7 +12,7 @@
     --color-text: black;
     
 }
-:root.dark {
+:root, :root.dark {
     --color-background: #1f2247;
     --color-background-secondary: #131325;
     --color-background-gradient: linear-gradient(var(--color-background) 15%, var(--color-background-secondary));
@@ -94,19 +94,58 @@ a:visited {
 }
 
 ::view-transition-new(root), 
-::view-transition-old(root) {
-    animation-duration: .5s;
+::view-transition-old(root),
+::view-transition-image-pair(root),
+::view-transition-group(root) {
+    background: var(--color-background-gradient);
+    animation-duration: .3s;
+    animation-timing-function: linear;
 }
 
+/* NOTE: This is a just temporary fix. Think can be better. Leaving this todo for future reference. */
+/* TODO: Fix animation.
+    When SETTING animation-name,
+        - The theme transition (e.g. dark to light) works.
+        - BUT the transition between pages doesn't work. It snaps between each page with no transition.
+    When NOT SETTING animation-name,
+        - transition between pages work (crossfade). 
+        - BUT the theme transition doesn't work properly. 
+        What happens:
+        1. The circle expands correctly but the "new transition" page isn't rendered correctly. 
+        2. ::view-transition-new is always the same (when transitioning light -> dark or vice versa).
+        3. The text is always white and the background is always brighter than the light theme background
+        4. Then after the circle fully expands, it snaps to the correctly rendered page. 
+    Not sure why setting the animation-name fixes theme transition (Same page view transition) but breaks transition between pages (Multi page transition)
+    Possible reason: When inspecting the view transition in Chrome (Go animations tab and pause animations. Then click the theme button / transition to another page),
+    going to "::view-transition-new", there's a animation tagged to it.
+    Currently it's: animation-name: -ua-view-transition-fade-out, -ua-mix-blend-mode-plus-lighter;
+    This changes the opacity and mix-blend-mode. Tried those 2 and ended up the code below.
+*/
 ::view-transition-new(root) {
-    z-index: 2;
-    /* Have no idea why the transition works when there's an animation name. even when there's no animation tied to the name. */
-    animation-name: tmp;
+    animation-name: crossfade-out;
+}
+
+@keyframes crossfade-out {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 ::view-transition-old(root) {
-    z-index: -1;
-    animation: none;
+    animation-name: crossfade-in;
 }
+
+@keyframes crossfade-in {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 @view-transition {
     navigation: auto;
 }

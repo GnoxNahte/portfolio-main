@@ -234,7 +234,6 @@ import GetUserTheme from "../scripts/utilities";
                 ToggleTheme();
                 return;
             }
-            // htmlEl.style.viewTransitionName = "theme-transition";
             console.log("Transit name: " + htmlEl.style.viewTransitionName);
 
             const themeToggleRect = themeToggle.parentElement?.getBoundingClientRect();
@@ -249,9 +248,11 @@ import GetUserTheme from "../scripts/utilities";
                 Math.max(x, innerWidth - x),
                 Math.max(y, innerHeight - y),
             );
-            console.log("Anim: " + x + "|" + y + "|" + endRadius);
+            // console.log("Anim: " + x + "|" + y + "|" + endRadius);
             const transition = document.startViewTransition(() => ToggleTheme());
+            const duration = 500;
             transition.ready.then(() => {
+
                 // Animate the root’s new view
                 document.documentElement.animate(
                 {
@@ -261,12 +262,22 @@ import GetUserTheme from "../scripts/utilities";
                     ],
                 },
                 {
-                    duration: 500,
+                    duration: duration,
                     easing: "ease-in",
                     // Specify which pseudo-element to animate
                     pseudoElement: "::view-transition-new(root)",
+                });
+                // Animate the root’s new view
+                document.documentElement.animate(
+                {
+                    opacity: [1,1]
                 },
-                );
+                {
+                    duration: duration,
+                    easing: "ease-in",
+                    // Specify which pseudo-element to animate
+                    pseudoElement: "::view-transition-old(root)",
+                });
             }); 
         })
 
