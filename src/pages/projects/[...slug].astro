@@ -1,0 +1,33 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+// Generate a new path for every collection entry
+export async function getStaticPaths()  {
+    const projectEntries = await getCollection('projects');
+    return projectEntries.map(project => ({
+        params: { slug: project.slug }, props: { project },
+    }));
+}
+
+export interface Props {
+    project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props as Props;
+const { Content } = await project.render();
+
+// For easier access
+const data = project.data;
+console.error(data)
+
+---
+
+<Layout title={data.title} description={data.shortDescription}>
+    <h1>{project.data.title}</h1>
+
+    <article>
+        <Content />
+    </article>
+</Layout> 
+

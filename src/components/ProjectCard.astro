@@ -1,0 +1,80 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { getEntryBySlug } from 'astro:content';
+
+export interface Props {
+    project: CollectionEntry<'projects'> | string;
+}
+
+interface EntryMetadata {
+    id: string;
+    slug: string;
+}
+
+const { project } = Astro.props as Props;
+
+let projectCollectionEntry: CollectionEntry<'projects'>;
+
+if (typeof project === "string") {
+    const result = (await getEntryBySlug("projects", project));
+    if (result)
+        projectCollectionEntry = result;
+    else {
+        console.error("Cannot find project: " + project);
+        return;
+    }
+}
+else
+    projectCollectionEntry = project;
+
+const data = projectCollectionEntry.data;
+const metadata: EntryMetadata = { 
+    id: projectCollectionEntry.id,
+    slug: projectCollectionEntry.slug
+};
+---
+
+<a href=`/projects/${metadata.slug}` class="project-card">
+    <Image 
+        src={data.thumbnailImg} 
+        alt={"Thumbnail for " + data.title} 
+        transition:name=`project-img-${data.title}`
+    />
+    <div class="project-description">
+        <p>{data.title}</p>
+        <p>{data.shortDescription}</p>
+    </div>
+</a>
+
+<style>
+    .project-card {
+        /* Not sure why need to minus padding */
+        /* width: calc(100% - 2em); */
+        max-height: 12.5rem;
+        display: flex;
+        border-radius: 1.5em;
+        background-color: var(--color-background-secondary);
+        padding: 1em;
+        gap: 1em;
+        height: fit-content;
+        border: 1px solid var(--color-primary);
+        color: var(--color-primary);
+        text-decoration: none;
+    }
+
+    a:visited.project-card {
+        color: var(--color-primary);
+    }
+    
+    img {
+        object-fit: contain;
+        width: 25%;
+        height: auto;
+        border-radius: 0.5em;
+    }
+
+    .project-description {
+        text-decoration: none;
+    }
+</style>
