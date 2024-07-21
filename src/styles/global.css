@@ -87,6 +87,14 @@ button {
     font-weight: bold;
 }
 
+input {
+    padding: 0.5em;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-background);
+}
+
 /* Scrollbar */
 
 ::-webkit-scrollbar {
