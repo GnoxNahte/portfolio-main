@@ -35,7 +35,7 @@ const metadata: EntryMetadata = {
 };
 ---
 
-<a href=`/projects/${metadata.slug}` class="project-card">
+<a href=`/projects/${metadata.slug}/` class="project-card">
     <Image 
         src={data.thumbnailImg} 
         alt={"Thumbnail for " + data.title} 
@@ -54,17 +54,17 @@ const metadata: EntryMetadata = {
         max-height: 12.5rem;
         display: flex;
         border-radius: 1.5em;
-        background-color: var(--color-background-secondary);
+        background-color: var(--color-secondary);
         padding: 1em;
         gap: 1em;
         height: fit-content;
-        border: 1px solid var(--color-primary);
-        color: var(--color-primary);
+        border: 1px solid var(--color-border);
+        color: var(--color-text);
         text-decoration: none;
     }
 
     a:visited.project-card {
-        color: var(--color-primary);
+        color: var(--color-text);
     }
     
     img {

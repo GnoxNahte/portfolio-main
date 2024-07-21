@@ -2,33 +2,39 @@
 
 /* Color Variables */
 :root.light {
-    /* --color-background: #9399e7; */
-    /* --color-background: #8c93f2; */
     --color-background: #e3e3ff;
     --color-background-secondary: #9999ff;
-    /* --color-background-secondary: var(--color-background); */
     --color-background-gradient: linear-gradient(var(--color-background), var(--color-background-secondary));
-    --color-primary: black;
-    --color-secondary: grey;
-    --color-accent: #FF9999;
-    --color-accent-text: #000;
-    --color-text: black;
+    /* --color-primary: #ca494d; */
+    /* --color-primary: #d25e62; */
+    --color-primary: #d86372;
+    --color-secondary: #a5bff7;
+    /* TODO: Find a better color. Contrast ratio is quite bad on light mode */
+    --color-accent: #d62329;
+    --color-accent-text: #fff;
+    --color-text: #000;
+    --color-border: black;
+    --color-secondary-border: black;
 }
 :root, :root.dark {
     --color-background: #1f2247;
     --color-background-secondary: #131325;
     --color-background-gradient: linear-gradient(var(--color-background) 15%, var(--color-background-secondary));
-    --color-primary: white;
-    --color-secondary: grey;
-    --color-accent: #d23f5c;
-    --color-accent-text: #fff;
+    --color-primary: #e15b5f;
+    /* --color-secondary: #5b64c3; */
+    --color-secondary: var(--color-background-secondary);
+    --color-accent: #e15b5f;
+    --color-accent: #e76464;
+    --color-accent-text: black;
     --color-text: white;
+    --color-border: white;
+    --color-secondary-border: transparent;
 }
 html {
     font-family: system-ui, sans-serif;
     font-size: 110%;
     background: var(--color-background-gradient);
-    color: var(--color-primary);
+    color: var(--color-text);
     scroll-behavior: smooth;
     min-height: 100vh;
 }
@@ -57,14 +63,14 @@ img {
 }
 
 a {
-    color:#001be6;
+    color:var(--color-accent);
 }
 a:visited {
     color: #802cc5;
 }
 
 .dark a {
-    color:#739fe6;
+    color:var(--color-accent);
 }
 .dark a:visited {
     color: #af74e3;
@@ -72,11 +78,12 @@ a:visited {
 
 button {
     color: var(--color-accent-text);
-    background-color: var(--color-accent);
+    background-color: var(--color-primary);
     border-radius: 0.5em;
     font-size: 0.8em;
     padding: 0.25em 0.75em;
-    border: 1px solid var(--color-primary);
+    /* border: none; */
+    border: 1px solid var(--color-secondary-border);
     font-weight: bold;
 }
 
