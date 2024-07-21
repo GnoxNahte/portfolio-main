@@ -3,7 +3,7 @@ title: Example Project
 shortDescription: This is an example project.
 startDate: 2022-10-30
 rank: 10
-thumbnailImg: "../../images/webdev-thumbnails/EventRegistrationThumbnail.png"
+thumbnailImg: "../../images/webdev/EventRegistration/EventRegistration_Icon.png"
 tags: [Other, Completed]
 ---
 ## Example Content

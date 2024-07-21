@@ -2,12 +2,15 @@
 import { Image } from 'astro:assets';
 import Layout from "../layouts/Layout.astro";
 // Game Dev Thumbnails
-import SpellboundRollersImg from "../images/gamedev-thumbnails/SpellboundRollers.png";
-import SentientBuffetImg from "../images/gamedev-thumbnails/SentientBuffetThumbnail.png";
+import SpellboundRollersImg from "../images/gamedev/MapleBingo/MapleBingo_Thumbnail.png";
+import SentientBuffetImg from "../images/gamedev/SentientBuffet/SentientBuffetThumbnail.png";
 // Web Dev Thumbnails
-import EventRegistrationImg from "../images/webdev-thumbnails/EventRegistrationThumbnail.png";
-import OldPortfolioImg from "../images/webdev-thumbnails/OldPortfolioThumbnail.png";
-import ObsidianAutoEmbed from "../images/webdev-thumbnails/Auto-Embed-Getting-Started.gif"
+import EventRegistrationImg from "../images/webdev/EventRegistration/EventRegistration_Icon.png";
+import OldPortfolioImg from "../images/webdev/PortfolioWebsite/Portfolio_Thumbnail.png"
+import ObsidianAutoEmbed from "../images/webdev/ObsidianAutoEmbed/obsidian-icon.svg"
+
+// const images = await Astro.glob("../images/");
+// console.log("Imagecount: " + images.length);
 
 // TODO: Change all to gifs
 const gamedevThumbnails: ImageMetadata[] = [SpellboundRollersImg, SentientBuffetImg];

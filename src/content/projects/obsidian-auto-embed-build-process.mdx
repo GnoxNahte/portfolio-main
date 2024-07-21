@@ -1,0 +1,80 @@
+---
+title: Obsidian Auto Embed build process
+shortDescription: The build process of the Obsidian Auto Embed plugin
+startDate: 2024-03-24 # format is YYYY-MM-DD
+# releaseDate: # format is YYYY-MM-DD
+projectLink: https://obsidian.md/plugins?id=auto-embed
+githubLink: https://github.com/GnoxNahte/obsidian-auto-embed
+thumbnailImg: "../../images/webdev/ObsidianAutoEmbed/obsidian-icon.svg"
+tags: [Obsidian, Personal, Windows, Ongoing] 
+rank: 51
+isUnlisted: true
+---
+
+## Introduction
+This post is just my process on building the plugin. After writing this post, I realized it's very long and plan to shorten it in the future.
+
+Other links:
+- [Project page](/obsidian-auto-embed) to see the features.
+- [Plugin download link](https://obsidian.md/plugins?id=auto-embed)
+- [GitHub Link](https://github.com/GnoxNahte/obsidian-auto-embed)
+
+## Why I wanted to build the plugin
+I was exploring for new note taking apps and found [Obsidian](https://obsidian.md/). 
+
+<details>
+    <summary>Not related but a list of reasons on why I like Obsidian:</summary>
+    - Gives the user full control of my notes
+        - Allows me to view my notes offline
+        - Even if Obsidian suddenly disappears, I'll still have my notes
+    - Gives access to users to make plugins and themes
+        - Since I know some web development, this really makes me use my skills and customize a lot of things. (Which lead to this plugin)
+    - Other great things like [Tags](https://help.obsidian.md/Editing+and+formatting/Tags), [Properties](https://help.obsidian.md/Editing+and+formatting/Properties) and many other features.
+</details>
+
+While exploring the app, found that they support embedding websites but it's only limited to YouTube and Twitter. The only way to embed unsupported websites is to use `<iframe>`. My main use case was trying to embed [CodePen](https://codepen.io/) links. I felt that it was troublesome to constantly use iframe to embed, and it was messy when seeing the raw markdown. 
+
+## My process building the plugin
+### Checking if there is an existing plugin
+Tried to search the web and didn't find anything that does it. 
+<details>
+<summary>Similar projects:</summary>
+- [Simple Embed](https://github.com/samwarnick/obsidian-simple-embeds) - Might have worked but repo is archived, isn't in Obsidian's plugin directory, and couldn't get it to work even after downloading it.
+- [Obsidian Link Embed](https://github.com/Seraphli/obsidian-link-embed) - Partly worked. It converts the link into title, thumbnail and description. Similar to Twitter/Discord. It also takes quite a while since it's using a third-party API to get the info. Might be more useful than my plugin if you want to view it offline but I want to embed the website's content. So this doesn't work for me.
+</details>
+
+### Starting to build the project
+Since this my first plugin I made, and I just started Obsidian, I had a lot to learn. Spend quite a long time just reading the documentation. 
+
+Then I created the GitHub repo on 5th March 2024. 
+
+Surprisingly got the <abbr title="Minimum viable product">MVP</abbr> working pretty fast, mostly thanks to Obsidian's simple API on the docs and my previous experience in web development.
+
+### Replacing the url to embed
+Learnt that many of the popular websites like YouTube, Twitter, CodePen, has unique urls to indicate that it should be embedded. This removes other elements like header, footer and any other element that isn't the main content. I also learnt basic [Regex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet) to identify which websites to embed and how to get the related info (like post id) from the url to transform the url to the embedded version.
+
+### Problems with resizing 
+
+Many websites either:
+- Change their own content layout based on the space their are given like YouTube and Spotify. 
+- Provide scripts to help to resize and do other processing. Example: [Twitter](https://publish.twitter.com/)
+- Put the size in the html the user copies. Example: [Reddit](https://publish.reddit.com/)
+
+Since none of these can be done in Obsidian for websites that need to be resized dynamically (Twitter and Reddit for example), I had to find another way. Tried searching and all solutions had the same problem: websites not allowing to get the size due to [<abbr title="Cross-Origin Resource Sharing">CORS</abbr>](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS). Some solutions required an external server to prerender the content and get the content, but I can't do it Obsidian. Or I can make my own server and make an API call to it, but it was a lot of work. 
+
+Eventually I was trying to various methods and one of them required sending messages and listening to them. To my surprise, I saw Twitter sending it's own message to resize, with the width, height and tweet id. I quickly used that info and it worked!
+
+Later found out that it doesn't work for Reddit when there are multiple posts since there isn't any id sent in the resize message. 
+To partly "fix" it:  
+- Embeds are [loaded lazily](https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading)
+- Only set the size if it doesn't have a size.
+
+This doesn't really solve it when the embeds are close together but at least it solves when the embed don't appear together in the same viewport.
+
+### Implementing Live Preview
+All the work done above only works on Reading Mode and not Live Preview - [Documentation](https://help.obsidian.md/Editing+and+formatting/Edit+and+preview+Markdown). Basically, Reading Mode shows the fully rendered HTML and the user can't edit while Live Preview shows the HTML but the user can edit. 
+
+Obsidian uses a different system, [Editor Extensions](https://docs.obsidian.md/Plugins/Editor/Editor+extensions), for Live Preview. It uses [CodeMirror](https://docs.obsidian.md/Plugins/Editor/Editor+extensions) as a base. This results in the information I'm required to understand to greatly increase as I needed to learn CodeMirror too. Personally, I Obsidian's documentation on Editor Extensions is very little and the community devs using Editor Extensions is small. But I would eventually implement it through a lot of searching and asking the Discord.
+
+### Submitting to Obsidian plugin directory
+Not much to say but I got accepted! Here's the link: https://obsidian.md/plugins?id=auto-embed
