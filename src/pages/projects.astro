@@ -2,8 +2,12 @@
 import { getCollection } from "astro:content";
 import ProjectCard from "../components/ProjectCard.astro";
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import SearchIcon from "../images/common/SearchIcon.svg";
 
-const projects = await getCollection("projects");
+const projects = await getCollection("projects", ({data}) => {
+    return !data.isUnlisted;
+});
 
 // Sort by rank, lower rank first
 projects.sort((a, b) => {

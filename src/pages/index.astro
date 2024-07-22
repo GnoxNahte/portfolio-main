@@ -71,9 +71,10 @@ const repeatArray = new Array<number>(4).fill(0);
   		font-style: normal;
 		font-weight: 500;
 	}
-	main {
-		font-size: 20px;
-		line-height: 1.6;
+	:global(main) {
+		// Scales with different size
+		// But doesn't change size when zoom the page.
+		font-size: max(min(2vw, 2vh), 1em);
 	}
 
 	h1, h2 {
@@ -107,16 +108,19 @@ const repeatArray = new Array<number>(4).fill(0);
 		color: unset;
 	}
 	a:hover {
-		font-size: 1.1em;
+		font-size: 1.15em;
 		font-weight: bolder;
 	}
 
 	.container {
+		--container-backdrop-filter: blur(8px) contrast(1.1);
+
 		display: flex;
 		flex-direction: column;
 		align-content: center;
 		justify-content: center;
-		backdrop-filter: blur(8px) contrast(1.1);
+		backdrop-filter: var(--container-backdrop-filter);
+		-webkit-backdrop-filter: var(--container-backdrop-filter);
 		mask-image: radial-gradient(ellipse, black 50%, transparent 75%);
 		padding: 0 15vw;
 		pointer-events: none;
@@ -125,7 +129,7 @@ const repeatArray = new Array<number>(4).fill(0);
 	}
 
 	:global(.light) .container {
-		backdrop-filter: blur(10px);
+		--container-backdrop-filter: blur(10px);
 
 		background-color: rgba(255, 255, 255, 0.1);
 		transition: backdrop-filter 0.5s;
