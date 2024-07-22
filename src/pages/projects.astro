@@ -20,6 +20,7 @@ projects.sort((a, b) => {
 })
 ---
 <Layout title="Projects" description="A list of all the projects I've worked.">
+    <h1>Projects</h1>
     <div class="container">
         <div class="filter-panel">
             <div class="search-bar">
@@ -37,6 +38,31 @@ projects.sort((a, b) => {
 </Layout>
 
 <style>
+    /* :global(html) {
+        background: none;
+        background-color: var(--color-background);
+    } */
+
+    h1 {
+        text-align: center;
+    }
+
+    .container {
+        max-width: fit-content;
+        display: flex;
+        gap: 1em;
+        margin-bottom: 5em;
+    }
+    
+    .filter-panel {
+        background-color: var(--color-secondary);
+        padding: 1em;
+        border-radius: 0.75em;
+
+        hr {
+            border-color: grey;
+        }
+    }
     .search-bar {
         display: flex;
         position: relative;
@@ -61,5 +87,11 @@ projects.sort((a, b) => {
         button {
             margin-left: 0.5rem;
         }
+    }
+
+    .project-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
     }
 </style>
