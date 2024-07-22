@@ -60,6 +60,8 @@ export class Tag {
     toString(): string {
         return this.path;
     }
+
+    static ErrorTag = new Tag("Error Tag");
 }
 
 function BuildTagMap(root: Tag, map: Map<string, Tag> = new Map()): Map<string, Tag> {
@@ -86,13 +88,13 @@ function BuildTagMap(root: Tag, map: Map<string, Tag> = new Map()): Map<string, 
 
 export const tags: Tag = new Tag("Root",
     [
-        new Tag("Engine & Framework",
+        new Tag("Dev Tool",
         [
             new Tag("Unity"),
             new Tag("Astro"),
             new Tag("SvelteKit"),
             new Tag("Obsidian"),
-            new Tag("Others"),
+            new Tag("Other Tool"),
         ]),
         new Tag("Project Type",
         [

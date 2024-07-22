@@ -1,0 +1,63 @@
+---
+import { Tag, tagMap } from '../scripts/tags';
+import TagPill from './TagPill.astro';
+
+export interface Props {
+    tags: Tag[] | string[];
+}
+
+const { tags } = Astro.props as Props;
+
+let tagArray: Tag[];
+const tag = tags[0];
+if (!tags)
+    tagArray = [];
+else if (tag instanceof Tag) {
+    tagArray = tags as Tag[];
+}
+else if (typeof tags[0] === "string") {
+    tagArray = tags.map(tag => {
+        const result = tagMap.get(tag as string);
+        if (result)
+            return result;
+        else
+            return Tag.ErrorTag;
+    })
+}
+else {
+    console.error("Invalid tag type");
+    tagArray = [];
+}
+---
+
+<div class="tag-container">
+    <p>Tags:</p>
+    <ul>
+        {
+            tagArray.map(tag => (
+                <TagPill tag={tag} ifAddLink={false} />
+            ))
+        }
+    </ul>
+</div>
+
+<style>
+    .tag-container {
+        display: flex;
+    }
+    .tag-container p {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-right: 0.6em;
+    }
+    ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        margin: 0;
+        padding: 0;
+        gap: 0.3em 0.6em;
+        list-style: none;
+    }
+</style>
