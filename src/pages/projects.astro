@@ -21,11 +21,12 @@ projects.sort((a, b) => {
 ---
 <Layout title="Projects" description="A list of all the projects I've worked.">
     <div class="container">
-        <h1>Projects</h1>
-        <div class="search-bar">
-            <label>Search:</label>
-            <input type="search"/>
-            <button>Filter</button>
+        <div class="filter-panel">
+            <div class="search-bar">
+                <Image src={SearchIcon} alt="Search Icon" class:list="search-icon"/>
+                <input type="search" placeholder="Search By Title"/>
+                <button>Filter</button>
+            </div>
         </div>
         <div class="project-container">
         {
@@ -38,15 +39,23 @@ projects.sort((a, b) => {
 <style>
     .search-bar {
         display: flex;
-        width: 100%;
+        position: relative;
+        /* Minus padding */
+        width: calc(100% - 2em);
+
+        /* TODO: Shift this to input[type="search"]::after */
+        .search-icon {
+            display: block;
+            position: absolute;
+            height: 1em;
+            top: 0.6em;
+            left: 0.6em;
+            /* transform: translateY(25%); */
+        }
 
         label {
             align-self: center;
             margin-right: 0.5rem;
-        }
-
-        input {
-            flex-grow: 1;
         }
 
         button {
