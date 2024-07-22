@@ -19,15 +19,19 @@
 :root, :root.dark {
     --color-background: #1f2247;
     --color-background-secondary: #131325;
+
+    --color-background: #1b2446;
+    --color-background-secondary: #0d374a;
     --color-background-gradient: linear-gradient(var(--color-background) 15%, var(--color-background-secondary));
     --color-primary: #e15b5f;
     /* --color-secondary: #5b64c3; */
-    --color-secondary: var(--color-background-secondary);
+    --color-secondary: #131325;
+    --color-secondary: #11111e;
     --color-accent: #e15b5f;
     --color-accent: #e76464;
     --color-accent-text: black;
     --color-text: white;
-    --color-border: white;
+    --color-border: #ffffff80;
     --color-secondary-border: transparent;
 }
 html {
