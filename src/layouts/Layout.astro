@@ -7,12 +7,11 @@ import "../styles/global.css";
 export interface Props {
     title: string;
     description: string;
-    darkMode?: boolean;
 	showHeader?: boolean;
 	showFooter?: boolean;
 }
 
-const { title, description, darkMode = true, showHeader = true, showFooter = true } = Astro.props as Props;
+const { title, description, showHeader = true, showFooter = true } = Astro.props as Props;
 ---
 
 <!DOCTYPE html>

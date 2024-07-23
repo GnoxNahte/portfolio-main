@@ -24,10 +24,81 @@ console.error(data)
 ---
 
 <Layout title={data.title} description={data.shortDescription}>
-    <h1>{project.data.title}</h1>
-
+    
     <article>
-        <Content />
+        <h1>{project.data.title}</h1>
+        <div class="markdown">
+            <Content />
+        </div>
     </article>
 </Layout> 
 
+
+<!-- Markdown styling needs to be global: https://github.com/withastro/astro/issues/3045 -->
+<style is:global>
+    
+    .markdown img {
+        width: 100%;
+        height: unset;
+        max-width: 500px;
+        max-height: 100vh;
+        margin: 20px auto;
+        object-fit: contain;
+    }
+
+    .markdown a {
+        text-decoration: underline;
+    }
+
+    .markdown h2 {
+        margin-bottom: 0.5em;
+        /* font-size: 1.75em; */
+    }
+
+    .markdown table, th, td {
+        border: 2px solid #333;
+    }
+
+    .markdown table {
+        border-collapse: collapse;
+    }
+
+    .markdown td {
+        padding: 6px 12px;
+    }
+
+    .markdown code {
+        background-color: #444;
+        padding: 0.2em 0.4em;
+        border-radius: 7px;
+    }
+
+    .markdown .person-a {
+        background-color: #6a2fca;
+    }
+    
+    .markdown .person-b {
+        background-color: #2366c4;
+    }
+    
+    .markdown .person-a,
+    .markdown .person-b {
+        border-radius: 5px;
+        padding: 0 .4em;
+        display: inline-block;
+        margin: 5px 0;
+        /* width: 2.75em; */
+        text-align: center;
+    }
+
+</style>
+
+<script>
+    const links = document.getElementsByTagName("a");
+    for (let i = 0; i < links.length; i++) {
+        const link = links[i];
+        const url = new URL(link.href);
+        if (url.host !== window.location.host)
+            link.target = "_blank";    
+    }
+</script>

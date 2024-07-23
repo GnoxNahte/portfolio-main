@@ -20,7 +20,6 @@ export class Tag {
     constructor(tag: string, childTags: Tag[] = []) {
         this.tag = tag;
         this.childTags = childTags;
-        console.log("Created: " + this.tag);
         this.parentTag = null;
         this.path = tag;
 

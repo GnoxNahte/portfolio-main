@@ -36,14 +36,17 @@ const metadata: EntryMetadata = {
     slug: projectCollectionEntry.slug
 };
 
-const tags = data.tags;
-
 let duration = "";
 if (data.startDate && data.releaseDate) {
     duration = GetDuration(data.startDate, data.releaseDate);
 }
 const dateOptions: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" };
 const userLocale="en-UK";
+let dateAndDurationString = data.startDate.toLocaleDateString(userLocale, dateOptions);
+if (data.releaseDate)
+    dateAndDurationString += ` - ${data.releaseDate.toLocaleDateString(userLocale, dateOptions)} (${duration})`;
+else
+    dateAndDurationString += " - Ongoing";
 ---
 
 <a href=`/projects/${metadata.slug}/` class="project-card">
@@ -55,7 +58,7 @@ const userLocale="en-UK";
     <div class="project-details">
         <p class="project-title">{data.title}</p>
         <TagContainer tags={data.tags}/>
-        <p class="project-date">Date: <i>{data.startDate.toLocaleDateString(userLocale, dateOptions)}</i></p>
+        <p class="project-date">Date: <i>{dateAndDurationString}</i></p>
         <p class="project-description">{data.shortDescription}</p>
     </div>
 </a>
@@ -75,7 +78,7 @@ const userLocale="en-UK";
         display: flex;
         /* max-height: 12.5rem; */
         height: max-content;
-        max-width: calc(50em * 1.2);
+        max-width: 50em;
 
         padding: 1em;
         gap: 1em;

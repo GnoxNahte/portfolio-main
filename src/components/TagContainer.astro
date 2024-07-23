@@ -8,6 +8,7 @@ export interface Props {
 
 const { tags } = Astro.props as Props;
 
+// Checks and converts to Tag[] if the type is string[].
 let tagArray: Tag[];
 const tag = tags[0];
 if (!tags)
@@ -46,15 +47,14 @@ else {
         display: flex;
     }
     .tag-container p {
-        margin-top: auto;
-        margin-bottom: auto;
         margin-right: 0.6em;
+        font-size: 0.9em;
     }
     ul {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-
+        align-content: center;
         margin: 0;
         padding: 0;
         gap: 0.3em 0.6em;

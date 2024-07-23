@@ -1,0 +1,12 @@
+---
+export interface Props {
+    youtubeLink: string;
+    title: string
+}
+const {youtubeLink, title} = Astro.props as Props;
+---
+
+<iframe src={youtubeLink} title={title} loading="lazy" 
+    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>

@@ -29,6 +29,8 @@ const category = categoryRegexResult ? categoryRegexResult[1] : Tag.ErrorTag.tag
         /* Lighten the borders */
         --tag-border-color: color-mix(in srgb, var(--tag-color), #FFF 45%);
 
+        height: min-content;
+
         font-size: 0.8em;
         
         background-color: var(--tag-color);
@@ -36,16 +38,18 @@ const category = categoryRegexResult ? categoryRegexResult[1] : Tag.ErrorTag.tag
         border: 1.5px solid var(--tag-border-color);
         border-radius: 0.5em;
         padding: 0em 0.3em;
-
     }
     
     :global(.dark) .tag {
         color: black;
         font-weight: 600;
+        /* TODO: Clean up the tags */
         &[data-category="Dev Tool"] {
             /* --tag-color: color-mix(in srgb, var(--color-primary), #000 10%); */
             --tag-color: #c54852;
             --tag-color: #d76872;
+            --tag-color: #9d72d8;
+            --tag-color: #5AD2C8;
         }
         &[data-category="Project Type"] {
             --tag-color: #456580;
@@ -58,11 +62,14 @@ const category = categoryRegexResult ? categoryRegexResult[1] : Tag.ErrorTag.tag
             --tag-color: #4852C5;
             --tag-color: #48C5BB;
             --tag-color: #5AD2C8;
+            --tag-color: #9d72d8;
         }
         &[data-category="Status"] {
-            --tag-color: black;
             --tag-color: #7D48C5;
             --tag-color: #996dd7;
+            --tag-color: #111;
+            color: white;
+            border-width: 2px;
         }
 
         &[data-category="Error Tag"] {
