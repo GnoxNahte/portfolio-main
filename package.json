@@ -15,8 +15,5 @@
     "@types/dom-view-transitions": "^1.0.4",
     "astro": "^4.4.9",
     "typescript": "^5.3.3"
-  },
-  "devDependencies": {
-    "sass": "^1.77.4"
   }
 }

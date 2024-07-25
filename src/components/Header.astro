@@ -32,7 +32,7 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
     <div class="filler"></div> 
 </header>
 
-<style lang="scss">
+<style>
     header {
         display: flex;
         position: fixed;
@@ -65,7 +65,7 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         }
     }
     
-    // TODO: Improve animation
+    /* TODO: Improve animation */
     header.hide-header:not(:hover) {
         top: -4.3em;
         
@@ -128,7 +128,7 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         flex-direction: row;
         margin: 0;
         padding: 0;
-        // transition-duration: .2s;
+        /* transition-duration: .2s; */
     }
 
     li a {
@@ -141,7 +141,7 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
 
     .header-arrow {
         transform: scaleY(-1);
-        // filter: brightness(0) invert(1);
+        /* filter: brightness(0) invert(1); */
         fill: white;
         height: 0;
         opacity: 0;
@@ -159,7 +159,7 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         transition: transform 0.25s;
     }
 
-    // ===== Theme toggle =====
+    /* ===== Theme toggle ===== */
     .theme-toggle-container {
         width: var(--theme-icon-size);
     }
@@ -168,7 +168,7 @@ import LightThemeIcon from "../images/icons/light-mode-icon.svg";
         display: inline-block;
         position: relative;
         user-select: none;
-        // width: var(--theme-icon-size);
+        /* width: var(--theme-icon-size); */
         height: 100%;
         
         cursor: pointer;
