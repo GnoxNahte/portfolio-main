@@ -13,7 +13,6 @@
     --color-accent: #d62329;
     --color-accent-text: #fff;
     --color-text: #000;
-    --color-border: black;
     --color-secondary-border: black;
 }
 :root, :root.dark {
@@ -32,6 +31,8 @@
     --color-accent-text: black;
     --color-text: white;
     --color-border: #ffffff80;
+    --color-border-accent: var(--color-accent);
+
     --color-secondary-border: transparent;
 }
 html {
@@ -109,7 +110,7 @@ button:hover {
 
 button:active {
     box-shadow: 0 0 2px 2px var(--color-accent);
-    transform: scale(1.05);
+    transform: scale(1.025);
 }
 /* For search but can be used for other input also. Not specifying [type="search"] for now. */
 input {
@@ -141,6 +142,49 @@ input[type="search" i]::-webkit-search-cancel-button:hover {
 /* For light mode, make the icon black */
 .light input[type="search" i]::-webkit-search-cancel-button {
     filter: brightness(0);
+}
+
+/* A type of radio selection, based on tab selection */
+.radio-tab-selection {
+    --border-radius: 0.5em;
+
+    display: flex;
+    flex-grow: 2;
+
+    border-radius: var(--border-radius);
+
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    label {
+        flex: 1;
+        padding: 0em 0.3em;
+        display: inline-block;
+        transition: background-color 0.1s;
+        border: 3px solid var(--color-border-accent);
+        text-align: center;
+        border-right-width: 0;
+
+        &:nth-child(2) {
+            border-top-left-radius: 0.5em;
+            border-bottom-left-radius: 0.5em;
+        }
+        
+        &:last-child {
+            border-top-right-radius: 0.5em;
+            border-bottom-right-radius: 0.5em;
+            border-right-width: initial;
+        }
+    }
+
+    input[type="radio"]:checked + label {
+        background-color: var(--color-accent);
+    }
 }
 
 /* YouTube Embed */
@@ -184,6 +228,16 @@ iframe[src*="youtube.com"] {
 
     padding: 1em;
     padding-top: 0;
+}
+
+.card {
+    padding: 1em;
+    max-width: 50em;
+
+    border-radius: 0.75em;
+
+    background-color: var(--color-secondary);
+    color: var(--color-text);
 }
 
 ::view-transition-new(root), 

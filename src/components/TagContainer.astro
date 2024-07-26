@@ -30,26 +30,15 @@ else {
     tagArray = [];
 }
 ---
-
-<div class="tag-container">
-    <p>Tags:</p>
-    <ul>
-        {
-            tagArray.map(tag => (
-                <TagPill tag={tag} ifAddLink={false} />
-            ))
-        }
-    </ul>
-</div>
+<ul>
+    {
+        tagArray.map(tag => (
+            <TagPill tag={tag} ifAddLink={false} />
+        ))
+    }
+</ul>
 
 <style>
-    .tag-container {
-        display: flex;
-    }
-    .tag-container p {
-        margin-right: 0.6em;
-        font-size: 0.9em;
-    }
     ul {
         display: flex;
         flex-direction: row;
@@ -57,7 +46,8 @@ else {
         align-content: center;
         margin: 0;
         padding: 0;
-        gap: 0.3em 0.6em;
+        /* gap: 0.3em 0.5em; */
+        gap: 0.5em;
         list-style: none;
     }
 </style>
