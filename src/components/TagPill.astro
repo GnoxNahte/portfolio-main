@@ -1,4 +1,6 @@
 ---
+// TODO: Improve component name
+
 import { Tag } from '../scripts/tags';
 
 export interface Props {
@@ -14,12 +16,13 @@ const categoryRegexResult = tag.path.match(categoryRegex);
 const category = categoryRegexResult ? categoryRegexResult[1] : Tag.ErrorTag.tag;
 ---
 
-<li class="tag" data-category={category}>
+<li class="tag" data-category={category} data-tag={tag.tag}>
     {
         ifAddLink ? 
-            <a>{tagValue}</a>
+            // TODO: Add href
+            <a>{category === "Status" && <span class="circle"></span>}{tagValue}</a>
             :
-            <span>{tagValue}</span>
+            <span>{category === "Status" && <span class="circle"></span>}{tagValue}</span>
     }
 </li>
 
@@ -27,7 +30,7 @@ const category = categoryRegexResult ? categoryRegexResult[1] : Tag.ErrorTag.tag
     .tag {
         --tag-color: var(--color-primary);
         /* Lighten the borders */
-        --tag-border-color: color-mix(in srgb, var(--tag-color), #FFF 45%);
+        --tag-border-color: color-mix(in srgb, var(--tag-color), #FFF 50%);
 
         height: min-content;
 
@@ -35,9 +38,34 @@ const category = categoryRegexResult ? categoryRegexResult[1] : Tag.ErrorTag.tag
         
         background-color: var(--tag-color);
 
-        border: 1.5px solid var(--tag-border-color);
+        border: 3px solid var(--tag-border-color);
         border-radius: 0.5em;
         padding: 0em 0.3em;
+
+        &[data-tag="Ongoing"] .circle{
+            background-color: #04d000;
+        }
+
+        &[data-tag="Completed"] .circle{
+            background-color: #00c9f4;
+        }
+
+        &[data-tag="On Hold"] .circle{
+            background-color: orange;
+        }
+
+        &[data-tag="Dropped"] .circle{
+            background-color: red;
+        }
+    }
+    
+    .circle {
+        display: inline-block;
+        margin-right: 0.5em;
+        margin-left: 0.15em;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
     }
     
     :global(.dark) .tag {
@@ -77,6 +105,7 @@ const category = categoryRegexResult ? categoryRegexResult[1] : Tag.ErrorTag.tag
         }
     }
     
+    /* TODO: set colors for light mode */
     :global(.light) .tag {
         filter: brightness(1.5);
         &[data-category="Dev Tool"] {
