@@ -38,7 +38,8 @@
 html {
     font-family: system-ui, sans-serif;
     font-size: 110%;
-    background: var(--color-background-gradient);
+    /* background: var(--color-background-gradient); */
+    background: var(--color-background);
     color: var(--color-text);
     scroll-behavior: smooth;
     min-height: 100vh;
