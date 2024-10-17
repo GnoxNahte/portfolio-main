@@ -19,8 +19,12 @@
     --color-background: #1f2247;
     --color-background-secondary: #131325;
 
-    --color-background: #1b2446;
-    --color-background-secondary: #0d374a;
+    /* --color-background: #1b2446; */
+    /* --color-background-secondary: #0d374a; */
+    --color-background: #0f213e;
+    /* --color-background-secondary: #254e7d; */
+    --color-background-secondary: #1d3d62;
+
     --color-background-gradient: linear-gradient(var(--color-background) 15%, var(--color-background-secondary));
     --color-primary: #e15b5f;
     /* --color-secondary: #5b64c3; */
@@ -38,8 +42,8 @@
 html {
     font-family: system-ui, sans-serif;
     font-size: 110%;
-    /* background: var(--color-background-gradient); */
-    background: var(--color-background);
+    background: var(--color-background-gradient);
+    /* background: var(--color-background); */
     color: var(--color-text);
     scroll-behavior: smooth;
     min-height: 100vh;
