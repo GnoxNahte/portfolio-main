@@ -13,6 +13,10 @@ const projectsCollection = defineCollection({
         rank: z.number(),
         thumbnailImg: image(),
         bannerImg: image().optional(),
+        // Match any css unit
+        bannerMaxWidth: z.string().regex(/^(-?(\d*\.)?\d+)((px)|(em)|(%)|(ex)|(ch)|(rem)|(vw)|(vh)|(vmin)|(vmax)|(cm)|(mm)|(in)|(pt)|(pc))$/im).optional(),
+        // Match any hex color codes. Support #AAA, #123BCD, #123BCDAA (For alpha)
+        bannerBackgroundColor: z.string().regex(/^#(?:[A-Fa-f0-9]{3}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$/).optional(),
         // TODO: Add verification
         tags: z.array(z.string()),
         isUnlisted: z.boolean().optional(), // Page is available but won't show up in "/projects/" page;

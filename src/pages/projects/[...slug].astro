@@ -38,15 +38,16 @@ if (data.startDate && data.releaseDate)
 ---
 
 <Layout title={data.title} description={data.shortDescription}>
-    {data.bannerImg && <div>
+    {data.bannerImg && <div class="banner-container" style={data.bannerBackgroundColor && ("background-color: " + data.bannerBackgroundColor)}>
         <Image 
             src={data.bannerImg} 
             alt={"Banner for " + data.title} 
             class:list={["banner"]}
+            style={data.bannerMaxWidth && ("max-width: " + data.bannerMaxWidth)}
         />
     </div>}
     <article>
-        <h1>{project.data.title}</h1>
+        <h1 class="title">{project.data.title}</h1>
         { data.subtitle && <p class="subtitle">{data.subtitle}</p> }
         { data.releaseDate ? 
             <p>Date: <span class="date">{data.startDate.toLocaleDateString(userLocale, dateOptions)} - {data.releaseDate.toLocaleDateString(userLocale, dateOptions)} ({duration})</span></p>
@@ -70,7 +71,7 @@ if (data.startDate && data.releaseDate)
 </Layout> 
 
 <style>
-    div:has(.banner) {
+    .banner-container {
         --banner-height: 300px;
         position: relative;
 
@@ -78,16 +79,17 @@ if (data.startDate && data.releaseDate)
         max-height: var(--banner-height);
         overflow-y: hidden;
         
-        mask: linear-gradient(transparent 0%, #FFF 5px, transparent calc(min(var(--banner-height), 110%)));
+        mask: linear-gradient(#FFF min(50px, 50%), transparent calc(min(var(--banner-height), 100%)));
     }
-
+    
     .banner {
         display: block;
         /* max-width: 1920px; */
+        /* max-width: 50em; */
         width: 100%;
         margin-left: auto;
         margin-right: auto;
-        border-radius: 1em;
+        /* border-radius: 1em; */
     }
     
     /* Anchor the banner image to the bottom */
@@ -95,6 +97,10 @@ if (data.startDate && data.releaseDate)
         margin-top: 100px;
         position: absolute;
         bottom: 0;
+    }
+
+    .banner-container + article h1 {
+        margin-top: 0;
     }
 
     h1:has(+ .subtitle) {
@@ -108,7 +114,7 @@ if (data.startDate && data.releaseDate)
 
     .tag-container {
         display: flex;
-        gap: 0.5em;
+        gap: 0.25em;
         margin: 0;
 
         p {
@@ -120,7 +126,7 @@ if (data.startDate && data.releaseDate)
         list-style: none;
         padding: 0;
         display: flex;
-        gap: 0.5em;
+        gap: 0.25em;
     }
 </style>
 
