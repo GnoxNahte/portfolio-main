@@ -28,10 +28,6 @@ const category = categoryRegexResult ? categoryRegexResult[1] : Tag.ErrorTag.tag
 
 <style>
     .tag {
-        --tag-color: var(--color-primary);
-        /* Lighten the borders */
-        --tag-border-color: color-mix(in srgb, var(--tag-color), #FFF 50%);
-
         height: min-content;
 
         font-size: 0.8em;
@@ -41,22 +37,6 @@ const category = categoryRegexResult ? categoryRegexResult[1] : Tag.ErrorTag.tag
         border: 3px solid var(--tag-border-color);
         border-radius: 0.5em;
         padding: 0em 0.3em;
-
-        &[data-tag="Ongoing"] .circle{
-            background-color: #04d000;
-        }
-
-        &[data-tag="Completed"] .circle{
-            background-color: #00c9f4;
-        }
-
-        &[data-tag="On Hold"] .circle{
-            background-color: orange;
-        }
-
-        &[data-tag="Dropped"] .circle{
-            background-color: red;
-        }
     }
     
     .circle {
@@ -66,63 +46,5 @@ const category = categoryRegexResult ? categoryRegexResult[1] : Tag.ErrorTag.tag
         width: 10px;
         height: 10px;
         border-radius: 50%;
-    }
-    
-    :global(.dark) .tag {
-        color: black;
-        font-weight: 600;
-        /* TODO: Clean up the tags */
-        &[data-category="Dev Tool"] {
-            /* --tag-color: color-mix(in srgb, var(--color-primary), #000 10%); */
-            --tag-color: #c54852;
-            --tag-color: #d76872;
-            --tag-color: #9d72d8;
-            --tag-color: #5AD2C8;
-        }
-        &[data-category="Project Type"] {
-            --tag-color: #456580;
-            --tag-color: #52C548;
-            --tag-color: #91C548;
-            --tag-color: #A0D25A;
-        }
-        &[data-category="Platform"] {
-            --tag-color: #2f7571;
-            --tag-color: #4852C5;
-            --tag-color: #48C5BB;
-            --tag-color: #5AD2C8;
-            --tag-color: #9d72d8;
-        }
-        &[data-category="Status"] {
-            --tag-color: #7D48C5;
-            --tag-color: #996dd7;
-            --tag-color: #111;
-            color: white;
-            border-width: 2px;
-        }
-
-        &[data-category="Error Tag"] {
-            --tag-color: red;
-        }
-    }
-    
-    /* TODO: set colors for light mode */
-    :global(.light) .tag {
-        filter: brightness(1.5);
-        &[data-category="Dev Tool"] {
-            --tag-color: #6a6392;
-        }
-        &[data-category="Project Type"] {
-            --tag-color: #456580;
-        }
-        &[data-category="Platform"] {
-            --tag-color: #2f7571;
-        }
-        &[data-category="Status"] {
-            --tag-color: white;
-        }
-
-        &[data-category="Error Tag"] {
-            --tag-color: red;
-        }
     }
 </style>
