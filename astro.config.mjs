@@ -11,5 +11,11 @@ export default defineConfig({
   devToolbar: {
     enabled: false
   },
-  integrations: [mdx()]
+  integrations: [mdx()],
+
+  // Not sure why this isn't working
+  // Explicitly using `data-astro-prefetch` on the main links for now.
+  prefetch: {
+    prefetchAll: true
+  }
 });

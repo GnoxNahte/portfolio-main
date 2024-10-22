@@ -49,11 +49,11 @@ else
     dateAndDurationString += " - Ongoing";
 ---
 
-<a href=`/projects/${metadata.slug}/` class="card project-card" data-title={data.title} data-tags={data.tags}>
+<a href=`/projects/${metadata.slug}/` class="card project-card" data-title={data.title} data-tags={data.tags} data-astro-prefetch>
     <Image 
         src={data.thumbnailImg} 
         alt={"Thumbnail for " + data.title} 
-        transition:name=`project-img-${data.title}`
+        transition:name={`project-img-${data.title}`}
     />
     <div class="project-details">
         <p class="project-title">{data.title}</p>
