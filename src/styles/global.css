@@ -67,9 +67,21 @@ body:has(header + main) {
     min-height: calc(100vh - var(--heading-size));
 }
 
+body:has(.banner) {
+    padding-top: 0;
+}
+
 img {
     height: auto;
     width: auto;
+}
+
+h1 { font-size: 2em;}
+
+h2 {
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: solid 2px #4e4ecb77;
 }
 
 a {
@@ -192,6 +204,39 @@ input[type="search" i]::-webkit-search-cancel-button:hover {
     }
 }
 
+table {
+    border-collapse: collapse;
+    max-width: 100%;
+}
+
+td {
+    padding: 6px 12px;
+}
+
+th {
+    background-color: color-mix(in srgb, var(--color-background-secondary) 75%, black 25%);
+}
+
+table, th, td {
+    border: 3px solid #CCC;
+}
+
+details {
+    padding: 1em;
+    background-color: var(--color-background-secondary);
+    border-radius: 0.5em;
+    border: 2px solid color-mix(in srgb, var(--color-background-secondary), #FFF 45%);
+
+    :not(:first-child) {
+        margin-top: 1em;
+        margin-left: 1em;
+    }
+
+    *:last-child {
+        margin-bottom: 0.4em;
+    }
+}
+
 /* YouTube Embed */
 iframe[src*="youtube.com"] {
     width: max(100%, 300px);
@@ -244,6 +289,12 @@ iframe[src*="youtube.com"] {
     background-color: var(--color-secondary);
     color: var(--color-text);
 }
+
+.date {
+    font-style: italic;
+}
+
+/* View Transitions */
 
 ::view-transition-new(root), 
 ::view-transition-old(root),

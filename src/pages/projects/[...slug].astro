@@ -1,6 +1,9 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import { Image } from 'astro:assets';
+import TagContainer from "../../components/TagContainer.astro";
+import { GetDuration } from "../../scripts/utilities";
 
 // Generate a new path for every collection entry
 export async function getStaticPaths()  {
@@ -21,18 +24,105 @@ const { Content } = await project.render();
 const data = project.data;
 console.error(data)
 
+const dateOptions: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" };
+// TODO (LOW): Detect the user's location using window.navigator.language
+// But need to use <script></script>
+const userLocale="en-UK";
+
+let duration = "";
+if (data.startDate && data.releaseDate)
+{
+    duration = GetDuration(data.startDate, data.releaseDate);
+}
+
 ---
 
 <Layout title={data.title} description={data.shortDescription}>
-    
+    {data.bannerImg && <div>
+        <Image 
+            src={data.bannerImg} 
+            alt={"Banner for " + data.title} 
+            class:list={["banner"]}
+        />
+    </div>}
     <article>
         <h1>{project.data.title}</h1>
+        { data.subtitle && <p class="subtitle">{data.subtitle}</p> }
+        { data.releaseDate ? 
+            <p>Date: <span class="date">{data.startDate.toLocaleDateString(userLocale, dateOptions)} - {data.releaseDate.toLocaleDateString(userLocale, dateOptions)} ({duration})</span></p>
+            :
+            <p>Date: <span class="date">{data.startDate.toLocaleDateString(userLocale, dateOptions)} - Ongoing</span></p>
+        }
+        <div class="tag-container">
+            <p>Tags: </p>
+            <TagContainer tags={data.tags} />
+        </div>
+        <ul class="list-of-links">
+            Links:
+            {data.projectLink != null && <li><a href={data.projectLink} target="_blank">Project Link</a></li>}
+            {data.githubLink != null && <li><a href={data.githubLink} target="_blank">GitHub Link</a></li>}
+        </ul>
+        
         <div class="markdown">
             <Content />
         </div>
     </article>
 </Layout> 
 
+<style>
+    div:has(.banner) {
+        --banner-height: 300px;
+        position: relative;
+
+        /* margin-top: 30px; */
+        max-height: var(--banner-height);
+        overflow-y: hidden;
+        
+        mask: linear-gradient(transparent 0%, #FFF 5px, transparent calc(min(var(--banner-height), 110%)));
+    }
+
+    .banner {
+        display: block;
+        /* max-width: 1920px; */
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 1em;
+    }
+    
+    /* Anchor the banner image to the bottom */
+    .banner-bottom {
+        margin-top: 100px;
+        position: absolute;
+        bottom: 0;
+    }
+
+    h1:has(+ .subtitle) {
+        margin-bottom: 0;
+    }
+    
+    .subtitle {
+        color: rgb(164, 157, 145);;
+        margin: 0;
+    }
+
+    .tag-container {
+        display: flex;
+        gap: 0.5em;
+        margin: 0;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .list-of-links {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        gap: 0.5em;
+    }
+</style>
 
 <!-- Markdown styling needs to be global: https://github.com/withastro/astro/issues/3045 -->
 <style is:global>
@@ -53,18 +143,6 @@ console.error(data)
     .markdown h2 {
         margin-bottom: 0.5em;
         /* font-size: 1.75em; */
-    }
-
-    .markdown table, th, td {
-        border: 2px solid #333;
-    }
-
-    .markdown table {
-        border-collapse: collapse;
-    }
-
-    .markdown td {
-        padding: 6px 12px;
     }
 
     .markdown code {
