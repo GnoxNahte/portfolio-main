@@ -1,0 +1,87 @@
+---
+// NOTE: This file calls itself recursively so it can't be combined with TableOfContent.
+// In line 18, it shows Astro.self and inserts any subheadings (if there are any)
+// So don't try to combine it with TableOfContent
+import type { HeadingWithSubheadings } from './TableOfContent.astro';
+
+export interface Props {
+    headings: HeadingWithSubheadings[];
+}
+
+const { headings } = Astro.props as Props;
+---
+
+<ul>
+    {headings.map(heading => {
+        return (
+            <li>
+                <span><a href={`#${heading.text.toLowerCase().replaceAll(" ", "-")}`}>{heading.text}</a></span>
+                {heading.subheadings.length > 0 && <Astro.self headings={heading.subheadings} />}
+            </li>
+        );
+    })}
+</ul> 
+
+<style>
+    ul {
+        --indent-size: 1.5em; 
+        margin-top: 8px;
+        padding: 0;
+        list-style: none;
+        position:relative;
+    }
+    
+    ul ul {
+        margin-top: 0;
+        padding-left: var(--indent-size);
+    }
+    
+    li {
+        position:relative;
+    }
+    
+    li a {
+        text-decoration: none;
+        display: inline-block;
+        width: calc(100% - 1em);
+        /* color: grey; */
+        opacity: 0.4;
+        color: var(--text-color);
+        padding-left: var(--indent-size);
+    }
+
+    li a.active-heading {
+        opacity: 1;
+    }
+    
+    /* li:has(.active-heading) a {
+        opacity: 1;
+    } */
+
+    li span:has(.active-heading) {
+        background-color: var(--color-primary);
+        background-color: #6d89efb7; /* Based from color-primary but slightly darker */
+        
+        opacity: 1;
+    }
+    
+    li span {
+        display: inline-block;
+        width: 100%;
+
+        /* transition: background-color 0.1s; */
+    }
+
+    li span:hover {
+        backdrop-filter: brightness(300%);
+    }
+
+    /* Puts vertical indent lines */
+    ul li::before {
+        content: "\200B";
+        position: absolute;
+        border-right: 1px solid grey;
+        top: 0;
+        bottom: 0;    
+    }
+</style>

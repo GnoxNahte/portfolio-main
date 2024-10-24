@@ -1,0 +1,201 @@
+---
+import type { MarkdownHeading } from 'astro'
+import TableOfContentElements from './TableOfContentElements.astro';
+
+export interface Props {
+    headings: MarkdownHeading[];
+}
+
+export type HeadingWithSubheadings = MarkdownHeading & {
+    subheadings: HeadingWithSubheadings[];
+};
+
+const { headings } = Astro.props as Props;
+const tableOfContent = generateTableOfContent(headings);
+
+function generateTableOfContent(headings: MarkdownHeading[]) {
+    if (!headings || headings.length === 0)
+        return undefined;
+
+    
+    // Check if first heading is lowest depth
+    let firstHeadingDepth = headings[0].depth;
+    for (let i = 0; i < headings.length; i++) {
+        const depth = headings[i].depth;
+        if (depth < firstHeadingDepth) {
+            console.error(`First Heading isn't the most important heading. First heading: ${firstHeadingDepth}. Lowest Depth: ${depth}`);
+            return undefined;
+        }
+    }
+
+    let tableOfContent: HeadingWithSubheadings[] = [
+        {
+            ...headings[0],
+            subheadings: [],
+        }
+    ];
+    
+    if (headings.length === 1)
+        return tableOfContent;
+
+    let currIndex = 1;
+
+    buildHeadingsTree(tableOfContent, tableOfContent[0]);
+    // printTableOfContent(tableOfContent); 
+    return tableOfContent;
+
+    function buildHeadingsTree(prevParentHeading: HeadingWithSubheadings[], prevHeading: HeadingWithSubheadings) {
+        while (currIndex < headings.length) {
+        
+            const heading: HeadingWithSubheadings = {
+                ...headings[currIndex],
+                subheadings: [],
+            };
+
+            const prevDepth = prevHeading.depth;
+
+            if (heading.depth < prevDepth) {
+                return undefined;
+            }
+            else if (heading.depth === prevDepth) {
+                prevParentHeading.push(heading);
+                ++currIndex;
+                buildHeadingsTree(prevParentHeading, heading);
+            }
+            else if (heading.depth > prevDepth) {
+                prevHeading.subheadings.push(heading);
+                ++currIndex;
+                buildHeadingsTree(prevHeading.subheadings, heading);
+            }
+        }
+    }
+
+    // function printTableOfContent(headings: HeadingWithSubheadings[]) {
+    //     for (let i = 0; i < headings.length; i++)
+    //     {
+    //         const heading = headings[i];
+    //         console.log(`${"\t".repeat(heading.depth)}${heading.depth}: ${heading.text}`);
+    //         // console.log(heading)
+    //         printTableOfContent(heading.subheadings);
+    //     }
+    // }
+}
+
+---
+
+<div id="table-of-content-container">
+    <div id="table-of-content">
+        <!-- <Image src={leftArrowSVG} alt="expand-toc" width="25" height="25" class:list={"expand-toc-arrow"}></Image> -->
+        <h2>Table of Contents</h2>
+        {tableOfContent && <TableOfContentElements headings={tableOfContent}/>}
+    </div>
+</div>
+    
+<style>
+    #table-of-content-container {
+        width: max-content;
+        /* Any smaller and the "Table of Contents" heading will wrap" */
+        min-width: 12.5em;
+        max-width: 17em;
+        height: fit-content;
+        
+        position: sticky;
+        top: 25px;
+        
+        padding: 15px 20px 10px;
+        margin-left: 25px;
+        
+        border-radius: 10px;
+        background-color: var(--color-secondary);
+        
+        --transition-duration: .6s;
+        transition: opacity calc(0.5 * var(--transition-duration)), 
+                    max-width var(--transition-duration), 
+                    min-width var(--transition-duration), 
+                    padding var(--transition-duration);
+        transition-timing-function: ease-out;
+    }
+    
+    #table-of-content {
+        height: fit-content;
+        background-color: var(--color-secondary);
+    }
+    
+    #table-of-content h2 {
+        margin: 0;
+        padding: 0;
+        border-bottom: none;
+    }
+
+    @media screen and (max-width: 70em) {
+        #table-of-content-container {
+            min-width: 0;
+            max-width: 0;
+            width: 0;
+            margin-left: 0;
+            padding: 0;
+            opacity: 0;
+            overflow: hidden;
+            /* transition: all 0.5s, opacity 0.5s, min-width 0.7s;
+            transition-timing-function: linear; */
+        }
+    }
+
+</style>
+
+<!-- TODO: Highlight each heading as the user scrolls -->
+<script>
+
+    const activeHeadingClass = "active-heading";
+    let tocHeadings: HTMLCollectionOf<HTMLAnchorElement>;
+    let markdownHeadings: NodeListOf<HTMLHeadingElement>;
+    let activeHeading: HTMLAnchorElement;
+
+    const toc = document.getElementById("table-of-content");
+    if (!toc) {
+        throw new Error("Cannot find Table of content");
+    }
+    // const tocHeadings = toc.querySelectorAll("li:not(:has(ul))");
+    tocHeadings = toc.getElementsByTagName("a");
+    activeHeading = tocHeadings[0];
+    activeHeading.classList.add(activeHeadingClass);
+    
+    const markdown = document.querySelector(".markdown");
+    if (!markdown)
+        throw new Error("Cannot find Markdown");
+
+    markdownHeadings = markdown.querySelectorAll("h1,h2,h3,h4,h5,h6") as NodeListOf<HTMLHeadingElement>;
+    
+    window.addEventListener("scroll", OnScroll);
+
+    function OnScroll() {
+        let newActiveHeading: HTMLAnchorElement | null = null;
+        
+        if (scrollY <= markdownHeadings[0].offsetTop) {
+            newActiveHeading = tocHeadings[0];
+        }
+        else {
+            // Iterate backwards
+            // Find the heading that the user is on
+            for (let i = markdownHeadings.length - 1; i >= 0; --i) {
+                // scrollY + 3 becuase when the user clicks on a link leading to a heading, e.g. project/#heading1,
+                // the browser will scroll to the heading but not exactly there. so just use + 3 as a buffer
+                if (scrollY + 3 > markdownHeadings[i].offsetTop) {
+                    newActiveHeading = tocHeadings[i];
+                    break;
+                }
+            }
+            
+            if (!newActiveHeading) {
+                throw new Error("Cannot find Active Heading. ScrollY: " + scrollY + " | heading count: " + tocHeadings.length + " Test: " + markdownHeadings[0].offsetTop);
+            }
+        }
+
+        // Switch active class tags if the active heading changed
+        if (activeHeading != newActiveHeading) {
+            activeHeading.classList.remove(activeHeadingClass);
+            activeHeading = newActiveHeading;
+            newActiveHeading.classList.add(activeHeadingClass);
+        }
+    }
+</script>

@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import { Image } from 'astro:assets';
 import TagContainer from "../../components/TagContainer.astro";
 import { GetDuration } from "../../scripts/utilities";
+import TableOfContent from "../../components/TableOfContent/TableOfContent.astro";
 
 // Generate a new path for every collection entry
 export async function getStaticPaths()  {
@@ -18,7 +19,7 @@ export interface Props {
 }
 
 const { project } = Astro.props as Props;
-const { Content } = await project.render();
+const { Content, headings } = await project.render();
 
 // For easier access
 const data = project.data;
@@ -46,28 +47,32 @@ if (data.startDate && data.releaseDate)
             style={data.bannerMaxWidth && ("max-width: " + data.bannerMaxWidth)}
         />
     </div>}
-    <article>
-        <h1 class="title">{project.data.title}</h1>
-        { data.subtitle && <p class="subtitle">{data.subtitle}</p> }
-        { data.releaseDate ? 
-            <p>Date: <span class="date">{data.startDate.toLocaleDateString(userLocale, dateOptions)} - {data.releaseDate.toLocaleDateString(userLocale, dateOptions)} ({duration})</span></p>
-            :
-            <p>Date: <span class="date">{data.startDate.toLocaleDateString(userLocale, dateOptions)} - Ongoing</span></p>
-        }
-        <div class="tag-container">
-            <p>Tags: </p>
-            <TagContainer tags={data.tags} />
-        </div>
-        <ul class="list-of-links">
-            Links:
-            {data.projectLink != null && <li><a href={data.projectLink} target="_blank">Project Link</a></li>}
-            {data.githubLink != null && <li><a href={data.githubLink} target="_blank">GitHub Link</a></li>}
-        </ul>
-        
-        <div class="markdown">
-            <Content />
-        </div>
-    </article>
+    <div class="layout-container">
+        <article>
+            <h1 class="title">{project.data.title}</h1>
+            { data.subtitle && <p class="subtitle">{data.subtitle}</p> }
+            { data.releaseDate ? 
+                <p>Date: <span class="date">{data.startDate.toLocaleDateString(userLocale, dateOptions)} - {data.releaseDate.toLocaleDateString(userLocale, dateOptions)} ({duration})</span></p>
+                :
+                <p>Date: <span class="date">{data.startDate.toLocaleDateString(userLocale, dateOptions)} - Ongoing</span></p>
+            }
+            <div class="tag-container">
+                <p>Tags: </p>
+                <TagContainer tags={data.tags} />
+            </div>
+            <ul class="list-of-links">
+                Links:
+                {data.projectLink != null && <li><a href={data.projectLink} target="_blank">Project Link</a></li>}
+                {data.githubLink != null && <li><a href={data.githubLink} target="_blank">GitHub Link</a></li>}
+            </ul>
+            
+            <div class="markdown">
+                <Content />
+            </div>
+        </article>
+
+        <TableOfContent headings={headings}/>
+    </div>
 </Layout> 
 
 <style>
@@ -99,12 +104,26 @@ if (data.startDate && data.releaseDate)
         bottom: 0;
     }
 
-    .banner-container + article h1 {
+    article > h1 {
         margin-top: 0;
+        margin-bottom: 0;
     }
 
-    h1:has(+ .subtitle) {
-        margin-bottom: 0;
+    .layout-container {
+        display: flex;
+        padding: 0 2em;
+        max-width: 80em;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+        transition: padding 1s linear;
+        
+        article {
+            margin-left: 0;
+            margin-right: 0;
+
+            padding: 0;
+        }
     }
     
     .subtitle {
@@ -127,6 +146,12 @@ if (data.startDate && data.releaseDate)
         padding: 0;
         display: flex;
         gap: 0.25em;
+    }
+
+    @media (max-width: 70em) {
+        .layout-container {
+            padding: 0 1em;
+        }
     }
 </style>
 
