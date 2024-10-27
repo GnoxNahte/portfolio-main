@@ -20,6 +20,7 @@ const projectsCollection = defineCollection({
         // TODO: Add verification
         tags: z.array(z.string()),
         isUnlisted: z.boolean().optional(), // Page is available but won't show up in "/projects/" page;
+        isFeatured: z.boolean().optional(),
     })
 })
 

@@ -61,6 +61,7 @@ const dateAndDurationString = `${startDateString} - ${endDateString} (${duration
         <p class="project-date">Date: <i>{dateAndDurationString}</i></p>
         <p class="project-description">{data.shortDescription}</p>
     </div>
+    {data.isFeatured && <div class="featured-ribbon"><span>Featured</span></div>}
 </a>
 
 <style>
@@ -76,6 +77,8 @@ const dateAndDurationString = `${startDateString} - ${endDateString} (${duration
         --box-shadow-color: #00000040;
 
         display: flex;
+        position: relative; /* For ribbon */
+
         /* max-height: 12.5rem; */
         height: max-content;
 
@@ -83,6 +86,7 @@ const dateAndDurationString = `${startDateString} - ${endDateString} (${duration
         text-decoration: none;
 
         color: var(--color-text);
+        border: 2px solid #555;
 
         transition: transform 0.5s, box-shadow 0.5s;
 
@@ -114,6 +118,7 @@ const dateAndDurationString = `${startDateString} - ${endDateString} (${duration
         height: min-content;
 
         text-wrap: pretty;
+        overflow: auto;
         
         p {
             margin: 0;
@@ -140,6 +145,48 @@ const dateAndDurationString = `${startDateString} - ${endDateString} (${duration
             opacity: 0.6 !important;
             margin-bottom: 0.1em;
         }
+    }
+
+    /* Ribbon base CSS from: https://codepen.io/nxworld/pen/oLdoWb */
+    .featured-ribbon {
+        --ribbon-size: 125px;
+        --ribbon-space: 8px;
+        width: var(--ribbon-size);
+        height: var(--ribbon-size);
+        overflow: hidden;
+        position: absolute;
+        top: calc(var(--ribbon-space) * -1);
+        right: calc(var(--ribbon-space) * -1);
+    }
+    .featured-ribbon::before,
+    .featured-ribbon::after {
+        position: absolute;
+        z-index: -2;
+        content: '';
+        display: block;
+        border: calc(var(--ribbon-space) * 0.5 - 0.5px) solid color-mix(in srgb, var(--color-primary) 80%, #000 20%);
+    }
+    .featured-ribbon::before {
+        top: 0;
+        left: 0;
+    }
+    .featured-ribbon::after {
+        bottom: 0;
+        right: 0;
+    }
+    .featured-ribbon span {
+        position: absolute;
+        display: block;
+        width: calc(var(--ribbon-size) * 1.5);
+        padding: calc(var(--ribbon-space) * 1.5) 0;
+        background-color: var(--color-primary);
+        color: #fff;
+        font: 700 14px/1 'Lato', sans-serif;
+        text-transform: uppercase;
+        text-align: center;
+        left: -18px;
+        top: 30px;
+        transform: rotate(45deg);
     }
 
     @media (max-width: 60em) {
