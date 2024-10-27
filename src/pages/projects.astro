@@ -81,6 +81,7 @@ projects.sort((a, b) => {
         position: sticky;
         top: 1em;
         width: 15em;
+        min-width: 10em;
         height: fit-content;
         flex-direction: column;
         gap: 1em;
@@ -217,17 +218,19 @@ projects.sort((a, b) => {
             opacity: 1;
             padding: 1em;
         }
-
+        
         to {
+            border-width: 0;
             max-height: 0;
             padding: 0 1em;
             margin-bottom: 0;
             opacity: 0;
         }
     }
-
+    
     @keyframes showCard {
         from {
+            border-width: 0;
             max-height: 0;
             padding: 0 1em;
             margin-bottom: 0;
@@ -241,8 +244,16 @@ projects.sort((a, b) => {
             opacity: 1;
         }
     }
+    
+    /* When ProjectCard changes their height. 
+        Not really a good solution but not sure any other solution */
+    @media (max-width: 60em) {
+        .project-container {
+            --project-card-max-height: 25em;
+        }
+    }
 
-    @media (max-width: 70em) {
+    @media (max-width: 40em) {
         .container {
             flex-direction: column;
         }
@@ -256,14 +267,15 @@ projects.sort((a, b) => {
             flex-direction: row;
             flex-wrap: wrap;
 
-            .filter-tag-container {
+            /* .filter-tag-container { */
                 /* TODO: Test this, wrap with background color? */
-                padding: 0.5em;
-                border: 2px solid #666;
+                /* padding: 0.5em; */
+                /* border: 2px solid #666; */
                 /* background-color: color-mix(in srgb, var(--color-secondary) 100%, var(--tag-color) 25%); */
-                border-radius: 0.5em;
-                width: fit-content;
-            }
+
+                /* border-radius: 0.5em; */
+                /* width: fit-content; */
+            /* } */
         }
     }
 </style>
@@ -402,7 +414,7 @@ projects.sort((a, b) => {
             project.projectCardEl?.classList.toggle("hide", !ifShow)
         }
 
-        // Hide this if there is at lesat 1 project
+        // Hide this if there is at least 1 project
         noProjectsFoundCard?.classList.toggle("hide", count > 0);
     }
 </script>

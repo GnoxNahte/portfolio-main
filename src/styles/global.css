@@ -226,11 +226,11 @@ details {
     background-color: var(--color-background-secondary);
     border-radius: 0.5em;
     border: 2px solid color-mix(in srgb, var(--color-background-secondary), #FFF 45%);
-
-    :not(:first-child) {
+/* 
+    &>*:not(:first-child) {
         margin-top: 1em;
         margin-left: 1em;
-    }
+    } */
 
     *:last-child {
         margin-bottom: 0.4em;
@@ -418,3 +418,12 @@ iframe[src*="youtube.com"] {
         --tag-color: red;
     }
 }
+
+/* Accessibility */
+/*  */
+/* @media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0s !important;
+        transition-duration: 0s !important;
+    }
+} */

@@ -50,7 +50,7 @@ if (data.startDate && data.releaseDate)
     <div class="layout-container">
         <article>
             <h1 class="title">{project.data.title}</h1>
-            { data.subtitle && <p class="subtitle">{data.subtitle}</p> }
+            { <p class="subtitle">{ data.subtitle ?? data.shortDescription }</p> }
             { data.releaseDate ? 
                 <p>Date: <span class="date">{data.startDate.toLocaleDateString(userLocale, dateOptions)} - {data.releaseDate.toLocaleDateString(userLocale, dateOptions)} ({duration})</span></p>
                 :
@@ -127,7 +127,8 @@ if (data.startDate && data.releaseDate)
     }
     
     .subtitle {
-        color: rgb(164, 157, 145);;
+        /* color: rgb(164, 157, 145); */
+        opacity: 0.6;
         margin: 0;
     }
 
@@ -176,10 +177,41 @@ if (data.startDate && data.releaseDate)
         /* font-size: 1.75em; */
     }
 
-    .markdown code {
-        background-color: #444;
-        padding: 0.2em 0.4em;
-        border-radius: 7px;
+    .markdown pre {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        border-radius: 0.5em;
+        /* width: 38em; */
+        counter-reset: line;
+    }
+
+    .markdown pre code {
+        display: block;
+        box-sizing: border-box;
+        padding: 1.5em;
+        /* word-break: break-all; */
+        /* Not sure why overflow-x isn't working. It resizes the whole layout-container instead. 
+            For now, wrap everything */
+        overflow-x: auto;
+        white-space: pre-wrap;
+
+        /* Not sure why it has a empty line at the end. But just remove it */
+        & > span:last-child:empty {
+            display: none;
+        }
+    }
+
+    /* Add line numbers */
+    .markdown code > span:before {
+        counter-increment: line;
+        content: counter(line);
+        display: inline-block;
+        border-right: 1px solid #ddd;
+        padding: 0 0em;
+        margin-right: 1em;
+        width: 1.1em;
+        color: #888
     }
 
     .markdown .person-a {
@@ -199,6 +231,26 @@ if (data.startDate && data.releaseDate)
         /* width: 2.75em; */
         text-align: center;
     }
+    
+    @keyframes highlightFade {
+        from { background-color: var(--color-primary); }
+        to { background-color: transparent; }
+    }
+
+    .markdown {
+        h1, h2, h3, h4, h5, h6 {
+            /* Do this to have some spacing on the left for the highlight */
+            padding: 0.1em 0.5em;
+            transform: translateX(-0.5em);
+            
+            border-radius: 5px;
+
+            &.highlight-header {
+                animation: highlightFade 2s ease-out;
+            }
+        }
+    }
+
 
 </style>
 
@@ -210,4 +262,37 @@ if (data.startDate && data.releaseDate)
         if (url.host !== window.location.host)
             link.target = "_blank";    
     }
+
+    // Add a link icon to all headers
+    // const markdown = document.querySelector(".markdown");
+    // const headings = markdown?.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    // headings?.forEach((heading) => {
+    //     const link = document.createElement("a");
+    //     link.text = "Link";
+    //     link.href = `#${FormatHeadingToLink(heading.textContent ?? "")}`;
+    //     link.classList.add("heading-link");
+    //     heading.appendChild(link);
+    // })
+
+    // Highlight heading on page load or when clicking on heading
+    function highlightHeading() {
+        const hash = window.location.hash;
+        
+        if (!hash)
+            return;
+
+        const header = document.querySelector(hash)as HTMLHeadingElement;
+        if (!header)
+            return;
+
+        // Resets it
+        header.classList.remove("highlight-header");
+        void header.offsetWidth; 
+
+        header.classList.add("highlight-header");
+    }
+    
+    highlightHeading();
+    window.addEventListener("hashchange", highlightHeading);
+
 </script>

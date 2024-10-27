@@ -1,13 +1,30 @@
 ---
-import Layout from '../layouts/Layout.astro'
+import Layout from "../layouts/Layout.astro";
 
 interface Props {
-  error: unknown
+  error: unknown;
 }
-const { error } = Astro.props
+const { error } = Astro.props;
 ---
 
 <Layout title="Error" description=`There was an error: ${error}`>
-    <p>You have an enounted an unexpected error. Please contact me to inform me about the error. Thanks! </p>
-    <p>{error instanceof Error ? error.message : 'Unknown error'}</p>
+  <div class="container">
+    <p>You have an encountered an unexpected error. Please <a href="/about/">contact me</a> to inform me about the error. Thanks!</p>
+    <div class="error">
+        <p>Error</p>
+        <p>{error instanceof Error ? error.message : "Unknown error"}</p>
+    </div>
+  </div>
 </Layout>
+
+<style>
+    p {
+        color: red;
+    }
+    .container {
+        background-color: red;
+    }
+    div.error {
+        background-color: black;
+    }
+</style>

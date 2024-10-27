@@ -2,19 +2,23 @@
 import { Image } from 'astro:assets';
 import Layout from "../layouts/Layout.astro";
 // Game Dev Thumbnails
-import SpellboundRollersImg from "../images/gamedev/MapleBingo/MapleBingo_Thumbnail.png";
-import SentientBuffetImg from "../images/gamedev/SentientBuffet/SentientBuffetThumbnail.png";
+import SentientBuffetImg from "../images/gamedev/SentientBuffet/SentientBuffet_Banner.png";
+import SpellboundRollersImg from "../images/gamedev/SpellboundRollers/SpellboundRollers_Banner.png";
+// import TheGreatTunaEscapeImg from "../images/gamedev/TheGreatTunaEscape_Thumbnail2.png";
+import AwakenTheChaosImg from "../images/gamedev/AwakenTheChaos/AwakenTheChaos_Thumbnail.png";
+import IWP_Img from "../images/gamedev/IndependentWorkProject/IWP_Warrior.png";
 // Web Dev Thumbnails
-import EventRegistrationImg from "../images/webdev/EventRegistration/EventRegistration_Icon.png";
-import OldPortfolioImg from "../images/webdev/PortfolioWebsite/Portfolio_Thumbnail.png"
-import ObsidianAutoEmbed from "../images/webdev/ObsidianAutoEmbed/obsidian-icon.svg"
+// import EventRegistrationImg from "../images/webdev/EventRegistration/EventRegistration_Icon.png";
+import OldPortfolioImg from "../images/webdev/OldPortfolioWebsite/Banner.png"
+import PortfolioImg from "../images/webdev/PortfolioWebsite/Thumbnail.png"
+import ObsidianAutoEmbed from "../images/webdev/ObsidianAutoEmbed/AutoEmbed_Preview.gif"
 
 // const images = await Astro.glob("../images/");
 // console.log("Imagecount: " + images.length);
 
 // TODO: Change all to gifs
-const gamedevThumbnails: ImageMetadata[] = [SpellboundRollersImg, SentientBuffetImg];
-const webdevThumbnails: ImageMetadata[] = [ObsidianAutoEmbed, OldPortfolioImg, EventRegistrationImg];
+const gamedevThumbnails: ImageMetadata[] = [SpellboundRollersImg, SentientBuffetImg,  AwakenTheChaosImg, IWP_Img];
+const webdevThumbnails: ImageMetadata[] = [ObsidianAutoEmbed, PortfolioImg, OldPortfolioImg];
 
 const repeatArray = new Array<number>(4).fill(0);
 ---
@@ -70,14 +74,13 @@ const repeatArray = new Array<number>(4).fill(0);
 		font-family: "Permanent Marker", cursive;
   		font-style: normal;
 		font-weight: 500;
-	}
-	:global(main) {
 		/* Scales with different size */
 		/* But doesn't change size when zoom the page. */
 		font-size: max(min(2vw, 2vh), 1em);
 	}
 
 	h1, h2 {
+
 		text-align: center;
 		margin: 10px 0;
 		letter-spacing: 1.5px;
@@ -106,13 +109,21 @@ const repeatArray = new Array<number>(4).fill(0);
 	a:link, a:visited {
 		color: unset;
 	}
-	a:hover {
+
+	/* Emphasize the link when depending on which type of project they are hovering over */
+	/* Any link hover */
+	a:hover,
+	/* Emphasize link when user hover overs the gamedev thumbnails */
+	#gamedev-thumbnail:hover ~ .container #gamedev-link,
+	/* Emphasize link when user hover overs the gamedev thumbnails */
+	#webdev-thumbnail:hover ~ .container #webdev-link {
 		font-size: 1.15em;
 		font-weight: bolder;
 	}
 
 	.container {
-		--container-backdrop-filter: blur(8px) contrast(1.1);
+		/* --container-backdrop-filter: blur(8px) contrast(1.1); */
+		--container-backdrop-filter: blur(4px) contrast(1.1);
 
 		display: flex;
 		flex-direction: column;
@@ -145,8 +156,13 @@ const repeatArray = new Array<number>(4).fill(0);
 		animation: 30s linear 0s infinite normal;
 		transition: opacity 0.5s;
 	}
-	.thumbnail-list:hover, .thumbnail-list.hover{
-		opacity: 0.5;
+
+	/* Increase opacity to emphasize which project type they are hovering over */
+	.thumbnail-list:hover,
+	#gamedev-thumbnail:has(~ .container #gamedev-link:hover),
+	#webdev-thumbnail:has(~ .container #webdev-link:hover),
+	.thumbnail-list:has(~ .container #all-projects-link:hover) {
+		opacity: 0.6;
 	}
 
 	:global(.light) .thumbnail-list {
@@ -163,7 +179,8 @@ const repeatArray = new Array<number>(4).fill(0);
 	}
 	#webdev-thumbnail{
 		right: 2.5vw;
-		animation-name: slow-scroll-reverse;
+		animation-name: slow-scroll;
+		animation-direction: reverse;
 	}
 	.thumbnail {
 		width: 100%;
@@ -185,15 +202,6 @@ const repeatArray = new Array<number>(4).fill(0);
 		}
 	}
 
-	@keyframes slow-scroll-reverse {
-		from {
-			translate: 0 0;
-		}
-		to {
-			translate: 0 -50%;
-		}
-	}
-
 	#about-link {
 		position: absolute;
 		bottom: 2em;
@@ -205,44 +213,11 @@ const repeatArray = new Array<number>(4).fill(0);
 
 </style>
 
-<script>
-	function Init() {
-		// Quick check to see if it is the correct page. For when astro:page-load gets called after leaving this page
-		if (window.location.pathname !== "/")
-			return;
-
-		// Highlights the thumbnails when the user hovers over the link
-		function OnHover(div: HTMLDivElement) {
-			div.classList.add("hover");
-		}
-		
-		function OnLeave(div: HTMLDivElement) {
-			div.classList.remove("hover");
-		}
-
-		const gamedevThumbnail = document.getElementById("gamedev-thumbnail") as HTMLDivElement;
-		const gamedevLink = document.getElementById("gamedev-link") as HTMLAnchorElement;
-		gamedevLink.addEventListener("mouseover", ()=>OnHover(gamedevThumbnail));
-		gamedevLink.addEventListener("mouseleave", ()=>OnLeave(gamedevThumbnail));
-
-		const webdevThumbnail = document.getElementById("webdev-thumbnail") as HTMLDivElement;
-		const webdevLink = document.getElementById("webdev-link") as HTMLAnchorElement;
-		webdevLink.addEventListener("mouseover", ()=>OnHover(webdevThumbnail));
-		webdevLink.addEventListener("mouseleave", ()=>OnLeave(webdevThumbnail));
-
-		const seeAllLink = document.getElementById("all-projects-link") as HTMLAnchorElement;
-		seeAllLink.addEventListener("mouseover", ()=>OnHover(webdevThumbnail));
-		seeAllLink.addEventListener("mouseover", ()=>OnHover(gamedevThumbnail));
-		seeAllLink.addEventListener("mouseleave", ()=>OnLeave(webdevThumbnail));
-		seeAllLink.addEventListener("mouseleave", ()=>OnLeave(gamedevThumbnail));
-
-		// ===== Change animation duration based on height =====
-		// TODO: Add on resize listener
-		// TODO: Change animation speed instead of duration
-		const animSpeed = 150; // In pixels per seconds
-		gamedevThumbnail.style.animationDuration = (gamedevThumbnail.clientHeight / animSpeed).toString() + "s";
-		webdevThumbnail.style.animationDuration = (webdevThumbnail.clientHeight / animSpeed).toString() + "s";
-	}
-
-	Init();
-</script>
+<!-- <script>
+	// ===== Change animation duration based on height =====
+	// TODO: Add on resize listener
+	// TODO: Change animation speed instead of duration
+	const animSpeed = 150; // In pixels per seconds
+	gamedevThumbnail.style.animationDuration = (gamedevThumbnail.clientHeight / animSpeed).toString() + "s";
+	webdevThumbnail.style.animationDuration = (webdevThumbnail.clientHeight / animSpeed).toString() + "s";
+</script> -->
