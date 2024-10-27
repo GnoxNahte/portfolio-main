@@ -16,7 +16,7 @@ const categoryRegexResult = tag.path.match(categoryRegex);
 const category = categoryRegexResult ? categoryRegexResult[1] : Tag.ErrorTag.tag;
 ---
 
-<li class="tag" data-category={category} data-tag={tag.tag}>
+<li class="tag" title={`${category} Tag`} data-category={category} data-tag={tag.tag}>
     {
         ifAddLink ? 
             // TODO: Add href

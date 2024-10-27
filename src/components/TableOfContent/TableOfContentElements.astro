@@ -2,6 +2,7 @@
 // NOTE: This file calls itself recursively so it can't be combined with TableOfContent.
 // In line 18, it shows Astro.self and inserts any subheadings (if there are any)
 // So don't try to combine it with TableOfContent
+import { FormatHeadingToLink } from '../../scripts/utilities';
 import type { HeadingWithSubheadings } from './TableOfContent.astro';
 
 export interface Props {
@@ -9,13 +10,15 @@ export interface Props {
 }
 
 const { headings } = Astro.props as Props;
+
+
 ---
 
 <ul>
     {headings.map(heading => {
         return (
             <li>
-                <span><a href={`#${heading.text.toLowerCase().replaceAll(" ", "-")}`}>{heading.text}</a></span>
+                <span><a href={`#${FormatHeadingToLink(heading.text)}`}>{heading.text}</a></span>
                 {heading.subheadings.length > 0 && <Astro.self headings={heading.subheadings} />}
             </li>
         );

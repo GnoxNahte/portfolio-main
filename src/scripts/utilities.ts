@@ -47,3 +47,10 @@ export function GetDuration(startDate: Date, endDate: Date) : string {
 
     return duration;
 }
+
+export function FormatHeadingToLink(heading: string): string {
+    return heading
+            .toLowerCase()
+            .replaceAll(" ", "-")
+            .replaceAll(/[&?#\/\\%+='"`[\]{}()^~|:]/g, "");
+}

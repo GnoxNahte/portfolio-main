@@ -36,17 +36,14 @@ const metadata: EntryMetadata = {
     slug: projectCollectionEntry.slug
 };
 
-let duration = "";
-if (data.startDate && data.releaseDate) {
-    duration = GetDuration(data.startDate, data.releaseDate);
-}
 const dateOptions: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" };
 const userLocale="en-UK";
-let dateAndDurationString = data.startDate.toLocaleDateString(userLocale, dateOptions);
-if (data.releaseDate)
-    dateAndDurationString += ` - ${data.releaseDate.toLocaleDateString(userLocale, dateOptions)} (${duration})`;
-else
-    dateAndDurationString += " - Ongoing";
+
+// If release date is undefined, get duration from start date to today
+const duration = GetDuration(data.startDate, data.releaseDate ?? new Date());
+const startDateString = data.startDate.toLocaleDateString(userLocale, dateOptions);
+const endDateString = data.releaseDate ? data.releaseDate.toLocaleDateString(userLocale, dateOptions) : "Ongoing";
+const dateAndDurationString = `${startDateString} - ${endDateString} (${duration})`;
 ---
 
 <a href=`/projects/${metadata.slug}/` class="card project-card" data-title={data.title} data-tags={data.tags} data-astro-prefetch>
@@ -148,11 +145,12 @@ else
     @media (max-width: 60em) {
         .project-card {
             flex-direction: column;
+            max-height: none;
         }
 
         img {
             width: 100%;
-            max-height: 15em;
+            max-height: 10em !important;
         }
 
         .project-details {
