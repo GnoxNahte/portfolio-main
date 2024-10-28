@@ -52,6 +52,7 @@ const dateAndDurationString = `${startDateString} - ${endDateString} (${duration
         src={data.thumbnailImg} 
         alt={"Thumbnail for " + data.title} 
         transition:name={`project-img-${data.title}`}
+        widths={[ 220, 540, 720, data.thumbnailImg.width]}
     />
     <div class="project-details">
         <p class="project-title">{data.title}</p>

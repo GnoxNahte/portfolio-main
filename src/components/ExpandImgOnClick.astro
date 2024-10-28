@@ -4,22 +4,23 @@ import { Image } from 'astro:assets';
 
 export interface Props {
     image: ImageMetadata;
+    alt: string;
 }
 
-const { image } = Astro.props as Props;
+const { image, alt } = Astro.props as Props;
 ---
 
 <div class="expand-img-container">
     <div class="expanded-container" aria-hidden="true">
-        <Image src={image} alt="Expand the image" class="expanded-img"/>
+        <Image src={image} alt={alt + " - Expanded"} class="expanded-img"/>
     </div>
-    <Image src={image} alt="Expand the image" class="unexpanded-img"/>
+    <Image src={image} alt={alt} class="unexpanded-img" widths={[240, 540, 720, image.width]}/>
 </div>
 
 <style>
 
     .expand-img-container {
-        width: fit-content;
+        /* width: fit-content; */
         cursor: zoom-in;
 
         img {
@@ -73,6 +74,7 @@ const { image } = Astro.props as Props;
             left: 0;
             right: 0;
             margin: auto;
+            background-color: transparent;
         }
     }
 </style>
