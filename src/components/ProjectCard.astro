@@ -48,6 +48,7 @@ const dateAndDurationString = `${startDateString} - ${endDateString} (${duration
 
 <a href=`/projects/${metadata.slug}/` class="card project-card" data-title={data.title} data-tags={data.tags} data-astro-prefetch>
     <Image 
+        class="loading-spinner"
         src={data.thumbnailImg} 
         alt={"Thumbnail for " + data.title} 
         transition:name={`project-img-${data.title}`}
@@ -102,7 +103,7 @@ const dateAndDurationString = `${startDateString} - ${endDateString} (${duration
         color: var(--color-text);
     }
     
-    img {
+    .project-card img {
         object-fit: contain;
         width: 25%;
         min-width: 25%;
@@ -195,7 +196,7 @@ const dateAndDurationString = `${startDateString} - ${endDateString} (${duration
             max-height: none;
         }
 
-        img {
+        .project-card img {
             width: 100%;
             max-height: 10em !important;
         }
