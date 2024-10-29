@@ -316,30 +316,7 @@ projects.sort((a, b) => {
         projectsData.push(data)
     }
     
-    GetInfoFromURL();
-    UpdateProjectVisibility();
-
-    function GetInfoFromURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const params = Object.fromEntries(urlParams.entries());
-
-        const urlSearchInput = params["searchText"];
-        if (urlSearchInput !== undefined) {
-            searchText = urlSearchInput;
-        }
-        
-        const urlIncludeTags = params["includeTags"];
-        if (urlIncludeTags !== undefined)
-            includeTags = JSON.parse(urlIncludeTags);
-        else
-            includeTags = []; // Reset if not in url
-
-        const urlExcludeTags = params["excludeTags"];
-        if (urlExcludeTags !== undefined)
-            excludeTags = JSON.parse(urlExcludeTags);
-        else
-            excludeTags = []; // Reset if not in url
-    }
+    UpdatePage();
 
     // Selecting space bar if user presses '/'
     document.addEventListener('keydown', (event) => {
@@ -349,12 +326,14 @@ projects.sort((a, b) => {
         }
     });
 
+    // Register when the search input updates
     const searchInput = document.getElementById("search-input") as HTMLInputElement;
     searchInput?.addEventListener("input", () => {
         searchText = searchInput.value;
-        UpdateProjectVisibility();
+        UpdateProjects()
     });
 
+    // Register OnClick event listeners for tags
     const tags = filterPanel.getElementsByClassName("tag");
     for (const tag of tags) {
         const tagValue = (tag as HTMLElement).dataset.tag;
@@ -385,8 +364,23 @@ projects.sort((a, b) => {
                 includeTags.push(tagValue);
             }
 
-            UpdateProjectVisibility();
+            UpdateProjects();
         })
+    }
+
+    // Register when the back button is pressed.
+    // Docs: https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event
+    window.addEventListener("popstate", UpdatePage);
+
+    function UpdatePage() {
+        GetInfoFromURL();
+        UpdateTagStatus();
+        UpdateProjectVisibility();
+    }
+
+    function UpdateProjects() {
+        UpdateProjectVisibility();
+        UpdateURL();
     }
 
     function UpdateProjectVisibility() {
@@ -404,13 +398,61 @@ projects.sort((a, b) => {
             if (ifShow)
                 count++;
             
-            // project.projectCardEl.classList.remove("just-changed");
-            // if (project.projectCardEl.classList.contains("hide") === ifShow) 
-            //     project.projectCardEl.classList.add("just-changed");
             project.projectCardEl?.classList.toggle("hide", !ifShow)
         }
 
         // Hide this if there is at least 1 project
         noProjectsFoundCard?.classList.toggle("hide", count > 0);
+    }
+
+    function UpdateTagStatus() {
+        const tags = filterPanel.getElementsByClassName("tag");
+        for (const tag of tags) {
+            const tagValue = (tag as HTMLElement).dataset.tag;
+            if (!tagValue)
+            {
+                console.error("Can't find tag");
+                continue;
+            }
+
+            tag.classList.toggle(includeTagClass, includeTags.includes(tagValue));
+            tag.classList.toggle(excludeTagClass, excludeTags.includes(tagValue));
+        }
+    }
+
+    function GetInfoFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlParams.entries());
+
+        // NOTE: Resets the variable to it's default value if it isn't in the search parameters
+
+        searchText = params["search"] ?? "";
+
+        includeTags = params["include"]?.split(",") ?? [];
+        excludeTags = params["exclude"]?.split(",") ?? [];
+        
+        // console.log("========= NEW URL =========");
+        // console.log("include: " + includeTags);
+        // console.log("exclude: " + excludeTags);
+        // console.log("search: " + searchText);
+    }
+
+    function UpdateURL() {
+        const url = new URL(window.location.href);
+        const searchParams = new URLSearchParams();
+        if (searchText)
+            searchParams.set("search", searchText);
+        
+        if (includeTags && includeTags.length > 0)
+            searchParams.set("include", includeTags.toString());
+        if (excludeTags && excludeTags.length > 0)
+            searchParams.set("exclude", excludeTags.toString());
+
+        // window.location.search = searchParams.toString();
+        history.pushState({}, '', url.origin + url.pathname + "?" + searchParams.toString());
+    }
+
+    function UpdateProjectOrder() {
+
     }
 </script>
