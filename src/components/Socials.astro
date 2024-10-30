@@ -1,0 +1,72 @@
+---
+import { Image } from "astro:assets";
+
+import GitHubIcon from "../images/icons/social/github-mark-white.svg";
+import EmailIcon from "../images/icons/social/google-icon-email.svg";
+import TwitterIcon from "../images/icons/social/x-twitter-icon.svg";
+import LinkedInIcon from "../images/icons/social/LinkedIn-Icon.svg";
+import ItchIcon from "../images/icons/social/ItchIcon.svg";
+
+export interface Props {
+    showExtraSocials?: boolean
+}
+
+const { showExtraSocials = false } = Astro.props as Props;
+---
+
+<span class="social-icons">
+    <a href="mailto:gnoxnahte.dev@gmail.com" target="_blank"><Image src={EmailIcon} alt="Email: gnoxnahte.dev@gmail.com" title="Email" class="email" /></a>
+    <a href="https://github.com/GnoxNahte" target="_blank"><Image src={GitHubIcon} alt="GitHub: GnoxNahte" title="GitHub" /></a>
+    <a href="https://twitter.com/GnoxNahteDev" target="_blank"><Image src={TwitterIcon} alt="Twitter: GnoxNahteDev" title="X/Twitter" /></a>
+    <a href="https://www.linkedin.com/in/ethanongsg/" target="_blank"><Image src={LinkedInIcon} alt="LinkedIn: ethanongsg" title="LinkedIn" class="linked-in" /></a>
+    {showExtraSocials && 
+        <a href="https://gnoxnahtedev.itch.io/" target="_blank"><Image src={ItchIcon} alt="Itch.io: GnoxNahteDev" title="Itch.io" class="itch" /></a>
+    }
+</span>
+
+<style>
+    /* Social icons */
+    .social-icons {
+        --social-icons-padding: 0.7rem;
+        display: flex;
+        margin: 0;
+        height: calc(1.5rem + var(--social-icons-padding) * 2);
+    }
+
+    .social-icons a {
+        height: 100%;
+    }
+
+    .social-icons img {
+        height: calc(100% - var(--social-icons-padding) * 2);
+        width: auto;
+        padding: var(--social-icons-padding);
+        
+        /* Takes slighly longer to fall down */
+        transition: transform 0.5s;
+    }
+
+    .social-icons img:hover {
+        /* Rises up quickly */
+        transform: translateY(-10%);
+        transition: transform 0.25s;
+    }
+
+    .social-icons a:has(img.email) {
+        transform: scale(1.35);
+    }
+
+    @media (max-width: 33rem) {
+        .social-icons {
+            align-items: center;
+            justify-content: center;
+        }
+    }
+</style>
+
+<!-- Since styles are scoped, need to do this for it to interact with .dark -->
+<style is:global>
+    .light .social-icons img {
+        filter: brightness(0);
+    }
+</style>

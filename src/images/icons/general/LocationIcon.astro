@@ -1,0 +1,20 @@
+---
+// Source: https://icon-sets.iconify.design/mdi/location/
+const props = Astro.props
+
+export interface Props {
+    title: string;
+}
+
+const { title } = Astro.props as Props;
+---
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="location-icon">
+	{title && <title>{title}</title>}
+	<path fill="white" d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7" />
+</svg>
+
+<style>
+    .location-icon {
+        transform: translateY(0.25em);
+    }
+</style>
