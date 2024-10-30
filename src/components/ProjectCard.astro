@@ -38,15 +38,29 @@ const metadata: EntryMetadata = {
 
 const dateOptions: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" };
 const userLocale="en-UK";
+const today = new Date();
+// If release date is undefined, set end date to today
+const endDate = data.releaseDate ?? today;
 
-// If release date is undefined, get duration from start date to today
-const duration = GetDuration(data.startDate, data.releaseDate ?? new Date());
+const duration = GetDuration(data.startDate, endDate);
 const startDateString = data.startDate.toLocaleDateString(userLocale, dateOptions);
 const endDateString = data.releaseDate ? data.releaseDate.toLocaleDateString(userLocale, dateOptions) : "Ongoing";
 const dateAndDurationString = `${startDateString} - ${endDateString} (${duration})`;
+
+function GetNumberOfDays(startDate: Date, endDate: Date) {
+    const numberOfMilisecondsInDay = 1000 * 60 * 60 * 24;
+    return Math.abs(endDate.getTime() - startDate.getTime()) / numberOfMilisecondsInDay;
+}
 ---
 
-<a href=`/projects/${metadata.slug}/` class="card project-card" data-title={data.title} data-tags={data.tags} data-astro-prefetch>
+<a href=`/projects/${metadata.slug}/` class="card project-card" 
+        data-title={data.title} 
+        data-tags={data.tags} 
+        data-rank={data.rank}
+        data-time-since-created={GetNumberOfDays(data.startDate, today)}
+        data-time-since-released={GetNumberOfDays(endDate, today)}
+        data-duration={GetNumberOfDays(data.startDate, endDate)}
+        data-astro-prefetch>
     <Image 
         class="loading-spinner"
         src={data.thumbnailImg} 

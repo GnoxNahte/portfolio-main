@@ -7,6 +7,9 @@ import SearchIcon from "../images/common/SearchIcon.svg";
 import { tags } from "../scripts/tags";
 import TagContainer from "../components/TagContainer.astro";
 
+import SortAscending from "../images/icons/SortAscending.astro";
+import SortDescending from "../images/icons/SortDescending.astro";
+
 const projects = await getCollection("projects", ({data}) => {
     return !data.isUnlisted;
 });
@@ -25,17 +28,13 @@ projects.sort((a, b) => {
     <h1>Projects</h1>
     <div class="container">
         <div class="filter-panel card">
+            <h2>Filter by...</h2>
             <div class="search-bar">
                 <Image src={SearchIcon} alt="Search Icon" class:list="search-icon"/>
                 <!-- TODO: Add keyword -->
                 <input type="search" id="search-input" placeholder="Search by Title or tag"/>
             </div>
-            <div class="radio-tab-selection">
-                <input type="radio" id="tab-tag" value="tab-tag" name="tab-selection" checked> 
-                <label for="tab-tag">Tag</label>
-                <input type="radio" id="tab-options" value="tab-options" name="tab-selection"> 
-                <label for="tab-options">Options</label>
-            </div>
+            <!-- <h3>Tags</h3> -->
             <div class="filter-tag-tab">
             {
                 tags.childTags.map(tag => 
@@ -54,6 +53,23 @@ projects.sort((a, b) => {
                     </div>
                 )
             }
+            </div>
+            <!-- <h3>Others</h3> -->
+            <div class="filter-options-tab">
+                <label for="sort-by">Sort by</label>
+                <div class="filter-options">
+                    <select name="sort" id="sort-by">
+                        <option value="default" title="How I rank the projects. Based on how well the final product was, how complex it was, etc.">Default (Personal rank)</option>
+                        <option value="time-since-created" title="Sort by time since created">Time since Created</option>
+                        <option value="time-since-released" title="Sort by time since released">Time since Released</option>
+                        <option value="duration" title="Duration spent on the project. Ongoing projects have their duration calculated using today as the release date.">Duration</option>
+                        <option value="alphabetically">Alphabetically</option>
+                    </select>
+                    <div class="sort-order-icon">
+                        <SortAscending class:list="ascending"/>
+                        <SortDescending class:list="descending"/>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="project-container">
@@ -89,6 +105,16 @@ projects.sort((a, b) => {
         hr {
             border-color: grey;
         }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-left: 0.25em;
+        }
+
+        h3 {
+            margin: 0;
+        }
     }
 
     .search-bar {
@@ -112,7 +138,8 @@ projects.sort((a, b) => {
     .filter-tag-tab {
         display: flex;
         flex-direction: column;
-        gap: 1em;
+        row-gap: 0.7em;
+        column-gap: 1em;
 
         .filter-tag-container ul {
             margin-top: 0.2em;
@@ -169,10 +196,53 @@ projects.sort((a, b) => {
         }
     }
 
+    .filter-options {
+        display: flex;
+        gap: 0.75em;
+        margin-top: 0.2em;
+
+        select {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .sort-order-icon {
+        /* width: 32px; */
+        padding: 0.3em;
+        border: 2px solid #555;
+        border-radius: 0.5em;
+        background-color: var(--color-background-secondary);
+        cursor: pointer;
+        position: relative;
+        width: 1.75em;
+
+        svg {
+            position: absolute;
+
+            transition-property: width, height, opacity, transform;
+            transition-duration: 0.5s;
+            transition-timing-function: ease-in-out;
+        }
+
+        &:not(.descending) svg.descending {
+            /* width: 0;
+            height: 0; */
+            opacity: 0;
+            transform: rotate(-90deg) scale(0);
+        }
+
+        &.descending svg.ascending {
+            /* width: 0;
+            height: 0; */
+            opacity: 0;
+            transform: rotate(90deg) scale(0);
+        }
+    }
+
     .project-container {
         display: flex;
         flex-direction: column;
-        /* gap: 1em; */
 
         --project-card-max-height: 15em;
         --anim-duration: 1.2s;
@@ -206,6 +276,10 @@ projects.sort((a, b) => {
             &:nth-child(9) { animation-delay: calc(var(--animiation-delay-amt) * 9); }
             &:nth-child(10) { animation-delay: calc(var(--animiation-delay-amt) * 10); }
         } */
+
+        aside {
+            order: 999;
+        }
     }
 
     @keyframes hideCard {
@@ -285,16 +359,27 @@ projects.sort((a, b) => {
 
     let searchText = "";
 
+    let sortBy = "default"; 
+    let sortOrder_IsAscending = true; // Simplify it by storing as a boolean instead of "ASC" and "DESC"
+    const descendingClass = "descending";
+
     interface ProjectCardData {
         projectCardEl: HTMLAnchorElement;
         tags: string[];
         title: string;
+        rank: number;
+        timeSinceCreated: number;
+        timeSinceReleased: number;
+        duration: number;
     }
 
     const projectElements = document.getElementsByClassName("project-card");
     const projectsData = new Array<ProjectCardData>();
 
     const filterPanel = document.querySelector(".filter-panel") as HTMLDivElement;
+    const searchInput = document.getElementById("search-input") as HTMLInputElement;
+    const sortByDropdown = document.getElementById("sort-by") as HTMLSelectElement;
+    const sortOrderIcon = document.querySelector(".sort-order-icon") as HTMLOrSVGImageElement;
 
     const noProjectsFoundCard = document.getElementById("no-project-found");
     
@@ -303,8 +388,13 @@ projects.sort((a, b) => {
         const projectHtmlAnchorEl = project as HTMLAnchorElement;
         const tags = projectHtmlAnchorEl.dataset.tags?.split(',');
         const title = projectHtmlAnchorEl.dataset.title;
-        if (!tags || !title) {
-            console.error("Can't find project tag / title");
+        const rank = projectHtmlAnchorEl.dataset.rank;
+        const timeSinceCreated = projectHtmlAnchorEl.dataset.timeSinceCreated;
+        const timeSinceReleased = projectHtmlAnchorEl.dataset.timeSinceReleased;
+        const duration = projectHtmlAnchorEl.dataset.duration;
+        if (!tags || !title || !rank || !timeSinceCreated || !timeSinceReleased || !duration) {
+            console.error("Can't find project data");
+            console.error(projectHtmlAnchorEl.dataset)
             continue;
         }
 
@@ -312,6 +402,10 @@ projects.sort((a, b) => {
             projectCardEl: projectHtmlAnchorEl,
             tags: tags,
             title: title,
+            rank: parseInt(rank),
+            timeSinceCreated: parseFloat(timeSinceCreated),
+            timeSinceReleased: parseFloat(timeSinceReleased),
+            duration: parseFloat(duration),
         };
         projectsData.push(data)
     }
@@ -327,10 +421,9 @@ projects.sort((a, b) => {
     });
 
     // Register when the search input updates
-    const searchInput = document.getElementById("search-input") as HTMLInputElement;
     searchInput?.addEventListener("input", () => {
         searchText = searchInput.value;
-        UpdateProjects()
+        UpdateProjects();
     });
 
     // Register OnClick event listeners for tags
@@ -368,16 +461,32 @@ projects.sort((a, b) => {
         })
     }
 
+    sortByDropdown?.addEventListener("change", () => {
+        sortBy = sortByDropdown.options[sortByDropdown.selectedIndex].value;
+        UpdateProjects();
+    })
+
+    sortOrderIcon?.addEventListener("click", () => {
+        sortOrderIcon.classList.toggle(descendingClass);
+        sortOrder_IsAscending = !sortOrderIcon.classList.contains(descendingClass);
+        UpdateProjects();
+    })
+
     // Register when the back button is pressed.
     // Docs: https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event
     window.addEventListener("popstate", UpdatePage);
 
+    // Use this to refresh classes in the whole page
     function UpdatePage() {
         GetInfoFromURL();
+        searchInput.textContent = searchText;
+
         UpdateTagStatus();
+        UpdateSortOptions();
         UpdateProjectVisibility();
     }
 
+    // Use this on user interaction, changing a search parameter
     function UpdateProjects() {
         UpdateProjectVisibility();
         UpdateURL();
@@ -385,10 +494,12 @@ projects.sort((a, b) => {
 
     function UpdateProjectVisibility() {
         let count = 0;
+        const searchTextLowerCase = searchText.toLowerCase();
+
         // console.log(`IncludeTags: ${includeTags} \nExcludeTags: ${excludeTags}`);
         for (const project of projectsData) {
             const ifShow = 
-                (!searchText || project.title.includes(searchText)) &&
+                (!searchText || project.title.toLowerCase().includes(searchTextLowerCase)) &&
                 // Check if the project includes all include tags
                 // (includeTags.length === 0 || project.tags.some((el) => includeTags.includes(el))) && // Check if ANY include tag
                 (includeTags.length === 0 || includeTags.every((el) => project.tags.includes(el))) && // Check if ALL include tag
@@ -403,6 +514,8 @@ projects.sort((a, b) => {
 
         // Hide this if there is at least 1 project
         noProjectsFoundCard?.classList.toggle("hide", count > 0);
+
+        UpdateProjectOrder();
     }
 
     function UpdateTagStatus() {
@@ -420,6 +533,11 @@ projects.sort((a, b) => {
         }
     }
 
+    function UpdateSortOptions() {
+        sortByDropdown.value = sortBy;
+        sortOrderIcon.classList.toggle(descendingClass, !sortOrder_IsAscending);
+    }
+
     function GetInfoFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
         const params = Object.fromEntries(urlParams.entries());
@@ -431,6 +549,12 @@ projects.sort((a, b) => {
         includeTags = params["include"]?.split(",") ?? [];
         excludeTags = params["exclude"]?.split(",") ?? [];
         
+        sortBy = params["sort-by"]?.toLowerCase() ?? "default";
+
+        // Default value is ascending
+        // Just check if it's descending, if it isn't, it's either "ASC" or some unknown value so set to default (ascending);
+        sortOrder_IsAscending = params["sort-direction"] !== "DESC";
+
         // console.log("========= NEW URL =========");
         // console.log("include: " + includeTags);
         // console.log("exclude: " + excludeTags);
@@ -442,17 +566,56 @@ projects.sort((a, b) => {
         const searchParams = new URLSearchParams();
         if (searchText)
             searchParams.set("search", searchText);
-        
+
         if (includeTags && includeTags.length > 0)
             searchParams.set("include", includeTags.toString());
         if (excludeTags && excludeTags.length > 0)
             searchParams.set("exclude", excludeTags.toString());
+
+        if (sortBy !== "default")
+            searchParams.set("sort-by", sortBy);
+        if (!sortOrder_IsAscending)
+            searchParams.set("sort-direction", "DESC");
 
         // window.location.search = searchParams.toString();
         history.pushState({}, '', url.origin + url.pathname + "?" + searchParams.toString());
     }
 
     function UpdateProjectOrder() {
-
+        switch (sortBy) {
+            case "default": projectsData.sort((a, b) => a.rank - b.rank); break;
+            case "time-since-created": projectsData.sort((a, b) => a.timeSinceCreated - b.timeSinceCreated); break;
+            case "time-since-released":
+                projectsData.sort((a, b) => {
+                    // If both dates are the same, use the time since created
+                    // Happens often, mainly when project is still ongoing and "date released" is today.
+                    if (a.timeSinceReleased !== b.timeSinceReleased)
+                        return a.timeSinceReleased - b.timeSinceReleased;
+                    else 
+                        return a.timeSinceCreated - b.timeSinceCreated;
+                }); 
+                break;
+            case "duration": 
+                projectsData.sort((a, b) => {
+                    // If both durations are equal, compare the rank
+                    // Happens often, mainly for small projects and game jams.
+                    if (a.duration !== b.duration)
+                        return a.duration - b.duration; 
+                    else 
+                        return a.rank - b.rank; 
+                }); 
+                break;
+            case "alphabetically": projectsData.sort((a, b) => a.title.localeCompare(b.title)); break;
+            default: console.error("Unknown sort-by option: " + sortBy); break;
+        }
+        
+        // If sort ascending, swap a and b
+        if (!sortOrder_IsAscending) {
+            projectsData.reverse();
+        }
+        
+        projectsData.forEach((project, index) => {
+            project.projectCardEl.style.order = index.toString();
+        })
     }
 </script>

@@ -248,6 +248,24 @@ iframe[src*="youtube.com"] {
     border: none;
 }
 
+/* Dropdown */
+select {
+    padding: 0.5em 0.3em;
+    padding: 0.75em;
+    border-radius: 0.5em;
+    color: var(--color-text);
+    border: 2px solid #555;
+    background-color: var(--color-background-secondary);
+    
+    &:hover {
+        background-color: var(--color-background);
+    }
+    /* &:focus {
+        outline: none;
+        border: 2px solid var(--color-text);
+    } */ 
+}
+
 /* Scrollbar */
 
 ::-webkit-scrollbar {
