@@ -4,6 +4,11 @@ import type { CollectionEntry } from 'astro:content';
 import { getEntryBySlug } from 'astro:content';
 import TagContainer from './TagContainer.astro';
 import { GetDuration } from "../scripts/utilities.ts";
+import AstroIcon from '../images/icons/skill-icons/AstroIcon.astro';
+import { Tag } from '../scripts/tags';
+import Unity from '../images/icons/skill-icons/Unity.astro';
+import Svelte from '../images/icons/skill-icons/Svelte.astro';
+import Obsidian from '../images/icons/skill-icons/Obsidian.astro';
 
 export interface Props {
     project: CollectionEntry<'projects'> | string;
@@ -61,12 +66,29 @@ function GetNumberOfDays(startDate: Date, endDate: Date) {
         data-time-since-released={GetNumberOfDays(endDate, today)}
         data-duration={GetNumberOfDays(data.startDate, endDate)}
         data-astro-prefetch>
-    <Image 
-        class="loading-spinner"
-        src={data.thumbnailImg} 
-        alt={"Thumbnail for " + data.title} 
-        widths={[ 220, 540, 720, data.thumbnailImg.width]}
-    />
+    <div class="thumbnail-container">
+        <Image 
+            class="loading-spinner thumbnail"
+            src={data.thumbnailImg} 
+            alt={"Thumbnail for " + data.title} 
+            widths={[ 220, 540, 720, data.thumbnailImg.width]}>
+        </Image>
+        <!-- Looks slightly messy but not sure what other way to do this -->
+        {
+        // If uses Unity
+        data.tags.includes("Unity") ? 
+            <Unity class:list="tool-icon"/> :
+            // If uses Astro
+            data.tags.includes("Astro") ? 
+                <AstroIcon class:list="tool-icon"/> :
+                // If uses Obsidian
+                data.tags.includes("Obsidian") ? 
+                    <Obsidian class:list="tool-icon"/> :
+                    // If uses Svelte
+                    data.tags.includes("SvelteKit") && <Svelte  class:list="tool-icon"/>
+
+    }
+    </div>
     <div class="project-details">
         <p class="project-title">{data.title}</p>
         <div class="tag-container">
@@ -117,13 +139,35 @@ function GetNumberOfDays(startDate: Date, endDate: Date) {
         color: var(--color-text);
     }
     
-    .project-card img {
-        object-fit: contain;
+    .project-card .thumbnail-container {
+        display: flex;
+        justify-content: center;
+        
+        position: relative;
+        
         width: 25%;
         min-width: 25%;
         height: 100%;
-        border-radius: 0.5em;
-        backdrop-filter: none;
+
+        .thumbnail {
+            width: 100%;
+            border-radius: 0.5em;
+            backdrop-filter: none;
+            object-fit: contain;
+        }
+    }
+
+    .project-card .tool-icon {
+        --offset-amt: -0.4em;
+        position: absolute;
+        right: var(--offset-amt);
+        bottom: var(--offset-amt);
+
+        width: 3em;
+        height: 3em;
+        
+        border: 1.5px solid white;
+        border-radius: 0.75em;
     }
 
     .project-details {
@@ -208,7 +252,7 @@ function GetNumberOfDays(startDate: Date, endDate: Date) {
             max-height: none;
         }
 
-        .project-card img {
+        .project-card .thumbnail-container {
             width: 100%;
             max-height: 10em !important;
         }
