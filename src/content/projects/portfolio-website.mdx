@@ -1,6 +1,6 @@
 ---
 title: Portfolio Website
-shortDescription: My portfolio website showing projects I've done in the past. (This website)
+shortDescription: My portfolio website showcasing both completed and current projects. (This website)
 startDate: 2024-03-03
 # releaseDate: # format is YYYY-MM-DD
 projectLink: https://gnoxnahte.dev
@@ -18,7 +18,9 @@ import ProjectFilterGIF from "../../images/webdev/PortfolioWebsite/ProjectsPrevi
 import ThemeSwitchingGIF from "../../images/webdev/PortfolioWebsite/ThemeSwitch.gif";
 
 ## Background
-Slowly rebuilding this website. If you are curious, here's my [building and thought process](../portfolio-website-build-process). 
+Slowly building this website. If you are curious, here's my [building and thought process](../portfolio-website-build-process). 
+
+For reference, here's my [previous website](https://gnoxnahte.com)
 
 <details>
 <summary> Reasons for rebuilding it </summary>
@@ -31,7 +33,7 @@ Why I want to rebuild the website:
 
 ## Main Features
 ### Theme switching
-Has nice transitions between the 2 themes, without any sudden colors changes.  Note that light theme is still WIP.
+Has clean transitions between the 2 themes, without any sudden colors changes.  Note that light theme is still WIP.
 
 Click on the **Sun/Moon icon on the top right** to try it!
 
@@ -39,6 +41,10 @@ Click on the **Sun/Moon icon on the top right** to try it!
 
 ### Project filtering
 <ExpandImgOnClick image={ProjectFilterGIF} alt="GIF project filtering with animations"/>
+Filtering options:
+- Search by Title 
+- Filter by including & excluding tags
+- Sorting by <span title="My personal ranking on how well the project did, how complicated it was, etc">Rank</span>
 
 ### Easy to add projects
 Uses markdown, making adding new projects very easy. No need to write full pages in HTML and CSS for every project!
@@ -51,5 +57,8 @@ Uses [Unlighthouse](https://next.unlighthouse.dev/) which uses [Google's Lightho
 Including the animations shown in the [Theme Switching](#theme-switching) and [Project Filtering](#project-filtering) sections, there are lots of smooth animations around the website.
 
 ### Other smaller features
-- Automatic Table of Contents
-- Infinite scrolling home page
+- Automatic Table of Contents based on headings in markdown
+- Infinite scrolling project thumbnails in [home page](/)
+
+## Credits
+Here's a list of all the assets I used (mainly icons): [Credit Page](/credits/)
