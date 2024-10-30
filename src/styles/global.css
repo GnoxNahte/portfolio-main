@@ -78,12 +78,6 @@ img {
 
 h1 { font-size: 2em;}
 
-h2 {
-    padding-bottom: 5px;
-    margin-bottom: 5px;
-    border-bottom: solid 2px #4e4ecb77;
-}
-
 a {
     color:var(--color-accent);
 }

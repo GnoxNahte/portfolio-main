@@ -65,7 +65,6 @@ function GetNumberOfDays(startDate: Date, endDate: Date) {
         class="loading-spinner"
         src={data.thumbnailImg} 
         alt={"Thumbnail for " + data.title} 
-        transition:name={`project-img-${data.title}`}
         widths={[ 220, 540, 720, data.thumbnailImg.width]}
     />
     <div class="project-details">
@@ -122,11 +121,9 @@ function GetNumberOfDays(startDate: Date, endDate: Date) {
         object-fit: contain;
         width: 25%;
         min-width: 25%;
-        /* height: min-content; */
-        height: auto;
         height: 100%;
-        /* max-height: 10%; */
         border-radius: 0.5em;
+        backdrop-filter: none;
     }
 
     .project-details {

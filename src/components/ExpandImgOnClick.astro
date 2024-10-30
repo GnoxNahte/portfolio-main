@@ -20,7 +20,7 @@ const { image, alt } = Astro.props as Props;
 <style>
 
     .expand-img-container {
-        /* width: fit-content; */
+        /* width: fit-content; */ /* Comment out first cos it'll be very small when image is loading. Then once it loads, it'll shift the layout a lot (LCP) */
         cursor: zoom-in;
 
         img {
@@ -82,19 +82,6 @@ const { image, alt } = Astro.props as Props;
 <script>
     function OnClicked(container: HTMLDivElement) {
         container.classList.toggle("expanded");
-
-        // TODO: Try view transitions. Currently "works but if there any view-transition-name, that animation will overlap this one."
-        // if (!document.startViewTransition) {
-        //     Transition();
-        //     return;
-        // }
-        
-        // const transition = document.startViewTransition(() => Transition());
-        // transition.ready.then(() => {
-        //     document.documentElement.animate({
-        //         zIndex: 1000,
-        //     })
-        // });
     }
     const imgContainers = document.getElementsByClassName("expand-img-container");
     for (const imgContainer of imgContainers) {

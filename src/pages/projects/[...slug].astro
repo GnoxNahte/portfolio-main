@@ -173,9 +173,24 @@ if (data.startDate && data.releaseDate)
         text-decoration: underline;
     }
 
-    .markdown h2 {
+    h2 {
+        padding-bottom: 5px;
         margin-bottom: 0.5em;
-        /* font-size: 1.75em; */
+        position: relative;
+        /* border-bottom: solid 2px #4e4ecb77; */
+        &::after {
+            content:"";
+            position:absolute;
+            z-index:-1;
+            height: 3px;
+            width: calc(100% + 0.5em); /* to offset highlighted heading */
+            left:0;
+            right:0;
+            bottom: -10px;
+            /* color: #224884; */
+            /* backdrop-filter:brightness(60%); */
+            backdrop-filter:brightness(200%);
+        }
     }
 
     .markdown pre {
@@ -232,7 +247,8 @@ if (data.startDate && data.releaseDate)
         /* width: 2.75em; */
         text-align: center;
     }
-    
+
+    /* For highlighting headings */
     @keyframes highlightFade {
         from { background-color: var(--color-primary); }
         to { background-color: transparent; }
