@@ -13,6 +13,7 @@
     --color-accent: #d62329;
     --color-accent-text: #fff;
     --color-text: #000;
+    --color-border: #00000080;
     --color-secondary-border: black;
 }
 :root, :root.dark {
@@ -124,8 +125,9 @@ button:active {
     transform: scale(1.025);
 }
 /* For search but can be used for other input also. Not specifying [type="search"] for now. */
-input {
-    padding: 0.8em 0.5em 0.75em 2.7em;
+input, textarea {
+    font-family: system-ui, sans-serif; /* Not sure why the user style sheet overwrites the font */
+    padding: 0.75em;
     color: var(--color-text);
     border: 1.5px solid var(--color-border);
     border-radius: 0.5rem;
@@ -133,11 +135,15 @@ input {
     background-color: color-mix(var(--color-background), black 90%);
 }
 
+input[type="search"] {
+    padding: 0.8em 0.5em 0.75em 2.9em;
+}
+
 /* Input cancel icon */
 input[type="search" i]::-webkit-search-cancel-button {
     -webkit-appearance: none;
-    height: 1.25em;
-    width: 1.25em;
+    height: 1.5em;
+    width: 1.5em;
     background: url("../images/common/Cancel.svg") no-repeat;
     background-size: contain;
     opacity: 0.65;
@@ -153,6 +159,12 @@ input[type="search" i]::-webkit-search-cancel-button:hover {
 /* For light mode, make the icon black */
 .light input[type="search" i]::-webkit-search-cancel-button {
     filter: brightness(0);
+}
+
+textarea {
+    min-height: 3em;
+    field-sizing: content;
+    resize: vertical;
 }
 
 /* A type of radio selection, based on tab selection */

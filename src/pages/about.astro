@@ -89,6 +89,21 @@ import Sqlite from "../images/icons/skill-icons/Sqlite.astro";
             <li><a href="https://unity.com/products/unity-certifications/associate-programmer" target="_blank">UCAP-720: Unity Certified Associate: Programmer</a></li>
         </ul>
         <p>* <a href="https://www.nyp.edu.sg/current-students/academic-matters/nyp-assessment-regulations.html" target="_blank" data-astro-prefetch>Director's List</a> - Top 15% in my cohort for the semester</p>
+
+        <!-- modify this form HTML and place wherever you want your form -->
+        <div class="contact-form">
+            <h2>Send a Message</h2>
+            <p class="subtitle">Got an idea, project, or opportunity you'd like to discuss?<br />Send a message and I'll get back to you as soon as possible!</p>
+            <form action="https://formspree.io/f/mjkvygqz" method="POST">
+                <label for="contact-name"> What's your name?</label>
+                <input type="text" name="name" id="contact-name" autocomplete="name" spellcheck="false" placeholder="Name">
+                <label for="contact-email"> Your email:</label>
+                <input type="email" name="email" id="contact-email" autocomplete="email" placeholder="Email">
+                <label for="contact-message">Your message:</label>
+                <textarea name="message" id="contact-message" placeholder="Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
 </Layout>
 
 <style>
@@ -159,6 +174,46 @@ import Sqlite from "../images/icons/skill-icons/Sqlite.astro";
         &:hover {
             transform: translateY(-10%);
             transition: transform 0.25s;
+        }
+    }
+
+    .contact-form {
+        padding: 2em;
+        border-radius: 1.5em;
+        background-color: var(--color-background);
+        max-width: 30em;
+        margin: 3em auto;
+        h2 {
+            margin: 0;
+        }
+
+        h2, p {
+            text-align: center;
+        }
+
+        label {
+            transition: font-weight 0.5s, font-size 0.75s;
+        }
+
+        label:has(+ input:focus),
+        label:has(+ textarea:focus) {
+            font-weight: 600;
+            font-size: 1.07em;
+        }
+
+        input, textarea {
+            margin-bottom: 1em;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 1em;
+        }
+
+        button {
+            margin-top: 0.5em;
+            padding: 0.8em;
         }
     }
 </style>
