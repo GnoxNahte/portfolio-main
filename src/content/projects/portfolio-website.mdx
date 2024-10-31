@@ -16,6 +16,8 @@ isFeatured: true
 import ExpandImgOnClick from "../../components/ExpandImgOnClick.astro";
 import ProjectFilterGIF from "../../images/webdev/PortfolioWebsite/ProjectsPreview.gif";
 import ThemeSwitchingGIF from "../../images/webdev/PortfolioWebsite/ThemeSwitch.gif";
+import EasyToAddProjectExample from "../../images/webdev/PortfolioWebsite/EasyToAddProjectExample.png";
+import UnlighthouseResult from "../../images/webdev/PortfolioWebsite/UnlighthouseResult.png";
 
 ## Background
 Slowly building this website. If you are curious, here's my [building and thought process](../portfolio-website-build-process). 
@@ -47,11 +49,18 @@ Filtering options:
 - Sorting by <span title="My personal ranking on how well the project did, how complicated it was, etc">Rank</span>
 
 ### Easy to add projects
+<ExpandImgOnClick image={EasyToAddProjectExample} alt="Easy to add project example" />
+Left: Webpage, Right: Markdown
+
 Uses markdown, making adding new projects very easy. No need to write full pages in HTML and CSS for every project!
 Mainly thanks to [Astro's Markdown and Content Collections](https://docs.astro.build/en/guides/markdown-content/).
 
 ### Fast to load
+<ExpandImgOnClick image={UnlighthouseResult} alt="Unlighthouse Scan Result" />
+
 Uses [Unlighthouse](https://next.unlighthouse.dev/) which uses [Google's Lighthouse](https://github.com/GoogleChrome/lighthouse) to scan the **entire** website.
+
+Note that though there are some pages that are slightly slower to load, it's only because those pages have either a lot of images or have large gif sizes. The full page will load normally, while slow to load images/gifs will load separately and appear without any layout changes.
 
 ### Smooth animations
 Including the animations shown in the [Theme Switching](#theme-switching) and [Project Filtering](#project-filtering) sections, there are lots of smooth animations around the website.

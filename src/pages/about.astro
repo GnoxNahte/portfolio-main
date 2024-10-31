@@ -112,7 +112,6 @@ import Sqlite from "../images/icons/skill-icons/Sqlite.astro";
     }
     
     a.resume {
-        display: inline;
         display: inline-block;
         padding: 0.2em 0.4em;
         border: 2px solid var(--color-text);
@@ -126,6 +125,10 @@ import Sqlite from "../images/icons/skill-icons/Sqlite.astro";
         &:hover {
             transform: translateY(-10%);
             transition: transform 0.25s;
+        }
+
+        &:visited {
+            color: var(--color-text);
         }
         /* background-color: red;; */
     }
