@@ -5,6 +5,11 @@ import { Image } from 'astro:assets';
 import TagContainer from "../../components/TagContainer.astro";
 import { GetDuration } from "../../scripts/utilities";
 import TableOfContent from "../../components/TableOfContent/TableOfContent.astro";
+import ItchIcon from "../../images/icons/social/ItchIcon.svg";
+import ObsidianIcon from "../../images/icons/logos/ObsidianIcon.astro";
+import InternetIcon from "../../images/icons/general/InternetIcon.astro";
+import GitHubTransparent from "../../images/icons/logos/GitHubTransparent.astro";
+import ReviewsIcon from "../../images/icons/general/ReviewsIcon.astro";
 
 // Generate a new path for every collection entry
 export async function getStaticPaths()  {
@@ -30,11 +35,24 @@ const dateOptions: Intl.DateTimeFormatOptions = { day: "numeric", month: "long",
 // But need to use <script></script>
 const userLocale="en-UK";
 
-let duration = "";
-if (data.startDate && data.releaseDate)
-{
-    duration = GetDuration(data.startDate, data.releaseDate);
+let duration = GetDuration(data.startDate, data.releaseDate ?? new Date());
+
+enum ProjectType {
+    None,
+    Itch,
+    ObsidianPlugin,
+    Website,
 }
+
+let projectType: ProjectType;
+if (!data.projectLink) 
+    projectType = ProjectType.None;
+else if (/https:\/\/[\w]+\.itch\.io\/[\w-]+/.test(data.projectLink))
+    projectType = ProjectType.Itch;
+else if (/https:\/\/obsidian\.md\/plugins\?id\=[\w-]+/.test(data.projectLink))
+    projectType = ProjectType.ObsidianPlugin;
+else
+    projectType = ProjectType.Website;
 
 ---
 
@@ -56,16 +74,32 @@ if (data.startDate && data.releaseDate)
                 :
                 <p>Date: <span class="date">{data.startDate.toLocaleDateString(userLocale, dateOptions)} - Ongoing</span></p>
             }
+            <ul class="list-of-links">
+                Links:
+                {data.projectLink != null && 
+                    <li>
+                        <a href={data.projectLink} target="_blank">
+                            {
+                            // If is an Itch project
+                            projectType === ProjectType.Itch ? 
+                                <Image src={ItchIcon} alt="Itch.io Icon" title={`Itch.io project page for ${data.title}`} class="itch"/> :
+                                // If is an Obsidian project
+                                projectType === ProjectType.ObsidianPlugin ? 
+                                    <ObsidianIcon title={`Obsidian Plugin download page for ${data.title}`}/> :
+                                    // Use the general internet/website icon if not sure what the website points to
+                                    <InternetIcon title={`Website page for Project: ${data.title}`}/>
+                            }
+                        </a>
+                    </li>
+                }
+                {data.githubLink != null && <li><a href={data.githubLink} target="_blank"><GitHubTransparent title={`GitHub Page for ${data.title}`} /></a></li>}
+                {data.reviewsLink != null && <li><a href={data.reviewsLink} target="_blank"><ReviewsIcon title={`Reviews website for ${data.title}`} /></a></li>}
+            </ul>
+            
             <div class="tag-container">
                 <p>Tags: </p>
                 <TagContainer tags={data.tags} />
             </div>
-            <ul class="list-of-links">
-                Links:
-                {data.projectLink != null && <li><a href={data.projectLink} target="_blank">Project Link</a></li>}
-                {data.githubLink != null && <li><a href={data.githubLink} target="_blank">GitHub Link</a></li>}
-            </ul>
-            
             <div class="markdown">
                 <Content />
             </div>
@@ -104,11 +138,6 @@ if (data.startDate && data.releaseDate)
         bottom: 0;
     }
 
-    article > h1 {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-
     .layout-container {
         display: flex;
         padding: 0 2em;
@@ -125,11 +154,26 @@ if (data.startDate && data.releaseDate)
             padding: 0;
         }
     }
+
+    article > h1 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
     
+    article > div,
+    article > ul {
+        margin-top: 0;
+        margin-bottom: 0.75em;
+    }
+
     .subtitle {
         /* color: rgb(164, 157, 145); */
         opacity: 0.6;
         margin: 0;
+    }
+
+    p:has(.date) {
+        margin-top: 0;
     }
 
     .tag-container {
@@ -142,11 +186,26 @@ if (data.startDate && data.releaseDate)
         }
     }
 
+    /* Hide if don't have any links */
+    .list-of-links:not(.list-of-links:has(li)) {
+        display: none;
+    }
+
     .list-of-links {
         list-style: none;
         padding: 0;
         display: flex;
-        gap: 0.25em;
+        align-items: center;
+        gap: 0.4em;
+
+        li {
+            height: 2em;
+        }
+
+        svg, img {
+            width: 2em;
+            height: 2em;
+        }
     }
 
     @media (max-width: 70em) {

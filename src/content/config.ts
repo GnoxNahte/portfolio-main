@@ -10,6 +10,7 @@ const projectsCollection = defineCollection({
         releaseDate: z.date().optional(), // format is YYYY-MM-DD
         projectLink: z.string().url().optional(),
         githubLink: z.string().url().optional(),
+        reviewsLink: z.string().url().optional(),
         rank: z.number(),
         thumbnailImg: image(),
         bannerImg: image().optional(),

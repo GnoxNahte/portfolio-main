@@ -93,6 +93,20 @@ a:visited {
     color: #af74e3;
 }
 
+/* Note that sometimes, need to apply display: inline-block */
+a > img, 
+a > svg,
+a.float-on-hover {
+    /* Takes slightly longer to fall down */
+    transition: transform 0.5s;
+
+    /* Rises quickly */
+    &:hover {
+        transform: translateY(-10%);
+        transition: transform 0.25s;
+    }
+}
+
 aside {
     opacity: 0.75;
 }

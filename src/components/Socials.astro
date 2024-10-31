@@ -41,15 +41,6 @@ const { showExtraSocials = false } = Astro.props as Props;
         height: calc(100% - var(--social-icons-padding) * 2);
         width: auto;
         padding: var(--social-icons-padding);
-        
-        /* Takes slighly longer to fall down */
-        transition: transform 0.5s;
-    }
-
-    .social-icons img:hover {
-        /* Rises up quickly */
-        transform: translateY(-10%);
-        transition: transform 0.25s;
     }
 
     .social-icons a:has(img.email) {

@@ -35,7 +35,7 @@ import Sqlite from "../images/icons/skill-icons/Sqlite.astro";
         <p class="job-status">Currently looking for jobs, open to freelance</p>
 
         <div class="link-container">
-            <a href="/Resume.pdf" target="_blank" class="resume"><ResumeIcon /> Resume</a>
+            <a href="/Resume.pdf" target="_blank" class="resume float-on-hover"><ResumeIcon /> Resume</a>
             <Socials showExtraSocials={true}/>
         </div>
 
@@ -134,13 +134,6 @@ import Sqlite from "../images/icons/skill-icons/Sqlite.astro";
         color: var(--color-text);
         margin-right: 0.5em;
         text-decoration: none;
-        
-        transition: transform 0.5s;
-        
-        &:hover {
-            transform: translateY(-10%);
-            transition: transform 0.25s;
-        }
 
         &:visited {
             color: var(--color-text);
