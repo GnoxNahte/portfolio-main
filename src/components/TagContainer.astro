@@ -4,9 +4,10 @@ import TagPill from './TagPill.astro';
 
 export interface Props {
     tags: Tag[] | string[];
+    ifAddLink?: boolean
 }
 
-const { tags } = Astro.props as Props;
+const { tags, ifAddLink = false } = Astro.props as Props;
 
 // Checks and converts to Tag[] if the type is string[].
 let tagArray: Tag[];
@@ -33,7 +34,7 @@ else {
 <ul>
     {
         tagArray.map(tag => (
-            <TagPill tag={tag} ifAddLink={false} />
+            <TagPill tag={tag} ifAddLink={ifAddLink} />
         ))
     }
 </ul>
