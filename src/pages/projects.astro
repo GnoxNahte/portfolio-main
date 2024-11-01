@@ -245,25 +245,49 @@ projects.sort((a, b) => {
         flex-direction: column;
 
         --project-card-max-height: 15em;
-        --anim-duration: 1.2s;
 
         .project-card {
             margin-bottom: 1em;
             max-height: var(--project-card-max-height);
             margin-bottom: 1em;
+
+            --hide-transition-duration: 0.75s;
+            --hide-transition-opacity-duration: 0.5s;
+            transition: 
+                /* On hover effect */
+                transform var(--hover-transform-duration),
+                box-shadow var(--hover-box-shadow-duration),
+                /* Hide and show transitions */
+                max-height var(--hide-transition-duration),
+                padding var(--hide-transition-duration),
+                margin-bottom var(--hide-transition-duration),
+                border-width var(--hide-transition-duration),
+                opacity var(--hide-transition-opacity-duration);
         }
 
-        :not(.hide) {
-            /* animation: 1s linear showCard both; */
-            animation: 0.75s cubic-bezier(0.42, 0.07, 0.55, 2) showCard both;
+        /* Show */
+        .card:not(.hide) {
+            --hide-transition-opacity-duration: 1s;
+            
+            max-height: var(--project-card-max-height); 
+            opacity: 1;
+
+            /* --transition-timing-func: cubic-bezier(0.25,-1.2, 0.4, 2); */
         }
 
-        .hide {
-            animation: 1s cubic-bezier(0.25,-1.2, 0.4, 2) hideCard both;
+        .card.hide {
+            border-width: 0;
+            max-height: 0;
+            padding: 0 1em;
+            margin-bottom: 0;
+            opacity: 0;
+
+            /* --transition-timing-func: cubic-bezier(0.42, 0.07, 0.55, 2); */
+            
         }
 
-        .no-project-found {
-            order: 999;
+        #no-project-found {
+            /* order: 999; */
         }
 
         aside {
@@ -297,10 +321,6 @@ projects.sort((a, b) => {
         }
 
         to {
-            max-height: var(--project-card-max-height); 
-            /* padding: 1em;
-            margin-bottom: 1em; */
-            opacity: 1;
         }
     }
     

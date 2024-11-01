@@ -125,10 +125,15 @@ function GetNumberOfDays(startDate: Date, endDate: Date) {
         color: var(--color-text);
         border: 2px solid #555;
 
-        transition: transform 0.5s, box-shadow 0.5s;
+        /* Since transitions is being overwritten in /projects/ page, use this to set the duration */
+        --hover-transform-duration: 0.5s;
+        --hover-box-shadow-duration: 0.5s;
+
+        transition: transform var(--hover-transform-duration), box-shadow var(--hover-box-shadow-duration);
 
         &:hover {
-            transition: transform 0.25s, box-shadow 0.4s;
+            --hover-transform-duration: 0.25s;
+            --hover-box-shadow-duration: 0.4s;
 
             transform: translate(5px, -5px);
             box-shadow: -7px 7px 5px 0px var(--box-shadow-color);
