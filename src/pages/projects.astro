@@ -30,7 +30,7 @@ projects.sort((a, b) => {
         <div class="filter-panel card">
             <h2>Filter by...</h2>
             <div class="search-bar">
-                <Image src={SearchIcon} alt="Search Icon" class:list="search-icon"/>
+                <Image src={SearchIcon} alt="Search Icon" class:list="search-icon icon-single-color"/>
                 <!-- TODO: Add keyword -->
                 <input type="search" id="search-input" placeholder="Search by Title or tag"/>
             </div>
@@ -66,8 +66,8 @@ projects.sort((a, b) => {
                         <option value="alphabetically">Alphabetically</option>
                     </select>
                     <div class="sort-order-icon">
-                        <SortAscending class:list="ascending"/>
-                        <SortDescending class:list="descending"/>
+                        <SortAscending class:list="ascending icon-single-color"/>
+                        <SortDescending class:list="descending icon-single-color"/>
                     </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@ projects.sort((a, b) => {
 
             &.exclude-tag {
                 background-color: var(--color-secondary);
-                color: white;
+                color: var(--color-text);
             }
 
             &::before {

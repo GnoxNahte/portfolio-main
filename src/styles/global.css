@@ -338,6 +338,14 @@ select {
     margin: 0;
 }
 
+.light svg.icon-single-color, 
+.light img.icon-single-color,
+/* If the parent has the class */
+.light .icon-single-color svg,
+.light .icon-single-color img {
+    filter: brightness(0);
+}
+
 img.loading-spinner, .markdown img {
     --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='white'%3E%3Ccircle cx='12' cy='3.5' r='1.5'%3E%3CanimateTransform attributeName='transform' calcMode='discrete' dur='0.72s' repeatCount='indefinite' type='rotate' values='0 12 12;90 12 12;180 12 12;270 12 12'/%3E%3Canimate attributeName='opacity' dur='0.18s' repeatCount='indefinite' values='1;1;0'/%3E%3C/circle%3E%3Ccircle cx='12' cy='3.5' r='1.5' transform='rotate(30 12 12)'%3E%3CanimateTransform attributeName='transform' begin='0.06s' calcMode='discrete' dur='0.72s' repeatCount='indefinite' type='rotate' values='30 12 12;120 12 12;210 12 12;300 12 12'/%3E%3Canimate attributeName='opacity' begin='0.06s' dur='0.18s' repeatCount='indefinite' values='1;1;0'/%3E%3C/circle%3E%3Ccircle cx='12' cy='3.5' r='1.5' transform='rotate(60 12 12)'%3E%3CanimateTransform attributeName='transform' begin='0.12s' calcMode='discrete' dur='0.72s' repeatCount='indefinite' type='rotate' values='60 12 12;150 12 12;240 12 12;330 12 12'/%3E%3Canimate attributeName='opacity' begin='0.12s' dur='0.18s' repeatCount='indefinite' values='1;1;0'/%3E%3C/circle%3E%3C/g%3E%3C/svg%3E");
     min-width: 24px;
@@ -456,6 +464,7 @@ img.loading-spinner, .markdown img {
 /* TODO: set colors for light mode */
 .light .tag {
     filter: brightness(1.5);
+    /* --tag-border-color: color-mix(in srgb, var(--tag-color), #000 50%); */
     &[data-category="Dev Tool"] {
         --tag-color: #6a6392;
     }
@@ -467,10 +476,25 @@ img.loading-spinner, .markdown img {
     }
     &[data-category="Status"] {
         --tag-color: white;
+        color: black;
     }
 
     &[data-category="Error Tag"] {
         --tag-color: red;
+    }
+
+    /* Status circle color */
+    &[data-tag="Ongoing"] .circle{
+        background-color: #039700;
+    }
+    &[data-tag="Completed"] .circle{
+        background-color: #008aa9;
+    }
+    &[data-tag="On Hold"] .circle{
+        background-color: orange;
+    }
+    &[data-tag="Dropped"] .circle{
+        background-color: red;
     }
 }
 
