@@ -23,7 +23,23 @@ rank: 100
 import ExpandImgOnClick from "../../components/ExpandImgOnClick.astro";
 import PreviewGIF from "../../images/webdev/ObsidianTabPanels/Preview.gif";
 
-## Introduction
-
 ## Preview
 <ExpandImgOnClick image={PreviewGIF} alt="GIF showing how the tab panels plugin looks like" />
+**Left** - How it looks when it's rendered out (Live Preview/Reading mode)<br/>
+**Right** - The markdown used to render it (Source mode)
+
+## Introduction
+After searching for a way to organize notes into tabs, I found a few plugins but none that combined both clean markdown and a polished layout. Tabs provide a compact and visually organized structure, especially when working with large sets of information, making it simpler to navigate and focus on one section at a time. 
+
+So, I decided to make my own! This plugin, my second Obsidian plugin ([first plugin - Auto Embed](/projects/obsidian-auto-embed/)), was much easier to build with my experience. Since users edit markdown in [Live Preview](https://help.obsidian.md/Editing+and+formatting/Edit+and+preview+Markdown#Live+Preview), there was no need to integrate [CodeMirror](https://docs.obsidian.md/Plugins/Editor/Editor+extensions), simplifying development further.
+
+## Development process
+I began on 22 September 2024 afternoon and had a working prototype by 9 PM on the same day. Over the following days, I refined features and fixed bugs whenever I was free, finally releasing it on 26 September.
+
+### Challenges faced
+The primary challenge was achieving a clean and organized layout, which was the main reason I avoided existing plugins. In addition to layout design, I worked to ensure the plugin was compatible with various Obsidian themes. Testing against different themes required time, but it was essential for a cohesive look.
+
+## Submitting the plugin
+Submitting plugins to the Obsidian directory involves an automated review and then a human review. My experience from my previous plugin helped streamline this process. On 26 September, I made a pull request for submission, passing the automated review smoothly.
+
+Unfortunately, the human review encountered a delay as the reviewer, ([joethei](https://github.com/joethei)), took a break and paused plugin reviews around 25 September. I respect the work he does — handling numerous plugin and theme reviews daily! Despite the wait, my plugin was accepted on 30 October with no issues. If you're interested, feel free to [download the plugin](https://obsidian.md/plugins?id=tab-panels) and [share any feedback](https://github.com/GnoxNahte/obsidian-tab-panels/issues/new/choose)!
