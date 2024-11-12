@@ -51,7 +51,7 @@ const repeatArray = new Array<number>(4).fill(0);
 		<h1>Hi I'm Ethan,<br>Welcome to my Website!</h1>
 		<h2>Explore my projects</h2>
 		<p>
-			<a href="/projects/?include=Website" id="gamedev-link">Game Development</a>
+			<a href="/projects/?include=Unity" id="gamedev-link">Game Development</a>
 			OR
 			<a href="/projects/?include=Personal" id="webdev-link">Web Development</a>
 		</p>
@@ -155,7 +155,8 @@ const repeatArray = new Array<number>(4).fill(0);
 		width: 45vw;
 		opacity: .2;
 		animation: 30s linear 0s infinite normal;
-		transition: opacity 0.5s;
+		transition: opacity 0.5s, filter 0.5s;
+		filter: grayscale(1);
 	}
 
 	/* Increase opacity to emphasize which project type they are hovering over */
@@ -164,6 +165,7 @@ const repeatArray = new Array<number>(4).fill(0);
 	#webdev-thumbnail:has(~ .container #webdev-link:hover),
 	.thumbnail-list:has(~ .container #all-projects-link:hover) {
 		opacity: 0.6;
+		filter: none;
 	}
 
 	:global(.light) .thumbnail-list {
